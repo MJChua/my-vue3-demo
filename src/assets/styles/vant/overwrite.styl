@@ -1,0 +1,50 @@
+body
+  /** cell */
+  .van-cell
+    padding 14px 0
+    flex-wrap wrap
+    align-items center
+    background-color inherit
+    &::after
+      display none
+    + .van-cell
+      border-top 1px solid $neutral_line_in_white_color
+    &__value:not(.van-field__value)
+      color $neutral_normal_color
+      font-size 13px
+      line-height 1.5
+      letter-spacing .27px
+      text-align left
+      display inline-flex
+      align-items center
+      flex 0 1 auto
+      span
+        word-break break-all
+    &__right-icon
+      font-size 14px
+      font-weight 600
+      color $neutral_normal_color
+    &__title
+      padding-right 10px
+      font-size 14px
+      font-weight 500
+      line-height 1.2
+      letter-spacing 0.35px
+      text-align left
+      color #000
+    &__label
+      margin-top 2px
+      font-weight 400
+      color $neutral_light_color
+    &--clickable:active
+      background-color rgba(0, 0, 0, 0)
+
+  /** switch */
+  .van-switch
+    font-size 20px
+    border-color transparent
+    background-color #e9e9ea
+    &__node
+      box-shadow none
+    &--on
+      background-color #26c858
