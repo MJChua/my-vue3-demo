@@ -1,6 +1,8 @@
 :root {
   --white #fff
+  --white-50-percent rgba(255, 255, 255, 0.5)
   --black #000
+  --black-70-percent rgba(0, 0, 0, 0.7)
 }
 
 // primary
@@ -15,3 +17,196 @@ $neutral_line_in_white_color = #E8EBED
 /* 區塊背景 */
 // fill
 $multilingual_fill_background = #F2F3F7
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* 基本色 */
+    --white #000000
+    --white-50-percent rgba(0, 0, 0, 0.5)
+    --black #FFFFFF
+    --black-70-percent rgba(255, 255, 255, 0.7)
+
+    /* 4. Neutral */
+    --neutral-normal #97A4B0
+    --neutral-light #526377
+    --neutral-lighter #4C5763
+    --neutral-dark #B4BDC5
+    --neutral-line-in-gray #4C505D
+    --neutral-line-in-white #5F6B7B
+
+    /* 5. Fill */
+    --normal-background #323232
+    --info-background #383A3D
+
+    /* background **/
+    --bottom-popup-background #151516
+    --content-background #434343
+    --message-background #212121
+    --list-block-background #1C1C1E
+    --index-center-background linear-gradient(291deg, #000000 99%, #171717 1%)
+
+    /* 陰影顏色 **/
+    --outer-01 rgba(11, 11, 11, 0.15)
+    --outer-02 #26282b
+    --announcement-shadow-outer rgba(29, 30, 32, 0.5)
+
+    /* 自行定義 **/
+    --tab-background linear-gradient(to top, #4e4e4e, #696969 33%, #6c6c6c 33%)
+    --top-background-gradient linear-gradient(to bottom, #3b3b3b, #2a2a2a 12%, #323232), linear-gradient(to bottom, #4d4d4d, #323232)
+    --card-gradient linear-gradient(to bottom, #383838 2%, #3f3f3f 60%, #353535 95%, #404040)
+    --app-download-background linear-gradient(to bottom, #17191a, rgba(33, 29, 29, 0))
+    --mine-background linear-gradient(357deg, #3A334D 1%, #30424F 99%)
+    --switch-button #787880
+    --van-picker-mask linear-gradient(180deg, hsla(240, 3%, 8%, .9), hsla(240, 3%, 8%, .4)), linear-gradient(180deg, hsla(240, 3%, 8%, .9), hsla(240, 3%, 8%, .4))
+    --error-page-gradient-background linear-gradient(to bottom, #443d46 -1%, #413b46 4%, rgba(47, 46, 52, 0.42) 39%, rgba(3, 4, 4, 0) 76%)
+    --sub-game-background linear-gradient(to top, #242c34, rgba(36, 44, 52, 0))
+    --breadcrumb-background linear-gradient(to bottom, #383838 2%, #272728 14%, #383838 100%)
+  }
+}
+
+.light-mode{
+  /* 基本色 */
+  --white #FFFFFF
+  --white-50-percent rgba(255, 255, 255, 0.5)
+  --black #000000
+  --black-70-percent rgba(0, 0, 0, 0.7)
+
+  /* 1. Main **/
+  /* 產品主色 */
+  --main-color #7771d7
+
+  /* 漸層、按鈕 */
+  --primary-gradient radial-gradient(circle at 7% 11%, #2cd8d5, #6b8dd6 40%, #8e37d7 92%)
+  --secondary-gradient radial-gradient(circle at 9% 14%, #ffd957, #fb8e5c 40%,#d73737 92%)
+  --promo-background linear-gradient(67deg, #f89b17 1%, #f2306d 67%)
+
+  /* 2. Page **/
+  /* 內容主色 */
+  --primary-normal #3590EC
+  --primary-light #65B3F3
+  --primary-lighter #7198D1
+  --primary-lighter-30-percent rgba(#7198D1, .3)
+  --primary-background #E6EFF6
+  --primary-dark #2670CA
+  --primary-darker #1A53A9
+
+  /* 內容輔色 */
+  --secondary-normal #E5BF93
+  --secondary-light #EFD4AF
+  --secondary-lighter #F7E3C2
+  --secondary-dark #C4976B
+  --secondary-darker #A4724A
+
+  /* 次要按鈕 */
+  --primary-light-button linear-gradient(to bottom, #eaf4ff, #eef3f9)
+
+  /* 3. Others */
+  /* 錯誤/強調提示 **/
+  --error-notice #E46767
+  --focus-game-gold #DFB87C
+  --assets-color #BCD6F5
+
+  /* 注單/資金明細 **/
+  --money-lose #65C500
+  --money-win #FE356A
+  --money-detail-failed #FF3434
+  --money-detail-success #00A43F
+  --money-detail-timeOut #FF8F35
+
+  /* 提款銀行卡/提款地址/交易所 **/
+  --withdrawal-bankCard #708cd4
+  --withdrawal-TRC #D6776A
+  --withdrawal-ERC #896CCD
+  --withdrawal-exchange #5BB57C
+
+  /* 優惠活動 **/
+  --activity-normal #FF596F
+  --activity-table-background1 #9EC2FF
+  --activity-table-background2 linear-gradient(to right, #728DE8, #5392FF 93%,#4584ED 100%)
+  --activity-table-background3 linear-gradient(to top, #3E82ED 15%, #A398E4)
+  --activity-table-background5 #F3F6F9
+  --activity-table-line #4985ED
+
+  /* 4. Neutral */
+  --neutral-normal #526377
+  --neutral-light #97A4B0
+  --neutral-lighter #B4BDC5
+  --neutral-dark #3B434C
+  --neutral-line-in-gray #D2D7E6
+  --neutral-line-in-white #E8EBED
+  --neutral-disabled #E3E6F1
+
+  /* 5. Fill */
+  --normal-background #F2F3F7
+  --info-background #F0F3F8
+
+  /* background **/
+  --bottom-popup-background #FFFEFE
+  --content-background #E6EFF6
+  --message-background #FBFBFB
+  --list-block-background #FEFEFE
+  --index-center-background linear-gradient(291deg, #e8eefd 99%, #f8fbff 1%)
+
+  /* 陰影顏色 **/
+  --inner-01 rgba(113, 152, 209, 0.3)
+  --outer-01 rgba(130, 137, 145, 0.15)
+  --outer-02 #d5e0f1
+  --announcement-shadow-outer rgba(184, 186, 198, 0.5)
+
+  /* 自行定義 **/
+  --multilingual-primary-gradient-purple linear-gradient(100deg, #ff5c9d 3%, #3a68ff 96%)
+  --tab-background linear-gradient(to bottom, #ffffff 2%, #f2f2f6 88%, #ffffff)
+  --top-background-gradient linear-gradient(to bottom, #f8f9ff, rgba(255, 255, 255, 0.88) 12%, #ffffff), linear-gradient(to bottom, #ffffff, rgba(255, 255, 255, 0))
+  --card-gradient linear-gradient(to bottom, #ffffff 2%, #fefefe 60%, #f3f3f7 95%, #ffffff)
+  --app-download-background linear-gradient(to bottom, #dbf0ff, rgba(255, 255, 255, 0))
+  --mine-background linear-gradient(357deg, #e4e0f8 1%, #ddeaf9 99%)
+  --switch-button rgba(120, 120, 128, 0.16)
+  --van-picker-mask linear-gradient(180deg,hsla(360, 100%, 100%, .9), hsla(360, 100%, 100%, .4)), linear-gradient(180deg,hsla(360, 100%, 100%, .9), hsla(360, 100%, 100%, .4))
+  --error-page-gradient-background linear-gradient(to bottom, #f3ebf7 -1%, #f5ebfd 4%, rgba(226, 221, 244, 0.42) 39%, rgba(247, 251, 255, 0) 76%)
+  --sub-game-background linear-gradient(to top, #ffffff, rgba(255, 255, 255, 0))
+  --breadcrumb-background linear-gradient(to bottom, #ffffff 2%, #f2f2f6 14%, #ffffff)
+}
+
+.dark-mode {
+  /* 基本色 */
+  --white #000000
+  --white-50-percent rgba(0, 0, 0, 0.5)
+  --black #FFFFFF
+  --black-70-percent rgba(255, 255, 255, 0.7)
+
+  /* 4. Neutral */
+  --neutral-normal #97A4B0
+  --neutral-light #526377
+  --neutral-lighter #4C5763
+  --neutral-dark #B4BDC5
+  --neutral-line-in-gray #4C505D
+  --neutral-line-in-white #5F6B7B
+
+  /* 5. Fill */
+  --normal-background #323232
+  --info-background #383A3D
+
+  /* background **/
+  --bottom-popup-background #151516
+  --content-background #434343
+  --message-background #212121
+  --list-block-background #1C1C1E
+  --index-center-background linear-gradient(291deg, #000000 99%, #171717 1%)
+
+  /* 陰影顏色 **/
+  --outer-01 rgba(11, 11, 11, 0.15)
+  --outer-02 #26282b
+  --announcement-shadow-outer rgba(29, 30, 32, 0.5)
+
+  /* 自行定義 **/
+  --tab-background linear-gradient(to top, #4e4e4e, #696969 33%, #6c6c6c 33%)
+  --top-background-gradient linear-gradient(to bottom, #3b3b3b, #2a2a2a 12%, #323232), linear-gradient(to bottom, #4d4d4d, #323232)
+  --card-gradient linear-gradient(to bottom, #383838 2%, #3f3f3f 60%, #353535 95%, #404040)
+  --app-download-background linear-gradient(to bottom, #17191a, rgba(33, 29, 29, 0))
+  --mine-background linear-gradient(357deg, #3A334D 1%, #30424F 99%)
+  --switch-button #787880
+  --van-picker-mask linear-gradient(180deg, hsla(240, 3%, 8%, .9), hsla(240, 3%, 8%, .4)), linear-gradient(180deg, hsla(240, 3%, 8%, .9), hsla(240, 3%, 8%, .4))
+  --error-page-gradient-background linear-gradient(to bottom, #443d46 -1%, #413b46 4%, rgba(47, 46, 52, 0.42) 39%, rgba(3, 4, 4, 0) 76%)
+  --sub-game-background linear-gradient(to top, #242c34, rgba(36, 44, 52, 0))
+  --breadcrumb-background linear-gradient(to bottom, #383838 2%, #272728 14%, #383838 100%)
+}

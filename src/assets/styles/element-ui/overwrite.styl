@@ -1,0 +1,437 @@
+body
+  /** popup */
+  .el-dialog
+    background var(--bottom-popup-background)
+    border-radius 20px
+    box-shadow 0 2px 5px 0 var(--outer-01)
+    &__wrapper
+      &::-webkit-scrollbar
+        display none
+      &::-webkit-scrollbar-thumb
+        background var(--primary-normal)
+    &__body
+      color inherit
+
+  .el-message
+    width 300px
+    padding 0px
+    min-width unset
+    background-color var(--white)
+    border-radius 13px
+    box-shadow 0 2px 5px 0 var(--outer-01)
+    font-size 14px
+    z-index 9999 !important
+    pointer-events none
+    &__icon
+      display none
+    &__content
+      display flex
+      align-items flex-start
+      padding 14px 16px
+      line-height 1.3
+      &::before
+        content: ''
+        flex none
+        width 20px
+        height 20px
+        background-size cover
+        margin-right 8px
+    &--info
+      border 1px solid var(--neutral-lighter)
+      .el-message
+        &__content
+          color var(--neutral-lighter)
+          // &::before
+          //   background-image url('../../images/icon/icon-general-exclamation.webp')
+
+    &--success
+      border 1px solid var(--main-color)
+      .el-message
+        &__content
+          color var(--main-color)
+          // &::before
+          //   background-image url('../../images/icon/icon-general-check.webp')
+
+    &--error.el-message
+      background-color #FADFDF
+
+    &--error
+      border 1px solid var(--error-notice)
+      .el-message
+        &__content
+          color var(--error-notice)
+          // &::before
+          //   background-image url('../../images/icon/icon-general-delete.webp')
+
+  /** message-box */
+  .el-message-box
+    margin-bottom 10vh
+    padding 0
+    width 310px
+    min-height 140px
+    border 0
+    border-radius 13px
+    display inline-flex
+    flex-direction column
+    .el-message-box
+      // header
+      &__header
+        padding 8px 12px
+        text-align center
+      &__title
+        font-size 16px
+        font-weight 600
+        color #000
+        display flex
+        span
+          padding-top 8px
+
+      // content
+      &__content
+        padding 0 12px 16px
+        color var(--neutral-dark)
+        line-height 1.5
+        flex 1
+        display flex
+        align-items center
+      &__message p
+        line-height inherit
+
+      // buttons
+      &__btns
+        padding 0
+        display flex
+        button
+          margin 0
+          font-size 16px
+          line-height 1.5
+          color var(--neutral-normal)
+          background transparent
+          border-width 1px 0 0 0
+          border-color rgba(60, 60, 67, 0.15)
+          border-radius 0
+          flex 1
+          + button
+            border-left-width 1px
+          &.el-button--primary
+            color var(--primary-normal)
+
+    &--center
+      .el-message-box__content
+        justify-content center
+
+  /** form */
+  .form-field
+    .el-form-item
+      margin-bottom 0
+
+      // label
+      &__label
+        margin-bottom 8px
+        font-weight 500
+        letter-spacing 0.5px
+        line-height 20px
+        color var(--black)
+        float none
+
+      &__content
+        line-height inherit
+        > *:last-child:not(.el-form-item__error):not(.el-form-item__placeholder-below)
+          margin-bottom 22px
+
+        > .el-input
+          border-bottom 1px solid var(--neutral-line-in-white)
+          > *
+            display flex
+            align-items center
+
+      &__error, &__placeholder-below
+        padding 3px 0
+        width 100%
+        min-height 22px
+        font-size 11px
+        line-height normal
+        text-align left
+
+      // error
+      &__error
+        color var(--error-notice)
+        position relative
+        transition none !important // remove slide
+
+      /** placeholder 位置在輸入框下方樣式 */
+      &__placeholder-below
+        color var(--neutral-normal)
+        + .el-form-item__error // 防抖
+          position absolute
+
+    // input
+    .el-input
+      color var(--black)
+      display flex
+      align-items center
+      &__inner, &-group__prepend, &-group__append
+        padding 0
+        color inherit
+        border 0
+        border-radius 0
+        background-color transparent
+      &-group__prepend, &-group__append
+        width auto
+      &-group__prepend
+        + *
+          padding-left 10px
+        .icon
+          border-right 1px solid var(--neutral-line-in-white)
+      &__inner
+        height 33px
+        line-height 32px
+        font-weight 600
+        &::placeholder
+          font-weight 400
+          color var(--neutral-lighter)
+
+      // 尾部 icon
+      &__suffix
+        height 33px
+        position relative
+        right initial
+        left initial
+        .icon
+          cursor pointer
+      &__icon
+        margin 0
+        width auto
+        line-height inherit
+        color var(--neutral-light)
+      .icon
+        padding 4px 0 4px 12px
+        font-size 16px
+        color var(--neutral-light)
+        display inline-flex
+
+    // textarea
+    .el-textarea
+      color var(--black)
+      &__inner
+        padding 0
+        color inherit
+        border 0
+        border-radius 0
+        background-color transparent
+        &::placeholder
+          font-weight 400
+          color var(--neutral-lighter)
+
+    // count
+    .el-input__count
+      background transparent
+      margin-top 4px
+      height 16px
+      color var(--neutral-normal)
+      position absolute
+      right 0
+      top 100%
+      &-inner
+        white-space nowrap
+        background transparent !important
+
+
+    // select
+    .el-select
+      width 100%
+      padding-right 8px
+      .el-select__caret
+        width 20px
+        // background url('~@/assets/images/icon/icon-general-collapse.webp') no-repeat right center
+        background-size 100% auto
+        &:before
+          display none
+
+    .el-input-group__prepend .el-select
+      margin 0
+      width 95px
+      height 18px
+      border-right 1px solid var(--neutral-line-in-white)
+      background-color inherit
+      display inline-flex
+      .el-input__inner
+        line-height 16px
+      .el-select__caret
+        width 13px
+
+    // status-disabled, success, error, required
+    .is-disabled .el-input__inner
+      color var(--neutral-disabled)
+      background-color transparent
+      &::placeholder
+        color var(--neutral-disabled)
+
+    .is-error
+      .el-form-item__placeholder-below
+        display none
+        + .el-form-item__error
+          position relative
+
+    .is-required:not(.is-no-asterisk) > .el-form-item__label:before
+      color var(--primary-normal)
+
+    .is-required > .el-form-item__content
+      .el-input, .el-textarea
+        border 1px solid var(--neutral-lighter)
+      .el-input .el-input--suffix
+        border none
+
+  // 圓角輸入框
+  .form-field--round
+    .el-form-item__content > .el-input, .el-textarea, .el-select
+      border-radius 17.5px
+      border 1px solid var(--neutral-normal)
+      background-color var(--white)
+
+      // status-disabled
+      &.is-disabled
+        background-color var(--info-background)
+        border 1px solid var(--neutral-lighter)
+        .el-input__inner
+          color var(--neutral-light)
+          &::placeholder
+            color var(--neutral-light)
+        .el-input__suffix
+          display none
+
+    .el-form-item__content > .el-textarea
+      border-radius 12px
+
+    // status-success, error
+    .is-success
+      .el-input, .el-textarea
+        &:not(.is-disabled)
+          border-color var(--neutral-normal)
+          .el-input-group__prepend .el-select
+            border-color var(--neutral-normal)
+      .el-input-group__prepend .icon
+        color var(--neutral-normal)
+
+    .is-error:not(.no-error)
+      .el-input
+        &:not(.is-disabled)
+          border-color var(--error-notice)
+          .el-input-group__prepend .el-select
+            border-color var(--error-notice)
+      .el-input-group__prepend .icon
+        color var(--error-notice)
+
+    .el-input
+      &__inner
+        padding 0 10px
+      &-group__append
+        .verity-code-button
+          margin-right 5px
+      .icon
+        padding-right 10px
+
+    .el-textarea__inner
+      padding 12px
+      &::-webkit-scrollbar
+        width 6px
+        height 6px
+      &::-webkit-scrollbar-thumb
+        width 6px
+        border-radius 10px
+        background var(--neutral-line-in-white)
+        &:hover
+          background var(--neutral-line-in-gray)
+      &::-webkit-scrollbar-track
+        border-radius 0
+        background transparent
+
+    .el-input-group__prepend .el-select
+      height auto
+      border-radius 100px 0 0 100px
+      border-width 0 1px 0 0
+      border-color var(--neutral-lighter)
+
+  /** select popper */
+  .select-popper
+    &.el-popper
+      border-radius 8px
+      border 0
+      box-shadow 0 4px 16px 0 rgba(0, 0, 0, 0.2)
+      .el-select-dropdown
+        &__list
+          padding 4px 0
+        &__item
+          padding 4px 8px
+          width 100%
+          height auto
+          min-height 30px
+          font-size 12px
+          line-height initial
+          background-color transparent
+          display flex
+          align-items center
+          &.hover, &.selected
+            color var(--primary-normal)
+          &.selected
+            cursor none
+            pointer-events none
+      .popper__arrow
+        display none
+
+  /** checkbox */
+  .el-checkbox
+    font-weight inherit
+    &__input.is-checked + .el-checkbox__label
+      color var(--black)
+
+  /** tabs */
+  .el-tabs
+    &__nav-wrap::after
+      background-color var(--neutral-line-in-gray)
+    &__active-bar
+      background var(--main-color)
+    &__item
+      color var(--neutral-normal)
+      transition all .3s ease-out
+      &:focus-visible
+        border 0
+        outline 0
+      &:hover
+        color var(--neutral-normal)
+      &.is-active
+        color var(--main-color)
+
+  /** switch */
+  .el-switch
+    &__core
+      min-width 42px
+      height 25px
+      border-radius 100px
+      background-color var(--neutral-disabled)
+      border-color transparent
+      &:after
+        width 23px
+        height 23px
+        top 0
+        left 0
+    &.is-checked
+      .el-switch__core
+        background-color #26c858
+        border-color transparent
+        &:after
+          left 100%
+          margin-left 0
+          transform translateX(-100%)
+
+  /** date picker */
+  .el-picker-panel
+    td.disabled .cell
+      background-color transparent
+    a
+      text-decoration none
+
+    .el-date-table td.disabled div
+      background-color transparent
+
+

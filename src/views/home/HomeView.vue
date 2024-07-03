@@ -1,7 +1,7 @@
 <template>
   <keep-alive>
     <main class="home">
-      <TopHeader :title="TopHeaderTitle" />
+      <HeaderNav />
 
       <div class="middle-section">
         <div class="middle-section__img" />
@@ -12,23 +12,18 @@
 </template>
 
 <script>
-import TopHeader from '@/components/TopHeader'
+import HeaderNav from '@/components/HeaderNav'
 import HelloWorld from '@/components/HelloWorld'
 
 export default {
   name: 'HomeView',
   components: {
-    TopHeader,
+    HeaderNav,
     HelloWorld
   },
   setup (_) {
-    const TopHeaderTitle = {
-      text: 'Home',
-      routGo: '/'
-    }
-
     return {
-      TopHeaderTitle
+
     }
   }
 }
@@ -44,7 +39,7 @@ export default {
       &__img
         width 100%
         height 50vh
-        background url('~@/assets/image/home/doggy.jpg') center no-repeat
+        background url('~@/assets/images/home/doggy.jpg') center no-repeat
         background-size cover
         border-radius 20px
         overflow hidden
