@@ -12,7 +12,7 @@ module.exports = defineConfig({
       stylus: {
         import: [
           path.resolve(__dirname, 'src/assets/styles/theme.styl'),
-          path.resolve(__dirname, 'src/assets/styles/var.styl')
+          path.resolve(__dirname, 'src/assets/styles/var/index.styl')
         ]
       }
     }

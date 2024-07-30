@@ -4,19 +4,17 @@
 
 <script>
 import { onMounted } from 'vue'
-import { mapState, mapMutations } from '@/utils/store'
+import { mapState, mapActions } from '@/utils/store'
+
+import { attachAutoResize } from '@/utils/resizeScreen'
 
 export default {
   name: 'App',
   setup (_) {
     const { userAppearance } = mapState('app')
-    const { SET_USER_APPEARANCE } = mapMutations('app')
-    const body = document.body
-    const computeStyle = window.getComputedStyle(body)
-    const defaultBgColor = computeStyle.backgroundColor
+    const { SetDevice, SetFontSize } = mapActions('app')
 
     const detectAppearance = () => {
-      SET_USER_APPEARANCE(defaultBgColor === 'rgba(0, 0, 0, 0)' ? 'dark' : 'light')
       if (userAppearance.value === 'light') {
         document.body.classList.add('light-mode')
         document.body.classList.remove('dark-mode')
@@ -27,6 +25,7 @@ export default {
     }
 
     onMounted(() => {
+      attachAutoResize(SetDevice, SetFontSize)
       detectAppearance()
     })
   }

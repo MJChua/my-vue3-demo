@@ -6,8 +6,8 @@
 }
 
 // primary
-$primary_normal_color = #42b983
-$primary_dark_color = #30996a
+$primary_normal_color = #7771d7
+$primary_dark_color = #504b9c
 
 // neutral
 $neutral_normal_color = #526377
@@ -69,10 +69,13 @@ $multilingual_fill_background = #F2F3F7
   --white #FFFFFF
   --white-50-percent rgba(255, 255, 255, 0.5)
   --black #000000
+  --black-30-percent rgba(0, 0, 0, 0.3)
   --black-70-percent rgba(0, 0, 0, 0.7)
+  --white-60-percent-header linear-gradient(to bottom, var(--white) 60%, var(--white-50-percent))
+  --white-50-percent-footer linear-gradient(to bottom, var(--white-50-percente) 60%, var(--white))
 
   /* 1. Main **/
-  /* 產品主色 */
+  /* 主色 */
   --main-color #7771d7
 
   /* 漸層、按鈕 */
@@ -91,41 +94,14 @@ $multilingual_fill_background = #F2F3F7
   --primary-darker #1A53A9
 
   /* 內容輔色 */
-  --secondary-normal #E5BF93
-  --secondary-light #EFD4AF
-  --secondary-lighter #F7E3C2
-  --secondary-dark #C4976B
-  --secondary-darker #A4724A
+  // --secondary-normal #E5BF93
+  // --secondary-light #EFD4AF
+  // --secondary-lighter #F7E3C2
+  // --secondary-dark #C4976B
+  // --secondary-darker #A4724A
 
   /* 次要按鈕 */
   --primary-light-button linear-gradient(to bottom, #eaf4ff, #eef3f9)
-
-  /* 3. Others */
-  /* 錯誤/強調提示 **/
-  --error-notice #E46767
-  --focus-game-gold #DFB87C
-  --assets-color #BCD6F5
-
-  /* 注單/資金明細 **/
-  --money-lose #65C500
-  --money-win #FE356A
-  --money-detail-failed #FF3434
-  --money-detail-success #00A43F
-  --money-detail-timeOut #FF8F35
-
-  /* 提款銀行卡/提款地址/交易所 **/
-  --withdrawal-bankCard #708cd4
-  --withdrawal-TRC #D6776A
-  --withdrawal-ERC #896CCD
-  --withdrawal-exchange #5BB57C
-
-  /* 優惠活動 **/
-  --activity-normal #FF596F
-  --activity-table-background1 #9EC2FF
-  --activity-table-background2 linear-gradient(to right, #728DE8, #5392FF 93%,#4584ED 100%)
-  --activity-table-background3 linear-gradient(to top, #3E82ED 15%, #A398E4)
-  --activity-table-background5 #F3F6F9
-  --activity-table-line #4985ED
 
   /* 4. Neutral */
   --neutral-normal #526377
@@ -162,6 +138,7 @@ $multilingual_fill_background = #F2F3F7
   --mine-background linear-gradient(357deg, #e4e0f8 1%, #ddeaf9 99%)
   --switch-button rgba(120, 120, 128, 0.16)
   --van-picker-mask linear-gradient(180deg,hsla(360, 100%, 100%, .9), hsla(360, 100%, 100%, .4)), linear-gradient(180deg,hsla(360, 100%, 100%, .9), hsla(360, 100%, 100%, .4))
+  --van-toast-text-color var(--black)
   --error-page-gradient-background linear-gradient(to bottom, #f3ebf7 -1%, #f5ebfd 4%, rgba(226, 221, 244, 0.42) 39%, rgba(247, 251, 255, 0) 76%)
   --sub-game-background linear-gradient(to top, #ffffff, rgba(255, 255, 255, 0))
   --breadcrumb-background linear-gradient(to bottom, #ffffff 2%, #f2f2f6 14%, #ffffff)
@@ -171,8 +148,16 @@ $multilingual_fill_background = #F2F3F7
   /* 基本色 */
   --white #000000
   --white-50-percent rgba(0, 0, 0, 0.5)
+  --white-80-percent rgba(0, 0, 0, 0.8)
   --black #FFFFFF
+  --black-30-percent rgba(255, 255, 255, 0.3)
   --black-70-percent rgba(255, 255, 255, 0.7)
+  --white-60-percent-header linear-gradient(to bottom, var(--white) 60%, var(--white-80-percent))
+  --white-80-percent-footer linear-gradient(to bottom, var(--white-80-percent) 60%, var(--white))
+
+  /* 1. Main **/
+  /* 主色 */
+  --main-color #7771d7
 
   /* 4. Neutral */
   --neutral-normal #97A4B0
@@ -206,6 +191,7 @@ $multilingual_fill_background = #F2F3F7
   --mine-background linear-gradient(357deg, #3A334D 1%, #30424F 99%)
   --switch-button #787880
   --van-picker-mask linear-gradient(180deg, hsla(240, 3%, 8%, .9), hsla(240, 3%, 8%, .4)), linear-gradient(180deg, hsla(240, 3%, 8%, .9), hsla(240, 3%, 8%, .4))
+  --van-toast-text-color var(--black)
   --error-page-gradient-background linear-gradient(to bottom, #443d46 -1%, #413b46 4%, rgba(47, 46, 52, 0.42) 39%, rgba(3, 4, 4, 0) 76%)
   --sub-game-background linear-gradient(to top, #242c34, rgba(36, 44, 52, 0))
   --breadcrumb-background linear-gradient(to bottom, #383838 2%, #272728 14%, #383838 100%)

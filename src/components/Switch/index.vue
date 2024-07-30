@@ -19,7 +19,7 @@ import { mapState, mapMutations } from '@/utils/store'
 import { CellGroup, Cell, Switch } from 'vant'
 
 export default {
-  name: 'AppearanceTheme',
+  name: 'ThemeAppearance',
   props: {
     title: {
       type: String,
@@ -35,7 +35,7 @@ export default {
     'van-cell': Cell,
     'van-switch': Switch
   },
-  setup () {
+  setup (_) {
     const { proxy } = getCurrentInstance()
 
     const { userAppearance } = mapState('app')
@@ -43,9 +43,6 @@ export default {
     const checked = computed(() => {
       return userAppearance.value === 'dark'
     })
-
-    console.warn('checked:', checked.value)
-    console.warn('start:', userAppearance.value)
 
     const switchAppearanceStyle = (value) => {
       switch (value) {
@@ -70,11 +67,12 @@ export default {
       switchAppearanceStyle(changeColor)
       proxy.changed = false
       console.warn('change:', userAppearance.value)
-      proxy.$toast({ message: `已切换为${userAppearance.value === 'dark' ? '深' : '浅'}色`, position: top })
+      proxy.$toast({ message: `已切換為${userAppearance.value === 'dark' ? '深' : '淺'}色`, position: top })
       proxy.$emit('clickToClosed')
     }
 
     return {
+      /** Function */
       checked,
       onChange
     }
