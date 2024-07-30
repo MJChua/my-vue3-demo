@@ -1,0 +1,147 @@
+body
+  .van-overlay
+    --van-overlay-background-color rgba(#000, 0.4)
+
+  // popup
+  .van-popup
+    --van-popup-round-border-radius 13px
+    background var(--white-60-percent-header)
+
+  .van-popup--center
+    min-width $container-max-width-xs-rwd
+    max-height calc(100% - 50px)
+    // scrollbar
+    &::-webkit-scrollbar
+      width 4px
+      height 4px
+    &::-webkit-scrollbar-thumb
+      border-radius 10px
+      background $neutral_light_color
+    &::-webkit-scrollbar-track
+      background transparent
+
+  /**
+    - fixed -
+    lg: 960PX
+    md: 720PX
+    sm: 540PX
+    xs: 460PX
+    - rwd -
+    xs-rwd: 300PX
+  */
+  +media-breakpoint-up(md)
+    for size in lg md sm xs xs-rwd
+      .popup-{size}
+        width 100%
+        max-width $container-max-width- + size
+
+  // toast
+  .van-toast
+    --van-toast-text-padding 12px
+    --van-toast-max-width $container-max-width-xs-rwd
+    min-width 100px
+
+  // dialog
+  .van-dialog
+    min-width 268px
+    border-radius 13px
+
+    &__header
+      padding-top 14px
+      font-size 16px
+      font-weight 500
+      line-height 1
+      letter-spacing 0.31px
+      color black
+
+    &__content
+      padding 10px 14px 14px
+      min-height 66px
+      color $neutral_dark_color
+      display flex
+      align-items center
+      justify-content center
+      &--isolated
+        padding-top 14px
+        min-height 96px
+
+      &__message
+        padding initial
+        line-height 1.43
+        letter-spacing 0.27px
+
+      &__message::-webkit-scrollbar
+        display: none
+
+    &__footer
+      border-top 1px solid $neutral_line_in_white_color
+      &:after
+        display none
+
+      .van-button
+        margin auto
+        padding 10px
+        height auto
+        min-height 44px
+        font-size 16px
+        font-weight 500
+        color $neutral_normal_color
+        &:before, &:after, *:before
+          display none
+        + .van-button
+          border-left 1px solid $neutral_line_in_white_color
+        &.van-dialog
+          &__confirm, &__confirm:active
+            color $primary_normal_color
+
+  /** cell */
+  .van-cell
+    padding 14px 0
+    flex-wrap wrap
+    align-items center
+    background none
+
+    &::after
+      display none
+    // + .van-cell
+    //   border-top 1px solid $neutral_line_in_white_color
+    &__value:not(.van-field__value)
+      color $neutral_normal_color
+      font-size 13px
+      line-height 1.5
+      letter-spacing .27px
+      text-align left
+      display inline-flex
+      align-items center
+      flex 0 1 auto
+      span
+        word-break break-all
+    &__right-icon
+      font-size 14px
+      font-weight 600
+      color $neutral_normal_color
+      transition all .5s ease
+    &__title
+      padding-right 10px
+      font-size 14px
+      font-weight 500
+      line-height 1.2
+      letter-spacing 0.35px
+      text-align left
+      color var(--black)
+    &__label
+      margin-top 2px
+      font-weight 400
+      color $neutral_light_color
+    &--clickable:active
+      background-color rgba(0, 0, 0, 0)
+
+  /** switch */
+  .van-switch
+    font-size 20px
+    border-color transparent
+    background-color #e9e9ea
+    &__node
+      box-shadow none
+    &--on
+      background-color #26c858
