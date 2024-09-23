@@ -17,7 +17,12 @@
               <p>selrkgfnselukgn2804yut8hsoelu</p>
             </div>
           </div>
-          <div v-if="item.button" class="button text-center mx-auto p-6" @click.stop="() => show = true">切換</div>
+          <Button
+            v-if="item.button" text="切換"
+            :size="device === 'desktop' ? 'large' : 'middle'"
+            class="btn-position"
+            @click="() => show = true"
+          />
         </div>
       </div>
     </div>
@@ -34,25 +39,28 @@
       justify-content="end"
       @click-to-closed="() => show = false"
     />
-
   </van-popup>
 </template>
 
 <script>
 import { ref } from 'vue'
-import { mapState } from '@/utils/store'
+import { useAppStore } from '@/store/main'
+import { storeToRefs } from 'pinia'
 
 import { Popup } from 'vant'
 import Switcher from '@/components/Switch'
+import Button from '@/components/Button'
 
 export default {
   name: 'MinePage',
   components: {
     'van-popup': Popup,
-    Switcher
+    Switcher,
+    Button
   },
   setup (_) {
-    const { userAppearance } = mapState('app')
+    const store = useAppStore()
+    const { device, userAppearance } = storeToRefs(store)
     const contentItems = [
       {
         index: 0,
@@ -74,7 +82,8 @@ export default {
     const show = ref(false)
 
     return {
-      /** vuex */
+      /** pinia */
+      device,
       userAppearance,
 
       /** data */
@@ -89,8 +98,7 @@ export default {
   .mine
 
     .container
-      margin-top 80px
-      height 100vh
+      margin-top 20px
 
       .title, .content
         cursor default
@@ -106,15 +114,9 @@ export default {
           .desc > p
             word-break break-all
 
-        .button
-          width 150px
-          background $primary_normal_color
-          color var(--black)
-          cursor pointer
-          border-radius 20px
-          box-shadow 2px 1px 6px 0 $neutral_normal_color
-
-        .list-wrap
-          justify-content space-between
+      .btn-position
+        position relative
+        left 50%
+        transform translate(-50%, 0)
 
 </style>
