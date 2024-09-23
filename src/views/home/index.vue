@@ -15,7 +15,8 @@
 
 <script>
 import { computed } from 'vue'
-import { mapState, mapMutations } from '@/utils/store'
+import { useHomeStore } from '@/store/main'
+import { storeToRefs } from 'pinia'
 
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -47,15 +48,19 @@ export default {
       { key: 'Mine', icon: 'manager', title: '個人', value: 3 }
     ]
 
-    const { currentTab } = mapState('home')
-    const { SET_CURRENT_TAB } = mapMutations('home')
+    const store = useHomeStore()
+    const { currentTab } = storeToRefs(store)
 
     const currentKey = computed(() => {
       return tabs[currentTab.value].key
     })
 
     const changeTab = (index) => {
-      SET_CURRENT_TAB(index)
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      })
+      store.SetCurrentTab(index)
     }
 
     return {
@@ -79,7 +84,7 @@ export default {
     .middle-section
 
       &__img
-        margin 50px auto 60px
+        margin 15px auto
         width 100%
         height 50vh
         background url('~@/assets/images/home/doggy.jpg') center no-repeat

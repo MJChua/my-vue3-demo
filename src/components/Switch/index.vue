@@ -14,8 +14,9 @@
 </template>
 
 <script>
-import { getCurrentInstance, computed } from 'vue'
-import { mapState, mapMutations } from '@/utils/store'
+import { getCurrentInstance } from 'vue'
+import { useAppStore } from '@/store/main'
+import { storeToRefs } from 'pinia'
 import { CellGroup, Cell, Switch } from 'vant'
 
 export default {
@@ -37,12 +38,9 @@ export default {
   },
   setup (_) {
     const { proxy } = getCurrentInstance()
-
-    const { userAppearance } = mapState('app')
-    const { SET_USER_APPEARANCE } = mapMutations('app')
-    const checked = computed(() => {
-      return userAppearance.value === 'dark'
-    })
+    const store = useAppStore()
+    const { userAppearance } = storeToRefs(store)
+    const checked = userAppearance === 'dark'
 
     const switchAppearanceStyle = (value) => {
       switch (value) {
@@ -61,19 +59,19 @@ export default {
       }
     }
 
-    const onChange = () => {
+    const onChange = function () {
       const changeColor = userAppearance.value === 'dark' ? 'light' : 'dark'
-      SET_USER_APPEARANCE(changeColor)
+      store.SetAppearance(changeColor)
       switchAppearanceStyle(changeColor)
       proxy.changed = false
-      console.warn('change:', userAppearance.value)
-      proxy.$toast({ message: `已切換為${userAppearance.value === 'dark' ? '深' : '淺'}色`, position: top })
+      proxy.$toast({ message: `已切換為${userAppearance.value === 'dark' ? '深' : '淺'}色`, position: 'top' })
       proxy.$emit('clickToClosed')
     }
 
     return {
-      /** Function */
+      /** pinia */
       checked,
+      /** Function */
       onChange
     }
   }
