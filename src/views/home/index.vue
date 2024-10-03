@@ -1,17 +1,14 @@
 <template>
   <keep-alive>
     <main class="home">
-      <Header @on-tab="changeTab" />
+      <Header />
       <section class="middle-section container">
         <div class="middle-section__img" />
-
         <img v-if="diabloData.image_url" :src="diabloData.image_url" alt="just-a-pic" loading="lazy">
         {{ diabloData.name }}
-
-        <AboutUs />
       </section>
 
-      <Footer @on-tab="changeTab" />
+      <Footer />
     </main>
   </keep-alive>
 </template>
@@ -22,7 +19,6 @@ import { useHomeStore } from '@/store/home'
 
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import AboutUs from '../stationery/aboutUs'
 
 import { getDiabloItems } from '@/api/diablo4'
 
@@ -30,8 +26,7 @@ export default {
   name: 'HomeView',
   components: {
     Header,
-    Footer,
-    AboutUs
+    Footer
   },
   setup (_) {
     const { proxy } = getCurrentInstance()
@@ -74,6 +69,7 @@ export default {
   .home
 
     .middle-section
+      height 100vh
 
       &__img
         margin 15px auto

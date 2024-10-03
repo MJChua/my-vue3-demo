@@ -1,4 +1,5 @@
 <template>
+  <Header />
   <main class="about-us container">
     <div class="mx-auto text-center">
       <strong class="title p-10 fz-24">About Us</strong>
@@ -13,14 +14,18 @@
 </template>
 
 <script>
+import Header from '@/components/Header'
+
 export default {
-  name: 'HomeView'
+  name: 'HomeView',
+  components: { Header }
 }
 </script>
 
 <style lang="stylus" scoped>
   .about-us
     margin-top 50px
+    height 100vh
 
     .title
       text-decoration underline

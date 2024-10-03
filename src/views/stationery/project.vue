@@ -1,4 +1,5 @@
 <template>
+  <Header />
   <main class="project container">
     <div class="mx-auto text-center">
       <strong class="title p-10 fz-24">Project</strong>
@@ -13,14 +14,18 @@
 </template>
 
 <script>
+import Header from '@/components/Header'
+
 export default {
-  name: 'ProjectPage'
+  name: 'ProjectPage',
+  components: { Header }
 }
 </script>
 
 <style lang="stylus" scoped>
   .project
     margin-top 50px
+    height 100vh
 
     .title
       text-decoration underline
