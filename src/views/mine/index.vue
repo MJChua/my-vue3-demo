@@ -1,5 +1,6 @@
 <template>
   <main class="mine">
+    <Header @on-tab="changeTab" />
     <div class="container text-left">
       <strong class="title p-10 fz-24">Mine</strong>
 
@@ -26,6 +27,7 @@
         </div>
       </div>
     </div>
+    <Footer @on-tab="changeTab" />
   </main>
 
   <van-popup
@@ -43,22 +45,27 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, getCurrentInstance } from 'vue'
 import { useAppStore } from '@/store/main'
 import { storeToRefs } from 'pinia'
 
 import { Popup } from 'vant'
 import Switcher from '@/components/Switch'
 import Button from '@/components/Button'
+import Header from '@/components/Header'
+import Footer from '@/components/Footer'
 
 export default {
   name: 'MinePage',
   components: {
     'van-popup': Popup,
     Switcher,
-    Button
+    Button,
+    Header,
+    Footer
   },
   setup (_) {
+    const { proxy } = getCurrentInstance()
     const store = useAppStore()
     const { device, userAppearance } = storeToRefs(store)
     const contentItems = [
@@ -76,10 +83,20 @@ export default {
         index: 2,
         title: '背景切換',
         button: false
+      },
+      {
+        index: 3,
+        title: '背景切換',
+        button: false
       }
     ]
 
     const show = ref(false)
+
+    const changeTab = index => {
+      store.onTab(index)
+      proxy.$goToPage(store.computePage)
+    }
 
     return {
       /** pinia */
@@ -88,7 +105,10 @@ export default {
 
       /** data */
       contentItems,
-      show
+      show,
+
+      /** function */
+      changeTab
     }
   }
 }

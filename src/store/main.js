@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-const useAppStore = defineStore('app', {
+export const useAppStore = defineStore('app', {
   state: () => ({
     device: 'mobile',
     fontsize: 100,
@@ -31,19 +31,3 @@ const useAppStore = defineStore('app', {
   //   ]
   // }
 })
-
-const useHomeStore = defineStore('home', {
-  state: () => ({
-    currentTab: 0
-  }),
-  actions: {
-    SetCurrentTab (current) {
-      this.currentTab = current
-    }
-  }
-})
-
-export {
-  useAppStore,
-  useHomeStore
-}

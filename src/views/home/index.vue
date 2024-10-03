@@ -1,11 +1,14 @@
 <template>
   <keep-alive>
-    <main ref="home" class="home">
-      <Header :logo-info="logo" :tab-items="tabs" @on-tab="changeTab" />
-
+    <main class="home">
+      <Header @on-tab="changeTab" />
       <section class="middle-section container">
         <div class="middle-section__img" />
-        <component :is='currentKey' />
+
+        <img v-if="diabloData.image_url" :src="diabloData.image_url" alt="just-a-pic" loading="lazy">
+        {{ diabloData.name }}
+
+        <AboutUs />
       </section>
 
       <Footer @on-tab="changeTab" />
@@ -14,62 +17,51 @@
 </template>
 
 <script>
-import { computed } from 'vue'
-import { useHomeStore } from '@/store/main'
-import { storeToRefs } from 'pinia'
+import { onMounted, ref, getCurrentInstance } from 'vue'
+import { useHomeStore } from '@/store/home'
 
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import AboutUs from '../stationery/aboutUs'
-import Service from '../stationery/service'
-import Project from '../stationery/project'
-import Mine from '../mine'
+
+import { getDiabloItems } from '@/api/diablo4'
 
 export default {
   name: 'HomeView',
   components: {
     Header,
     Footer,
-    AboutUs,
-    Service,
-    Project,
-    Mine
+    AboutUs
   },
   setup (_) {
-    const logo = {
-      title: 'Demo',
-      icon: ''
-    }
-
-    const tabs = [
-      { key: 'AboutUs', icon: 'friends', title: '我們', value: 0 },
-      { key: 'Service', icon: 'service', title: '服務', value: 1 },
-      { key: 'Project', icon: 'hot', title: '成果', value: 2 },
-      { key: 'Mine', icon: 'manager', title: '個人', value: 3 }
-    ]
-
+    const { proxy } = getCurrentInstance()
     const store = useHomeStore()
-    const { currentTab } = storeToRefs(store)
-
-    const currentKey = computed(() => {
-      return tabs[currentTab.value].key
-    })
+    const diabloData = ref({})
 
     const changeTab = (index) => {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      })
-      store.SetCurrentTab(index)
+      store.onTab(index)
+      proxy.$goToPage(store.computePage)
     }
+
+    const getDibloInfos = async () => {
+      try {
+        const data = await getDiabloItems('class/rogue/skills/puncture')
+        if (Object.keys(data).length) {
+          diabloData.value = data
+        }
+      } catch (err) {
+        console.warn('error:', err)
+        throw err
+      }
+    }
+
+    onMounted(() => {
+      getDibloInfos()
+    })
 
     return {
       /** data */
-      logo,
-      tabs,
-
-      /** computed */
-      currentKey,
+      diabloData,
 
       /** function */
       changeTab

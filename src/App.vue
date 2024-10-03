@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { onMounted } from 'vue'
+import { onMounted, computed, getCurrentInstance } from 'vue'
 import { useAppStore } from './store/main'
 import { storeToRefs } from 'pinia'
 
@@ -12,8 +12,13 @@ import { attachAutoResize } from '@/utils/resizeScreen'
 export default {
   name: 'App',
   setup (_) {
+    const { proxy } = getCurrentInstance()
     const store = useAppStore()
     const { userAppearance } = storeToRefs(store)
+
+    const showNavBar = computed(() => {
+      return proxy?.$route?.meta?.showNavBar ?? false
+    })
 
     const detectAppearance = () => {
       if (userAppearance.value === 'light') {
@@ -25,35 +30,14 @@ export default {
       }
     }
 
-    onMounted(() => {
+    onMounted(async () => {
       attachAutoResize(store.SetDevice, store.SetFontsize)
       detectAppearance()
-
-      // const arr = [1, 2, 3, 'a', 1, 'b', 2, 4, 5]
-      // console.log('remove repeat arr:', Array.from(new Set(arr)))
-
-      // const arr2 = [1, 2, [3, 4, [5, 6, [7]]]]
-      // function flatten (arr, output = []) {
-      //   for (const val of arr) {
-      //     if (Array.isArray(val)) {
-      //       flatten(val, output)
-      //     } else {
-      //       output.push(val)
-      //     }
-      //   }
-      //   return output
-      // }
-      // console.log('flattenArray:', flatten(arr2))
-
-      // function multiply () {
-      //   for (let i = 0; i < 10; i++) {
-      //     for (let j = 0; j < 10; j++) {
-      //       console.log(`${i} * ${j} = ${i * j}`)
-      //     }
-      //   }
-      // }
-      // multiply()npm
     })
+
+    return {
+      showNavBar
+    }
   }
 }
 

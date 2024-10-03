@@ -3,7 +3,7 @@
     <div class="mx-auto text-center">
       <strong class="title p-10 fz-24">Project</strong>
 
-      <div class="content mt-28 p-10">
+      <div class="content mt-28 p-20">
         <p :class="$isMobile() ? 'fz-30' : 'fz-40'">Show you what us can!</p>
         <p :class="$isMobile() ? 'fz-30' : 'fz-40'">These are our product.</p>
         <p :class="$isMobile() ? '' : 'fz-20'">All those customer pic were build from xxxxxxxxxx</p>

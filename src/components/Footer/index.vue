@@ -1,20 +1,32 @@
 <template>
   <div class="footer-nav container">
-    <van-cell-group :border="false" :style="{ padding: $isMobile() ? '22px 0' : '44px 0' }" class="footer-nav__upper row">
+    <van-cell-group :border="false" :style="{ padding: $isMobile() ? '8px 0' : '22px 0' }" class="footer-nav__upper row">
       <van-cell
-        v-for="(item, index) in NavItem"
+        v-for="(item, index) in topItems"
         :key="index"
         :title="item.title"
         @click.stop="$emit('onTab', index)"
-      ></van-cell>
+      />
     </van-cell-group>
 
-    <div :style="{ padding: $isMobile() ? '22px 0' : '44px 0' }" class="footer-nav__lower row">
-      <div class="lower-wrap row">
-        <div v-for="(item, index) in LowerItems.leftItems" :key="index" class="pt-6 pr-8">{{ item.title }}</div>
-      </div>
-      <div class="lower-wrap row">
-        <div v-for="(item, index) in LowerItems.rightItems" :key="index" class="pt-6 pr-8">{{ item.title }}</div>
+    <div
+      :style="{ padding: $isMobile() ? '8px 0' : '24px 0' }"
+      class="footer-nav__lower justify-around row"
+    >
+      <div
+        v-for="(footerItem, index) in bottomItems"
+        :key="index"
+        :class="`g-${$isMobile() ? '10' : '60'}`"
+        class="lower-wrap justify-center row"
+      >
+        <div
+          v-for="(item, index) in footerItem"
+          :key="index"
+          class="lower-wrap__item"
+          @click="$goToPage(item.pathName)"
+        >
+          {{ item.title }}
+        </div>
       </div>
     </div>
   </div>
@@ -30,37 +42,30 @@ export default {
     'van-cell-group': CellGroup
   },
   props: {},
-  setup (props) {
-    const NavItem = [
+  setup (_) {
+    const topItems = [
       { pathName: '/', icon: '', title: 'Demo', value: 0 },
       { pathName: 'aboutUs', icon: 'friends', title: '我們＋', value: 1 },
       { pathName: 'support', icon: 'manager', title: '支援＋', value: 2 }
     ]
 
-    const LowerItems = {
-      leftItems: [
+    const bottomItems = [
+      [
         { pathName: '', icon: '', title: '@2024 Demo' },
         { pathName: '', icon: '', title: 'Privacy' },
         { pathName: '', icon: '', title: 'Cookies' }
       ],
-      rightItems: [
+      [
         { pathName: '', icon: '', title: 'Tags' },
         { pathName: '', icon: '', title: 'Places' },
         { pathName: '', icon: '', title: 'Resource' }
       ]
-    }
-
-    const toPage = (page) => {
-      console.warn('footer to page:', page)
-    }
+    ]
 
     return {
       /** data */
-      NavItem,
-      LowerItems,
-
-      /** Function */
-      toPage
+      topItems,
+      bottomItems
     }
   }
 
@@ -69,16 +74,36 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+  // setting Start
+  .justify-center
+    justify-content center
+
+  .justify-around
+    justify-content space-around
+
+  .justify-between
+    justify-content space-between
+
+  for space in 0 10 60
+
+    .g-{space}
+
+      gap (space) * 1px
+  // setting End
+
   .footer-nav
     max-width $container-max-width-xl
+    background var(--white-50-percent-footer)
+    border-radius 5px 5px 0 0
 
     &__upper, &__lower
-      justify-content space-between
+      display flex
+      align-items center
 
-      .lower-wrap
-        width 40%
-        justify-content space-around
-        cursor pointer
+    .lower-wrap
+      display flex
+      width 40%
+      cursor pointer
 
   /deep/
     .van-cell-group
@@ -94,7 +119,13 @@ export default {
           margin-right calc(100% / 2)
 
           .van-cell__title
-            font-size 24px
+            font-size 18px
+            background linear-gradient(to right, red, blue)
+            background-clip text
+            color transparent
+
+        &:nth-child(3) > .van-cell__title
+          padding 0
 
         &__title
           text-shadow 0 2px 6px var(--black-30-percent)

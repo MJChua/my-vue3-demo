@@ -1,8 +1,6 @@
 <template>
-  <div :class="$isMobile() ? 'px-24' : 'px-40'" class="header row py-16">
-    <slot v-if="logoInfo !== undefined">
-      <div :class="$isMobile() ? 'fz-20' : 'fz-24'" class="logo" @click="$goHome()">{{ logoInfo.title }}</div>
-    </slot>
+  <div :class="$isMobile() ? 'px-24' : 'px-40'" class="header fw-700 row py-16">
+    <div :class="$isMobile() ? 'fz-20' : 'fz-24'" class="logo" @click="$goHome()">Demo</div>
 
     <div v-if="$isMobile()" class="row">
       <HamburgerMenu :opened="show" to-right="87" @click="() => show = true" />
@@ -10,7 +8,7 @@
 
     <van-cell-group v-else :border="false" class="row">
       <van-cell
-        v-for="(item, index) in tabItems"
+        v-for="(item, index) in homeTabs"
         :key="index"
         :title="item.title"
         :icon="item.icon"
@@ -22,7 +20,7 @@
     <!-- 移動端 popup -->
     <van-popup v-model:show="show" position="right" round>
       <van-cell
-        v-for="(item, index) in tabItems"
+        v-for="(item, index) in homeTabs"
         :key="index"
         :title="item.title"
         :icon="item.icon"
@@ -39,6 +37,8 @@ import { ref } from 'vue'
 import { CellGroup, Cell, Popup } from 'vant'
 import HamburgerMenu from '@/components/HamburgerMenu'
 
+import { homeTabs } from '@/store/constant'
+
 export default {
   name: 'HeaderMenu',
   components: {
@@ -46,16 +46,6 @@ export default {
     'van-cell-group': CellGroup,
     'van-popup': Popup,
     HamburgerMenu
-  },
-  props: {
-    logoInfo: {
-      type: Object,
-      default: () => {}
-    },
-    tabItems: {
-      type: [Array, Object],
-      default: () => []
-    }
   },
 
   setup (_, { emit }) {
@@ -69,6 +59,7 @@ export default {
     return {
       /** data */
       show,
+      homeTabs,
 
       /** function */
       onTabMobile
@@ -81,21 +72,23 @@ export default {
 
 <style lang="stylus" scoped>
   .header
-    background var(--white-60-percent-header)
-    box-shadow 2px 1px 6px 0 $neutral_normal_color
-    border-radius 0 0 10px 10px
-    justify-content space-between
-    overflow hidden
     position sticky
     top 0
     z-index $z-index-header
+    justify-content space-between
+    box-shadow 2px 1px 6px 0 $neutral_normal_color
+    border-radius 0 0 10px 10px
+    background var(--white-80-percent-header)
+    overflow hidden
 
     .logo
       margin-right calc(100% / 2 - 40px)
-      color var(--black)
       font-style italic
-      cursor pointer
       transform rotate(-5deg)
+      background linear-gradient(to right, red, blue)
+      background-clip text
+      color transparent
+      cursor pointer
 
   /deep/
     .van-cell-group
