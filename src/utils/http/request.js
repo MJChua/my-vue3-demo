@@ -20,8 +20,9 @@ service.interceptors.response.use(
     return response.data
   },
   error => {
-    const { status, data } = error.response
-    console.warn('response errorCode:', status, data)
+    if (error.response?.status ?? false) {
+      console.warn('response errorCode:', error.response.status, error.response.data)
+    }
     return Promise.reject(error)
   }
 )
