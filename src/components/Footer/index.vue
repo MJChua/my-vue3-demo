@@ -10,6 +10,7 @@
     </van-cell-group>
 
     <div
+      v-if="!$isMobile()"
       :style="{ padding: $isMobile() ? '8px 0' : '24px 0' }"
       class="footer-nav__lower justify-around row"
     >
@@ -20,7 +21,7 @@
         class="lower-wrap justify-center row"
       >
         <div
-          v-for="(item, index) in ($isMobile() ? footerItem[0] : footerItem)"
+          v-for="(item, index) in footerItem"
           :key="index"
           class="lower-wrap__item"
           @click="$goToPage(item.pathName)"
@@ -93,7 +94,7 @@ export default {
   .footer-nav
     position sticky
     bottom 0
-    padding 15px 10px
+    padding 10px
     background var(--white-footer)
     border-radius 5px 5px 0 0
 

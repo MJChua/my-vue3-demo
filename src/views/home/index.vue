@@ -6,15 +6,14 @@
         <div class="middle-section__img" />
         <div class="content">
           <ul>
-            <li v-for="(item, index) in 6" :key="index" class="p-10">
+            <li v-for="(_, index) in 6" :key="index" class="p-10">
               Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quos, ab. Exercitationem optio perspiciatis hic quae veritatis alias at aliquam fugit quidem, nostrum saepe. Itaque reiciendis, adipisci necessitatibus repellat reprehenderit est.
             </li>
           </ul>
         </div>
         <div class="card-wrap">
-          <div v-for="(item, index) in 3" :key="index" class="card">
+          <div v-for="(_, index) in 18" :key="index" class="card">
             <img v-if="diabloData.image_url" :src="diabloData.image_url" alt="just-a-pic" loading="lazy">
-            <p>{{ diabloData.name }}</p>
           </div>
         </div>
       </section>
@@ -92,12 +91,13 @@ export default {
         overflow hidden
 
       .card-wrap
-        columns 300px
+        display flex
+        flex-wrap wrap
+        align-items center
 
         .card
-          display flex
-          flex-direction column
-          align-items center
+          margin 10px auto
+          max-width 100px
 
       .content
         margin 50px auto
