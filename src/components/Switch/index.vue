@@ -7,14 +7,14 @@
         class="group__title"
       />
       <van-cell class="group__switch">
-        <van-switch v-model="checked" @click="onChange()" />
+        <van-switch v-model.lazy="checkedSwitch" @click="onChange()" />
       </van-cell>
     </van-cell-group>
   </div>
 </template>
 
 <script>
-import { getCurrentInstance } from 'vue'
+import { ref, getCurrentInstance, onMounted } from 'vue'
 import { useAppStore } from '@/store/main'
 import { storeToRefs } from 'pinia'
 import { CellGroup, Cell, Switch } from 'vant'
@@ -40,7 +40,7 @@ export default {
     const { proxy } = getCurrentInstance()
     const store = useAppStore()
     const { userAppearance } = storeToRefs(store)
-    const checked = userAppearance === 'dark'
+    const checkedSwitch = ref(false)
 
     const switchAppearanceStyle = (value) => {
       switch (value) {
@@ -61,16 +61,20 @@ export default {
 
     const onChange = function () {
       const changeColor = userAppearance.value === 'dark' ? 'light' : 'dark'
-      store.SetAppearance(changeColor)
       switchAppearanceStyle(changeColor)
-      proxy.changed = false
+      store.SetAppearance(changeColor)
+
       proxy.$toast({ message: `已切換為${userAppearance.value === 'dark' ? '深' : '淺'}色`, position: 'top' })
       proxy.$emit('clickToClosed')
     }
 
+    onMounted(() => {
+      checkedSwitch.value = userAppearance.value === 'dark'
+    })
+
     return {
       /** pinia */
-      checked,
+      checkedSwitch,
       /** Function */
       onChange
     }

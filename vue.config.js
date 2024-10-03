@@ -6,7 +6,16 @@ module.exports = defineConfig({
   transpileDependencies: true,
   devServer: {
     open: true,
-    port: 9911
+    port: 9911,
+    proxy: {
+      '/api': {
+        target: 'https://d4api.dev',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': ''
+        }
+      }
+    }
   },
   configureWebpack: {
     plugins: [
