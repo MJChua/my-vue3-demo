@@ -13,7 +13,7 @@
         :title="item.title"
         :icon="item.icon"
         clickable
-        @click.stop="$emit('onTab', index)"
+        @click.stop="onTab(index)"
       />
     </van-cell-group>
 
@@ -25,14 +25,15 @@
         :title="item.title"
         :icon="item.icon"
         clickable
-        @click.stop="onTabMobile(index)"
+        @click.stop="onTab(index)"
       />
     </van-popup>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, getCurrentInstance } from 'vue'
+import { useHomeStore } from '@/store/home'
 
 import { CellGroup, Cell, Popup } from 'vant'
 import HamburgerMenu from '@/components/HamburgerMenu'
@@ -48,12 +49,18 @@ export default {
     HamburgerMenu
   },
 
-  setup (_, { emit }) {
+  setup (_) {
+    const { proxy } = getCurrentInstance()
+    const store = useHomeStore()
     const show = ref(false)
 
-    const onTabMobile = (index) => {
-      emit('onTab', index)
-      show.value = false
+    const onTab = (index) => {
+      store.onTab(index)
+      proxy.$goToPage(store.computePage)
+
+      if (proxy.$isMobile()) {
+        show.value = false
+      }
     }
 
     return {
@@ -62,7 +69,7 @@ export default {
       homeTabs,
 
       /** function */
-      onTabMobile
+      onTab
     }
   }
 

@@ -1,4 +1,5 @@
 <template>
+  <Header />
   <main class="service container">
     <div class="mx-auto text-center">
       <strong class="title p-10 fz-24">Service</strong>
@@ -13,14 +14,18 @@
 </template>
 
 <script>
+import Header from '@/components/Header'
+
 export default {
-  name: 'ServicePage'
+  name: 'ServicePage',
+  components: { Header }
 }
 </script>
 
 <style lang="stylus" scoped>
   .service
     margin-top 50px
+    height 100vh
 
     .title
       text-decoration underline

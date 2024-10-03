@@ -1,6 +1,6 @@
 <template>
   <main class="mine">
-    <Header @on-tab="changeTab" />
+    <Header />
     <div class="container text-left">
       <strong class="title p-10 fz-24">Mine</strong>
 
@@ -27,7 +27,6 @@
         </div>
       </div>
     </div>
-    <Footer @on-tab="changeTab" />
   </main>
 
   <van-popup
@@ -53,7 +52,6 @@ import { Popup } from 'vant'
 import Switcher from '@/components/Switch'
 import Button from '@/components/Button'
 import Header from '@/components/Header'
-import Footer from '@/components/Footer'
 
 export default {
   name: 'MinePage',
@@ -61,8 +59,7 @@ export default {
     'van-popup': Popup,
     Switcher,
     Button,
-    Header,
-    Footer
+    Header
   },
   setup (_) {
     const { proxy } = getCurrentInstance()
@@ -116,6 +113,7 @@ export default {
 
 <style lang="stylus" scoped>
   .mine
+    height 100vh
 
     .container
       margin-top 20px

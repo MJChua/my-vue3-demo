@@ -5,7 +5,7 @@
         v-for="(item, index) in topItems"
         :key="index"
         :title="item.title"
-        @click.stop="$emit('onTab', index)"
+        @click.prevent="$goToPage(item.pathName)"
       />
     </van-cell-group>
 
@@ -44,11 +44,10 @@ export default {
   props: {},
   setup (_) {
     const topItems = [
-      { pathName: '/', icon: '', title: 'Demo', value: 0 },
-      { pathName: 'aboutUs', icon: 'friends', title: '我們＋', value: 1 },
-      { pathName: 'support', icon: 'manager', title: '支援＋', value: 2 }
+      { pathName: 'Home', icon: '', title: 'Demo', value: 0 },
+      { pathName: 'AboutUs', icon: 'friends', title: '我們＋', value: 1 },
+      { pathName: 'Home', icon: 'manager', title: '支援＋', value: 2 }
     ]
-
     const bottomItems = [
       [
         { pathName: '', icon: '', title: '@2024 Demo' },
@@ -92,8 +91,10 @@ export default {
   // setting End
 
   .footer-nav
+    position fixed
+    bottom 0
     max-width $container-max-width-xl
-    background var(--white-50-percent-footer)
+    background var(--white-footer)
     border-radius 5px 5px 0 0
 
     &__upper, &__lower
