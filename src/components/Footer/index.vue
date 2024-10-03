@@ -1,5 +1,5 @@
 <template>
-  <div class="footer-nav container">
+  <div class="footer-nav">
     <van-cell-group :border="false" :style="{ padding: $isMobile() ? '8px 0' : '22px 0' }" class="footer-nav__upper row">
       <van-cell
         v-for="(item, index) in topItems"
@@ -20,7 +20,7 @@
         class="lower-wrap justify-center row"
       >
         <div
-          v-for="(item, index) in footerItem"
+          v-for="(item, index) in ($isMobile() ? footerItem[0] : footerItem)"
           :key="index"
           class="lower-wrap__item"
           @click="$goToPage(item.pathName)"
@@ -91,9 +91,9 @@ export default {
   // setting End
 
   .footer-nav
-    position fixed
+    position sticky
     bottom 0
-    max-width $container-max-width-xl
+    padding 15px 10px
     background var(--white-footer)
     border-radius 5px 5px 0 0
 

@@ -4,8 +4,19 @@
       <Header />
       <section class="middle-section container">
         <div class="middle-section__img" />
-        <img v-if="diabloData.image_url" :src="diabloData.image_url" alt="just-a-pic" loading="lazy">
-        {{ diabloData.name }}
+        <div class="content">
+          <ul>
+            <li v-for="(item, index) in 6" :key="index" class="p-10">
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quos, ab. Exercitationem optio perspiciatis hic quae veritatis alias at aliquam fugit quidem, nostrum saepe. Itaque reiciendis, adipisci necessitatibus repellat reprehenderit est.
+            </li>
+          </ul>
+        </div>
+        <div class="card-wrap">
+          <div v-for="(item, index) in 3" :key="index" class="card">
+            <img v-if="diabloData.image_url" :src="diabloData.image_url" alt="just-a-pic" loading="lazy">
+            <p>{{ diabloData.name }}</p>
+          </div>
+        </div>
       </section>
 
       <Footer />
@@ -43,6 +54,7 @@ export default {
         const data = await getDiabloItems('class/rogue/skills/puncture')
         if (Object.keys(data).length) {
           diabloData.value = data
+          return
         }
       } catch (err) {
         console.warn('error:', err)
@@ -69,7 +81,6 @@ export default {
   .home
 
     .middle-section
-      height 100vh
 
       &__img
         margin 15px auto
@@ -79,5 +90,17 @@ export default {
         background-size cover
         border-radius 20px
         overflow hidden
+
+      .card-wrap
+        columns 300px
+
+        .card
+          display flex
+          flex-direction column
+          align-items center
+
+      .content
+        margin 50px auto
+        columns 300px
 
 </style>
