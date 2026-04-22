@@ -1,19 +1,18 @@
 # Bug Tickets
 
-## BUG-001 - API request path duplicated `/api` prefix
+## BUG-001 - Demo API endpoint unavailable for home image rendering
 - Status: Fixed (Pending merge to `devlop`)
-- Branch: `bug_api-double-prefix`
+- Branch: `bug_image-api-source`
 - Reported symptom:
-  - Browser error: `Uncaught (in promise) AxiosError: Request failed with status code 500`
-  - Request URL looked like: `http://localhost:9911/api//api/class/rogue/skills/puncture`
+  - Request path was invalid and returned error.
+  - Home page failed to display fetched network images as expected.
 - Root cause:
-  - `src/api/diablo4.js` already prefixed URL with `/api/`
-  - `src/utils/http/index.js` also prepended `/api/`
-- Fix plan:
-  - Keep prefix only in request wrapper
-  - Normalize leading slash in request URL before join
-  - Avoid rethrow in mounted async flow
-  - Cleanup naming typo in home fetch function
+  - API path used in home flow did not exist on target backend.
+  - HTTP wrapper path join made path handling brittle.
+- Fix:
+  - switched demo source to free public API: `https://dog.ceo/api/breeds/image/random/{count}`
+  - normalized request URL handling in HTTP wrapper
+  - updated home page to render returned image list
 - Validation:
   - `pnpm lint` passed
-  - `pnpm build` passed (warnings only, no build error)
+  - `pnpm build` passed (warnings only)
