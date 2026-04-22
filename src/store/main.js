@@ -1,10 +1,13 @@
 import { defineStore } from 'pinia'
+import { createAppearanceStore } from '@my-vue3/core'
+
+const appearanceStore = createAppearanceStore(localStorage, 'current-appearance')
 
 export const useAppStore = defineStore('app', {
   state: () => ({
     device: 'mobile',
     fontsize: 100,
-    userAppearance: localStorage.getItem('current-appearance') || 'dark'
+    userAppearance: appearanceStore.get('dark')
 
   }),
   actions: {
@@ -15,8 +18,7 @@ export const useAppStore = defineStore('app', {
       this.fontsize = fontsize
     },
     SetAppearance (val) {
-      localStorage.setItem('current-appearance', val)
-      this.userAppearance = val
+      this.userAppearance = appearanceStore.set(val)
     }
   }
   // 配置持久化

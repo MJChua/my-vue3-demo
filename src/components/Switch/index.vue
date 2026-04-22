@@ -18,6 +18,7 @@ import { ref, getCurrentInstance, onMounted } from 'vue'
 import { useAppStore } from '@/store/main'
 import { storeToRefs } from 'pinia'
 import { CellGroup, Cell, Switch } from 'vant'
+import { applyAppearanceClass } from '@my-vue3/core'
 
 export default {
   name: 'ThemeAppearance',
@@ -42,26 +43,9 @@ export default {
     const { userAppearance } = storeToRefs(store)
     const checkedSwitch = ref(false)
 
-    const switchAppearanceStyle = (value) => {
-      switch (value) {
-        case 'dark':
-          document.body.classList.add('dark-mode')
-          document.body.classList.remove('light-mode')
-          break
-        case 'light':
-          document.body.classList.add('light-mode')
-          document.body.classList.remove('dark-mode')
-          break
-        default:
-          document.body.classList.remove('light-mode')
-          document.body.classList.remove('dark-mode')
-          break
-      }
-    }
-
     const onChange = function () {
       const changeColor = userAppearance.value === 'dark' ? 'light' : 'dark'
-      switchAppearanceStyle(changeColor)
+      applyAppearanceClass(changeColor)
       store.SetAppearance(changeColor)
 
       proxy.$toast({ message: `已切換為${userAppearance.value === 'dark' ? '深' : '淺'}色`, position: 'top' })
