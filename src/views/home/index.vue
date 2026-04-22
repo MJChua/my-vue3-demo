@@ -48,21 +48,22 @@ export default {
       proxy.$goToPage(store.computePage)
     }
 
-    const getDibloInfos = async () => {
+    const getDiabloInfos = async () => {
       try {
-        const data = await getDiabloItems('class/rogue/skills/puncture')
+        const data = await getDiabloItems('class/rogue/skills/heartseeker')
         if (Object.keys(data).length) {
           diabloData.value = data
-          return
+          return true
         }
       } catch (err) {
         console.warn('error:', err)
-        throw err
+        proxy?.$toast?.({ message: 'Failed to load Diablo data.', position: 'top' })
+        return false
       }
     }
 
     onMounted(() => {
-      getDibloInfos()
+      getDiabloInfos()
     })
 
     return {
