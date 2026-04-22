@@ -5,12 +5,12 @@ This file tracks reusable features from the app that should be extracted into in
 ## Current extraction status
 
 1. Device and layout utilities
-- Source: `src/utils/resizeScreen.js`
+- Source: `packages/core/src/index.js` (migrated from `src/utils/resizeScreen.js`)
 - Target package: `@my-vue3/core`
 - Planned exports:
   - `attachAutoResize(setDevice, setFontSize, options?)`
   - `resolveDeviceType(width, breakpoint?)`
-- Status: extracted to `packages/core` (app uses compatibility wrapper)
+- Status: extracted and app now imports shared package directly
 
 2. Theme and appearance
 - Source: `src/store/main.js`, `src/components/Switch/index.vue`, `src/App.vue`
@@ -18,15 +18,15 @@ This file tracks reusable features from the app that should be extracted into in
 - Planned exports:
   - `createAppearanceStore(storage, key, defaultValue?)`
   - `applyAppearanceClass(mode, target?)`
-- Status: planned
+- Status: extracted and integrated in app store/app shell/theme switch
 
 3. HTTP client baseline
-- Source: `src/utils/http/request.js`, `src/utils/http/index.js`
+- Source: `packages/http/src/index.js` (migrated from `src/utils/http/*`)
 - Target package: `@my-vue3/http`
 - Planned exports:
   - `createHttpClient(options?)`
   - `createRequest(client, defaults?)`
-- Status: extracted to `packages/http` (app request layer now uses this package)
+- Status: extracted and app API layer now imports shared package directly
 
 4. Generic UI components
 - Source: `src/components/Button`, `src/components/Switch`, `src/components/HamburgerMenu`

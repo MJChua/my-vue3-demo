@@ -1,7 +1,7 @@
-import { devRequest as request } from '@/utils/http'
+import { apiRequest } from './client'
 
 export const getDiabloItems = (params) => {
-  return request({
+  return apiRequest({
     url: `/api/${params}`,
     method: 'get'
   })
