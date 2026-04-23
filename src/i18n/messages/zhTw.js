@@ -1,0 +1,54 @@
+const zhTwMessages = {
+  nav: {
+    aboutUs: '\u95dc\u65bc\u6211\u5011',
+    service: '\u670d\u52d9',
+    project: '\u5c08\u6848',
+    mine: '\u500b\u4eba'
+  },
+  header: {
+    switchToEnglish: 'EN',
+    switchToChinese: '\u7e41\u4e2d'
+  },
+  home: {
+    introItem: '\u9019\u662f\u4e00\u500b\u793a\u7bc4\u9801\uff0c\u5c55\u793a API \u4e32\u63a5\u8207\u5716\u7247\u5361\u7247\u6392\u7248\u80fd\u529b\u3002',
+    imageAlt: '\u72d7\u72d7\u5716\u7247',
+    loadFailed: '\u5716\u7247\u8f09\u5165\u5931\u6557\uff0c\u8acb\u7a0d\u5f8c\u518d\u8a66\u3002'
+  },
+  mine: {
+    title: '\u500b\u4eba',
+    appearance: '\u4ecb\u9762\u504f\u597d',
+    descLine1: '\u53ef\u5728\u6b64\u7ba1\u7406\u500b\u4eba\u5316\u986f\u793a\u8a2d\u5b9a\u3002',
+    descLine2: '\u5305\u542b\u4e3b\u984c\u8207\u8a9e\u8a00\u7684\u700f\u89bd\u9ad4\u9a57\u3002'
+  },
+  aboutUs: {
+    title: '\u95dc\u65bc\u6211\u5011',
+    line1: '\u5c08\u6ce8\u65bc\u53ef\u7dad\u8b77\u7684\u524d\u7aef\u9ad4\u9a57',
+    line2: '\u7528\u4e00\u81f4\u6d41\u7a0b\u63d0\u5347\u958b\u767c\u6548\u7387',
+    description: '\u6211\u5011\u900f\u904e\u6a21\u7d44\u5316\u8207\u81ea\u52d5\u5316\u6e2c\u8a66\uff0c\u5354\u52a9\u5718\u968a\u66f4\u7a69\u5b9a\u5730\u4ea4\u4ed8\u7522\u54c1\u3002'
+  },
+  service: {
+    title: '\u670d\u52d9',
+    line1: '\u6211\u5011\u63d0\u4f9b\u6280\u8853\u9867\u554f\u8207\u5be6\u4f5c\u652f\u63f4',
+    line2: '\u806f\u7d61\u65b9\u5f0f',
+    line3: '589234123 03-103'
+  },
+  project: {
+    title: '\u5c08\u6848',
+    line1: '\u5c55\u793a\u8fd1\u671f\u53ef\u843d\u5730\u7684\u958b\u767c\u6210\u679c',
+    line2: '\u6db5\u84cb UI\u3001\u8cc7\u6599\u4e32\u63a5\u8207\u6548\u80fd\u512a\u5316',
+    line3: '\u5167\u5bb9\u53ef\u4f9d\u5546\u696d\u9700\u6c42\u5feb\u901f\u66ff\u63db\u8207\u64f4\u5145'
+  },
+  footer: {
+    demo: 'Demo',
+    aboutUs: '\u95dc\u65bc\u6211\u5011',
+    mine: '\u500b\u4eba',
+    copyright: '@2026 Demo',
+    privacy: '\u96b1\u79c1\u6b0a',
+    cookies: 'Cookie \u653f\u7b56',
+    tags: '\u6a19\u7c64',
+    places: '\u5730\u9ede',
+    resources: '\u8cc7\u6e90'
+  }
+}
+
+export default zhTwMessages

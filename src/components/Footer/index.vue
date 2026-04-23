@@ -4,7 +4,7 @@
       <van-cell
         v-for="(item, index) in topItems"
         :key="index"
-        :title="item.title"
+        :title="$t(item.titleKey)"
         @click.prevent="$goToPage(item.pathName)"
       />
     </van-cell-group>
@@ -21,12 +21,12 @@
         class="lower-wrap justify-center row"
       >
         <div
-          v-for="(item, index) in footerItem"
-          :key="index"
+          v-for="(item, itemIndex) in footerItem"
+          :key="itemIndex"
           class="lower-wrap__item"
           @click="$goToPage(item.pathName)"
         >
-          {{ item.title }}
+          {{ $t(item.titleKey) }}
         </div>
       </div>
     </div>
@@ -42,39 +42,35 @@ export default {
     'van-cell': Cell,
     'van-cell-group': CellGroup
   },
-  props: {},
-  setup (_) {
+  setup () {
     const topItems = [
-      { pathName: 'Home', icon: '', title: 'Demo', value: 0 },
-      { pathName: 'AboutUs', icon: 'friends', title: '我們＋', value: 1 },
-      { pathName: 'Home', icon: 'manager', title: '支援＋', value: 2 }
+      { pathName: 'Home', icon: '', titleKey: 'footer.demo', value: 0 },
+      { pathName: 'AboutUs', icon: 'friends', titleKey: 'footer.aboutUs', value: 1 },
+      { pathName: 'Mine', icon: 'manager', titleKey: 'footer.mine', value: 2 }
     ]
+
     const bottomItems = [
       [
-        { pathName: '', icon: '', title: '@2024 Demo' },
-        { pathName: '', icon: '', title: 'Privacy' },
-        { pathName: '', icon: '', title: 'Cookies' }
+        { pathName: '', icon: '', titleKey: 'footer.copyright' },
+        { pathName: '', icon: '', titleKey: 'footer.privacy' },
+        { pathName: '', icon: '', titleKey: 'footer.cookies' }
       ],
       [
-        { pathName: '', icon: '', title: 'Tags' },
-        { pathName: '', icon: '', title: 'Places' },
-        { pathName: '', icon: '', title: 'Resource' }
+        { pathName: '', icon: '', titleKey: 'footer.tags' },
+        { pathName: '', icon: '', titleKey: 'footer.places' },
+        { pathName: '', icon: '', titleKey: 'footer.resources' }
       ]
     ]
 
     return {
-      /** data */
       topItems,
       bottomItems
     }
   }
-
 }
-
 </script>
 
 <style lang="stylus" scoped>
-  // setting Start
   .justify-center
     justify-content center
 
@@ -85,11 +81,8 @@ export default {
     justify-content space-between
 
   for space in 0 10 60
-
     .g-{space}
-
       gap (space) * 1px
-  // setting End
 
   .footer-nav
     position sticky

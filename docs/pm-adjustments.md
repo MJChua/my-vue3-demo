@@ -41,3 +41,24 @@
   - add CI workflow: run lint, unit, and e2e smoke on pull request
 - Branch mapping:
   - Feature branch: `feature_04_test-foundation`
+
+## 05 - Global i18n and Right-Side Control Optimization
+- Goal: launch bilingual baseline (Traditional Chinese + English) and standardize utility controls for business-ready header UX.
+- Scope:
+  - add global i18n setup with locale persistence (`zh-TW` / `en`)
+  - migrate header, home, footer, mine, about, service, and project pages to translation keys
+  - keep global theme switch unified on header right side across pages
+  - add language toggle next to theme switch with compact desktop/mobile sizes (mobile smaller)
+  - remove deprecated standalone switch component to avoid duplicate behavior
+- Branch mapping:
+  - Feature branch: `feature_05_i18n-theme-controls`
+
+## 06 - i18n Locale-Pack Rule and Theme Contrast Hotfix
+- Goal: prevent i18n growth risk and fix language toggle readability after theme switch.
+- Scope:
+  - define team rule: do not place locale `messages` inline in `src/i18n/index.js`
+  - store each locale in independent files under `src/i18n/messages/`
+  - use locale-pack loading layer (`localePackDb`, LaceDB-style packing) for on-demand loading and smaller initial bundle size
+  - improve header language toggle contrast in light/dark themes with dedicated control color tokens
+- Branch mapping:
+  - Feature branch: `feature_05_i18n-theme-controls`
