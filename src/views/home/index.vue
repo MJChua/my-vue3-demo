@@ -93,13 +93,33 @@ export default {
         display flex
         flex-wrap wrap
         align-items center
+        justify-content center
 
         .card
           margin 10px auto
-          max-width 100px
+          width 150px
+          height 100px
+
+          > img
+            width 100%
+            height 100%
+            object-fit cover
+            border-radius 8px
+            display block
 
       .content
         margin 50px auto
         columns 300px
+
+@media (min-width: 768px)
+  .home
+
+    .middle-section
+
+      .card-wrap
+
+        .card
+          width 300px
+          height 120px
 
 </style>

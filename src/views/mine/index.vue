@@ -18,94 +18,30 @@
               <p>selrkgfnselukgn2804yut8hsoelu</p>
             </div>
           </div>
-          <Button
-            v-if="item.button" text="切換"
-            :size="device === 'desktop' ? 'large' : 'middle'"
-            class="btn-position"
-            @click="() => show = true"
-          />
         </div>
       </div>
     </div>
   </main>
-
-  <van-popup
-    v-model:show="show"
-    style="min-width: 100px;"
-    class="p-12"
-    round
-  >
-    <Switcher
-      :title="`切換為${userAppearance === 'dark' ? '淺' : '深'}色`"
-      justify-content="end"
-      @click-to-closed="() => show = false"
-    />
-  </van-popup>
 </template>
 
 <script>
-import { ref, getCurrentInstance } from 'vue'
-import { useAppStore } from '@/store/main'
-import { storeToRefs } from 'pinia'
-
-import { Popup } from 'vant'
-import Switcher from '@/components/Switch'
-import Button from '@/components/Button'
 import Header from '@/components/Header'
 
 export default {
   name: 'MinePage',
   components: {
-    'van-popup': Popup,
-    Switcher,
-    Button,
     Header
   },
-  setup (_) {
-    const { proxy } = getCurrentInstance()
-    const store = useAppStore()
-    const { device, userAppearance } = storeToRefs(store)
+  setup () {
     const contentItems = [
-      {
-        index: 0,
-        title: '背景切換',
-        button: true
-      },
-      {
-        index: 1,
-        title: '背景切換',
-        button: false
-      },
-      {
-        index: 2,
-        title: '背景切換',
-        button: false
-      },
-      {
-        index: 3,
-        title: '背景切換',
-        button: false
-      }
+      { index: 0, title: 'Appearance' },
+      { index: 1, title: 'Appearance' },
+      { index: 2, title: 'Appearance' },
+      { index: 3, title: 'Appearance' }
     ]
 
-    const show = ref(false)
-
-    const changeTab = index => {
-      store.onTab(index)
-      proxy.$goToPage(store.computePage)
-    }
-
     return {
-      /** pinia */
-      device,
-      userAppearance,
-
-      /** data */
-      contentItems,
-      show,
-
-      /** function */
-      changeTab
+      contentItems
     }
   }
 }
@@ -131,10 +67,5 @@ export default {
 
           .desc > p
             word-break break-all
-
-      .btn-position
-        position relative
-        left 50%
-        transform translate(-50%, 0)
 
 </style>

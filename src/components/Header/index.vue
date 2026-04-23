@@ -2,22 +2,37 @@
   <div :class="$isMobile() ? 'px-24' : 'px-40'" class="header fw-700 row py-16">
     <div :class="$isMobile() ? 'fz-20' : 'fz-24'" class="logo" @click="$goHome()">Demo</div>
 
-    <div v-if="$isMobile()" class="row">
-      <HamburgerMenu :opened="show" to-right="87" @click="() => show = true" />
+    <div v-if="$isMobile()" class="mobile-actions row">
+      <van-switch
+        v-if="showAppearanceSwitch"
+        v-model="checkedSwitch"
+        size="22px"
+        class="appearance-switch appearance-switch--mobile"
+        @change="onAppearanceChange"
+      />
+      <HamburgerMenu :opened="show" :absolute="false" @click="() => show = true" />
     </div>
 
-    <van-cell-group v-else :border="false" class="row">
-      <van-cell
-        v-for="(item, index) in homeTabs"
-        :key="index"
-        :title="item.title"
-        :icon="item.icon"
-        clickable
-        @click.stop="onTab(index)"
+    <div v-else class="desktop-actions row">
+      <van-cell-group :border="false" class="row">
+        <van-cell
+          v-for="(item, index) in homeTabs"
+          :key="index"
+          :title="item.title"
+          :icon="item.icon"
+          clickable
+          @click.stop="onTab(index)"
+        />
+      </van-cell-group>
+      <van-switch
+        v-if="showAppearanceSwitch"
+        v-model="checkedSwitch"
+        size="24px"
+        class="appearance-switch appearance-switch--desktop"
+        @change="onAppearanceChange"
       />
-    </van-cell-group>
+    </div>
 
-    <!-- 移動端 popup -->
     <van-popup v-model:show="show" position="right" round>
       <van-cell
         v-for="(item, index) in homeTabs"
@@ -32,10 +47,13 @@
 </template>
 
 <script>
-import { ref, getCurrentInstance } from 'vue'
+import { ref, getCurrentInstance, computed, watch } from 'vue'
 import { useHomeStore } from '@/store/home'
+import { useAppStore } from '@/store/main'
+import { storeToRefs } from 'pinia'
+import { applyAppearanceClass } from '@my-vue3/core'
 
-import { CellGroup, Cell, Popup } from 'vant'
+import { CellGroup, Cell, Popup, Switch } from 'vant'
 import HamburgerMenu from '@/components/HamburgerMenu'
 
 import { homeTabs } from '@/store/constant'
@@ -46,33 +64,49 @@ export default {
     'van-cell': Cell,
     'van-cell-group': CellGroup,
     'van-popup': Popup,
+    'van-switch': Switch,
     HamburgerMenu
   },
 
   setup (_) {
     const { proxy } = getCurrentInstance()
-    const store = useHomeStore()
+    const homeStore = useHomeStore()
+    const appStore = useAppStore()
+    const { userAppearance } = storeToRefs(appStore)
+
     const show = ref(false)
+    const checkedSwitch = ref(userAppearance.value === 'dark')
+
+    const showAppearanceSwitch = computed(() => proxy?.$route?.name === 'Home')
 
     const onTab = (index) => {
-      store.onTab(index)
-      proxy.$goToPage(store.computePage)
+      homeStore.onTab(index)
+      proxy.$goToPage(homeStore.computePage)
 
       if (proxy.$isMobile()) {
         show.value = false
       }
     }
 
+    const onAppearanceChange = (checked) => {
+      const nextMode = checked ? 'dark' : 'light'
+      applyAppearanceClass(nextMode)
+      appStore.SetAppearance(nextMode)
+    }
+
+    watch(() => userAppearance.value, (value) => {
+      checkedSwitch.value = value === 'dark'
+    })
+
     return {
-      /** data */
       show,
       homeTabs,
-
-      /** function */
-      onTab
+      checkedSwitch,
+      showAppearanceSwitch,
+      onTab,
+      onAppearanceChange
     }
   }
-
 }
 
 </script>
@@ -96,6 +130,19 @@ export default {
       background-clip text
       color transparent
       cursor pointer
+
+    .mobile-actions
+      align-items center
+      gap 12px
+
+    .desktop-actions
+      align-items center
+
+    .appearance-switch
+      margin-top 0
+
+      &--desktop
+        margin-left 16px
 
   /deep/
     .van-cell-group
