@@ -2,36 +2,37 @@
   <Header />
   <main class="project container">
     <div class="mx-auto text-center">
-      <strong class="title p-10 fz-24">Project</strong>
+      <strong class="title p-10 fz-24">{{ $t('project.title') }}</strong>
 
       <div class="content mt-28 p-20">
-        <p :class="$isMobile() ? 'fz-30' : 'fz-40'">Show you what us can!</p>
-        <p :class="$isMobile() ? 'fz-30' : 'fz-40'">These are our product.</p>
-        <p :class="$isMobile() ? '' : 'fz-20'">All those customer pic were build from xxxxxxxxxx</p>
+        <p :class="$isMobile() ? 'fz-30' : 'fz-40'">{{ $t('project.line1') }}</p>
+        <p :class="$isMobile() ? 'fz-30' : 'fz-40'">{{ $t('project.line2') }}</p>
+        <p :class="$isMobile() ? '' : 'fz-20'">{{ $t('project.line3') }}</p>
       </div>
     </div>
   </main>
 </template>
 
 <script>
-import Header from '@/components/Header'
+import Header from '@/components/Header/index.vue'
 
 export default {
   name: 'ProjectPage',
-  components: { Header }
+  components: {
+    Header
+  }
 }
 </script>
 
 <style lang="stylus" scoped>
-  .project
-    margin-top 50px
-    height 100vh
+.project
+  margin-top 50px
+  height 100vh
 
-    .title
-      text-decoration underline
+  .title
+    text-decoration underline
 
-    .content
-      background var(--white-50-percent)
-      border-radius 15px
-
+  .content
+    background var(--white-50-percent)
+    border-radius 15px
 </style>

@@ -1,135 +1,70 @@
 <template>
-  <div class="footer-nav">
-    <van-cell-group :border="false" :style="{ padding: $isMobile() ? '8px 0' : '22px 0' }" class="footer-nav__upper row">
-      <van-cell
-        v-for="(item, index) in topItems"
-        :key="index"
-        :title="item.title"
-        @click.prevent="$goToPage(item.pathName)"
-      />
-    </van-cell-group>
+  <footer class="site-footer">
+    <div class="container site-footer__content">
+      <p class="site-footer__slogan">{{ $t('footer.slogan') }}</p>
 
-    <div
-      v-if="!$isMobile()"
-      :style="{ padding: $isMobile() ? '8px 0' : '24px 0' }"
-      class="footer-nav__lower justify-around row"
-    >
-      <div
-        v-for="(footerItem, index) in bottomItems"
-        :key="index"
-        :class="`g-${$isMobile() ? '10' : '60'}`"
-        class="lower-wrap justify-center row"
-      >
-        <div
-          v-for="(item, index) in footerItem"
-          :key="index"
-          class="lower-wrap__item"
-          @click="$goToPage(item.pathName)"
-        >
-          {{ item.title }}
-        </div>
+      <div class="site-footer__social">
+        <span>{{ $t('footer.socialTitle') }}</span>
+        <a v-for="item in socials" :key="item.key" :href="item.href" target="_blank" rel="noopener noreferrer">
+          {{ $t(item.labelKey) }}
+        </a>
       </div>
+
+      <p class="site-footer__copyright">{{ $t('footer.copyright') }}</p>
     </div>
-  </div>
+  </footer>
 </template>
 
 <script>
-import { CellGroup, Cell } from 'vant'
-
 export default {
   name: 'FooterNav',
-  components: {
-    'van-cell': Cell,
-    'van-cell-group': CellGroup
-  },
-  props: {},
-  setup (_) {
-    const topItems = [
-      { pathName: 'Home', icon: '', title: 'Demo', value: 0 },
-      { pathName: 'AboutUs', icon: 'friends', title: '我們＋', value: 1 },
-      { pathName: 'Home', icon: 'manager', title: '支援＋', value: 2 }
-    ]
-    const bottomItems = [
-      [
-        { pathName: '', icon: '', title: '@2024 Demo' },
-        { pathName: '', icon: '', title: 'Privacy' },
-        { pathName: '', icon: '', title: 'Cookies' }
-      ],
-      [
-        { pathName: '', icon: '', title: 'Tags' },
-        { pathName: '', icon: '', title: 'Places' },
-        { pathName: '', icon: '', title: 'Resource' }
-      ]
+  setup () {
+    const socials = [
+      { key: 'ig', labelKey: 'footer.socialIg', href: 'https://www.instagram.com/' },
+      { key: 'fb', labelKey: 'footer.socialFb', href: 'https://www.facebook.com/' },
+      { key: 'threads', labelKey: 'footer.socialThreads', href: 'https://www.threads.net/' }
     ]
 
     return {
-      /** data */
-      topItems,
-      bottomItems
+      socials
     }
   }
-
 }
-
 </script>
 
 <style lang="stylus" scoped>
-  // setting Start
-  .justify-center
-    justify-content center
+.site-footer
+  margin-top 32px
+  border-radius 18px 18px 0 0
+  background var(--white-footer)
 
-  .justify-around
-    justify-content space-around
+  &__content
+    display grid
+    gap 12px
+    padding 18px 14px 20px
 
-  .justify-between
-    justify-content space-between
+  &__slogan
+    margin 0
+    color var(--black-70-percent)
+    font-weight 700
 
-  for space in 0 10 60
+  &__social
+    display flex
+    flex-wrap wrap
+    align-items center
+    gap 10px
+    color var(--black-70-percent)
 
-    .g-{space}
+    a
+      text-decoration none
+      padding 4px 10px
+      border-radius 999px
+      border 1px solid var(--black-30-percent)
+      color var(--black-70-percent)
+      background var(--header-control-bg)
 
-      gap (space) * 1px
-  // setting End
-
-  .footer-nav
-    position sticky
-    bottom 0
-    padding 10px
-    background var(--white-footer)
-    border-radius 5px 5px 0 0
-
-    &__upper, &__lower
-      display flex
-      align-items center
-
-    .lower-wrap
-      display flex
-      width 40%
-      cursor pointer
-
-  /deep/
-    .van-cell-group
-      background transparent
-      justify-content space-around
-
-      .van-cell
-        width auto
-        cursor pointer
-
-        &:nth-child(1)
-          padding 0
-          margin-right calc(100% / 2)
-
-          .van-cell__title
-            font-size 18px
-            background linear-gradient(to right, red, blue)
-            background-clip text
-            color transparent
-
-        &:nth-child(3) > .van-cell__title
-          padding 0
-
-        &__title
-          text-shadow 0 2px 6px var(--black-30-percent)
-
+  &__copyright
+    margin 0
+    color var(--black-70-percent)
+    font-size 12px
 </style>

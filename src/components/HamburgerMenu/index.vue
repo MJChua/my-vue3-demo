@@ -1,10 +1,12 @@
 <template>
-  <div :style="{ 'left': `${toRight}%` }" :class="['menu', { 'active': opened }]">
+  <div :style="menuStyle" :class="['menu', { 'active': opened, 'menu--inline': !absolute }]">
     <div class="hamburger" />
   </div>
 </template>
 
 <script>
+import { computed } from 'vue'
+
 export default {
   name: 'HamburgerMenu',
   props: {
@@ -15,11 +17,21 @@ export default {
     toRight: {
       type: [Number, String],
       default: 0
+    },
+    absolute: {
+      type: Boolean,
+      default: true
     }
   },
-  setup (_) {
-    return {
+  setup (props) {
+    const menuStyle = computed(() => {
+      return props.absolute
+        ? { left: `${props.toRight}%` }
+        : {}
+    })
 
+    return {
+      menuStyle
     }
   }
 }
@@ -35,6 +47,12 @@ export default {
     cursor pointer
     background transparent
     border-radius 6%
+
+    &.menu--inline
+      position relative
+      top auto
+      transform none
+      left auto
 
     .hamburger
       top 50%
