@@ -4,11 +4,11 @@ export const devRequest = ({ ...req }, errorType = []) => {
   const timeoutHandle = {
     timeout: 3000
   }
-  const normalizedUrl = String(req.url || '').replace(/^\/+/, '')
+  const normalizedUrl = String(req.url || '')
 
   return defaultRequest.request({
     ...req,
-    url: `/api/${normalizedUrl}`,
+    url: normalizedUrl,
     timeoutHandle,
     timeout: timeoutHandle.timeout
   })

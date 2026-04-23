@@ -9,11 +9,8 @@ module.exports = defineConfig({
     port: 9911,
     proxy: {
       '/api': {
-        target: 'https://d4api.dev',
-        changeOrigin: true,
-        pathRewrite: {
-          '^/api': ''
-        }
+        target: 'https://dog.ceo',
+        changeOrigin: true
       }
     }
   },

@@ -12,8 +12,8 @@
           </ul>
         </div>
         <div class="card-wrap">
-          <div v-for="(_, index) in 18" :key="index" class="card">
-            <img v-if="diabloData.image_url" :src="diabloData.image_url" alt="just-a-pic" loading="lazy">
+          <div v-for="(imageUrl, index) in imageUrls" :key="`${imageUrl}-${index}`" class="card">
+            <img :src="imageUrl" alt="api-image" loading="lazy">
           </div>
         </div>
       </section>
@@ -30,7 +30,7 @@ import { useHomeStore } from '@/store/home'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
-import { getDiabloItems } from '@/api/diablo4'
+import { getPublicImages } from '@/api/diablo4'
 
 export default {
   name: 'HomeView',
@@ -41,34 +41,32 @@ export default {
   setup (_) {
     const { proxy } = getCurrentInstance()
     const store = useHomeStore()
-    const diabloData = ref({})
+    const imageUrls = ref([])
 
     const changeTab = (index) => {
       store.onTab(index)
       proxy.$goToPage(store.computePage)
     }
 
-    const getDiabloInfos = async () => {
+    const getApiImages = async () => {
       try {
-        const data = await getDiabloItems('class/rogue/skills/heartseeker')
-        if (Object.keys(data).length) {
-          diabloData.value = data
-          return true
-        }
+        imageUrls.value = await getPublicImages(18)
+        return imageUrls.value.length > 0
       } catch (err) {
         console.warn('error:', err)
-        proxy?.$toast?.({ message: 'Failed to load Diablo data.', position: 'top' })
+        proxy?.$toast?.({ message: 'Failed to load API images.', position: 'top' })
+        imageUrls.value = []
         return false
       }
     }
 
     onMounted(() => {
-      getDiabloInfos()
+      getApiImages()
     })
 
     return {
       /** data */
-      diabloData,
+      imageUrls,
 
       /** function */
       changeTab

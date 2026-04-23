@@ -10,21 +10,12 @@
 - Branch mapping:
   - Recommended feature branch label: `feature_01_workspace-library`
 
-## 02 - Bugfix: Replace Invalid Demo API With Public Image API
-- Goal: ensure home page demonstrates real API fetch and image rendering with a stable public endpoint.
+## 02 - Bugfix: Home API Source Replacement and Image Rendering
+- Goal: replace invalid API path with a stable public API and ensure fetched images render on home page.
 - Scope:
-  - replace unavailable API path with free public API (`dog.ceo`)
-  - fix URL assembly in HTTP wrapper to avoid duplicate prefix errors
-  - update home page data flow to render image array from API response
+  - switch API source to public free endpoint (`dog.ceo`)
+  - update home page to render image list returned from API
+  - harden request URL handling to avoid malformed path combinations
 - Branch mapping:
   - Bug branch: `bug_image-api-source`
-
-## 02 - Bugfix: API URL Double Prefix and Home Request Stability
-- Goal: fix duplicated API prefix causing request failure and remove unstable throw behavior in home API flow.
-- Scope:
-  - normalize API path joining to avoid `/api//api/...`
-  - update home API path source and naming typo cleanup
-  - avoid rethrow in mounted async flow to prevent `Uncaught (in promise)`
-- Branch mapping:
-  - Bug branch: `bug_api-double-prefix`
 
