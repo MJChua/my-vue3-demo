@@ -16,7 +16,9 @@
     "test:e2e": "playwright test --project=chromium",
     "test:e2e:headed": "playwright test --project=chromium --headed",
     "test": "pnpm test:unit && pnpm test:e2e",
-    "test:ci": "pnpm lint:check && pnpm test:unit && pnpm test:e2e"
+    "test:ci": "pnpm lint:check && pnpm test:unit && pnpm test:e2e",
+    "pre:pr:quick": "pnpm test:ci",
+    "pre:pr": "pnpm test:ci && pnpm build"
   },
   "dependencies": {
     "@my-vue3/core": "workspace:*",
