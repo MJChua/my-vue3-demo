@@ -7,13 +7,13 @@
         <div class="content">
           <ul>
             <li v-for="(_, index) in 6" :key="index" class="p-10">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quos, ab. Exercitationem optio perspiciatis hic quae veritatis alias at aliquam fugit quidem, nostrum saepe. Itaque reiciendis, adipisci necessitatibus repellat reprehenderit est.
+              {{ $t('home.introItem') }}
             </li>
           </ul>
         </div>
         <div class="card-wrap">
           <div v-for="(imageUrl, index) in imageUrls" :key="`${imageUrl}-${index}`" class="card">
-            <img :src="imageUrl" alt="api-image" loading="lazy">
+            <img :src="imageUrl" :alt="$t('home.imageAlt')" loading="lazy">
           </div>
         </div>
       </section>
@@ -54,7 +54,7 @@ export default {
         return imageUrls.value.length > 0
       } catch (err) {
         console.warn('error:', err)
-        proxy?.$toast?.({ message: 'Failed to load API images.', position: 'top' })
+        proxy?.$toast?.({ message: proxy.$t('home.loadFailed'), position: 'top' })
         imageUrls.value = []
         return false
       }

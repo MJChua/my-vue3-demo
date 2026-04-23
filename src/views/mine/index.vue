@@ -1,21 +1,23 @@
 <template>
   <main class="mine">
     <Header />
+
     <div class="container text-left">
-      <strong class="title p-10 fz-24">Mine</strong>
+      <strong class="title p-10 fz-24">{{ $t('mine.title') }}</strong>
 
       <div class="row">
         <div
-          v-for="(item, index) in contentItems"
-          :key="index"
+          v-for="item in contentItems"
+          :key="item.index"
           :style="{ 'min-height': $isMobile() ? '200px' : '170px' }"
           class="container-xs content mt-28 mx-auto"
         >
           <div class="desc-wrap row py-16 px-24">
-            <strong :class="{ 'mx-auto': $isMobile() }">{{ item.title }}</strong>
+            <strong :class="{ 'mx-auto': $isMobile() }">{{ $t(item.titleKey) }}</strong>
+
             <div class="desc mt-10">
-              <p>slrfgjsl;oi132pj4;oi34wt</p>
-              <p>selrkgfnselukgn2804yut8hsoelu</p>
+              <p>{{ $t('mine.descLine1') }}</p>
+              <p>{{ $t('mine.descLine2') }}</p>
             </div>
           </div>
         </div>
@@ -34,10 +36,10 @@ export default {
   },
   setup () {
     const contentItems = [
-      { index: 0, title: 'Appearance' },
-      { index: 1, title: 'Appearance' },
-      { index: 2, title: 'Appearance' },
-      { index: 3, title: 'Appearance' }
+      { index: 0, titleKey: 'mine.appearance' },
+      { index: 1, titleKey: 'mine.appearance' },
+      { index: 2, titleKey: 'mine.appearance' },
+      { index: 3, titleKey: 'mine.appearance' }
     ]
 
     return {
@@ -48,24 +50,23 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-  .mine
-    height 100vh
+.mine
+  min-height 100vh
 
-    .container
-      margin-top 20px
+  .container
+    margin-top 20px
 
-      .title, .content
-        cursor default
+    .title, .content
+      cursor default
 
-      .content
-        background var(--black-30-percent)
-        border-radius 30px
-        width calc(100% / 2 - 15px)
+    .content
+      background var(--black-30-percent)
+      border-radius 30px
+      width calc(100% / 2 - 15px)
 
-        .desc-wrap
-          justify-content space-between
+      .desc-wrap
+        justify-content space-between
 
-          .desc > p
-            word-break break-all
-
+        .desc > p
+          word-break break-word
 </style>

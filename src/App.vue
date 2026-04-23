@@ -45,7 +45,7 @@ export default {
 
 <style lang="stylus">
 
-// 處理暗色系圖片切換機制
+// Global background appearance classes
 .light-mode
   #app
     background var(--normal-background) url('~@/assets/images/bg.webp') repeat-y center top
