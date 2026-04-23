@@ -20,3 +20,14 @@
 - Branch mapping:
   - Bug branch: `bug_image-api-source`
 
+## 03 - Home UI and Appearance Control Relocation
+- Goal: standardize home image card sizes and move global appearance switch from mine page to home header flow.
+- Scope:
+  - set image card size to `150x100` on mobile and `300x120` on desktop
+  - enforce image corner radius `8px`
+  - move appearance switch to header and show on home page
+  - mobile header: `12px` gap between appearance switch and hamburger menu
+  - desktop header: place appearance switch to the right of `Mine` nav item
+  - remove old appearance popup entry from mine page
+- Branch mapping:
+  - Working branch: `bug_image-api-source`
