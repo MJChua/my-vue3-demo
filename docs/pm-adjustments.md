@@ -31,3 +31,13 @@
   - remove old appearance popup entry from mine page
 - Branch mapping:
   - Working branch: `bug_image-api-source`
+
+## 04 - Test Foundation (Unit + E2E + Mock + CI)
+- Goal: establish automated test baseline for quality gates in `devlop` integration flow.
+- Scope:
+  - add unit test stack: `Vitest + Vue Test Utils`
+  - add API mock stack: `MSW`
+  - add browser E2E stack: `Playwright`
+  - add CI workflow: run lint, unit, and e2e smoke on pull request
+- Branch mapping:
+  - Feature branch: `feature_04_test-foundation`
