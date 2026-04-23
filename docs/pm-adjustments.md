@@ -16,6 +16,7 @@
   - switch API source to public free endpoint (`dog.ceo`)
   - update home page to render image list returned from API
   - harden request URL handling to avoid malformed path combinations
+  - rename API module from `diablo4.js` to `dogApi.js` (camelCase naming)
 - Branch mapping:
   - Bug branch: `bug_image-api-source`
 
