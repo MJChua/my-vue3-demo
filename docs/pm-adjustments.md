@@ -87,3 +87,23 @@
   - update footer with adoption advocacy and social links
 - Branch mapping:
   - Feature branch: `feature_08_vite-home-immersive`
+
+## 09 - Deployment SOP Documentation
+- Goal: standardize packaging and online release workflow for repeatable deployment.
+- Scope:
+  - add deployment playbook doc for Vite + pnpm project
+  - include pre-release checks, build artifact rules, deploy modes, smoke-test checklist, and rollback plan
+  - align release behavior with `devlop -> master` sprint flow
+- Branch mapping:
+  - Feature branch: `feature_08_vite-home-immersive`
+
+## 10 - Release and Hotfix Branch Governance
+- Goal: lock down production release governance with explicit SemVer branch naming and merge order.
+- Scope:
+  - define release branch naming from `master`: `release_0.1.0`, `release_0.2.0`, ...
+  - define hotfix branch naming: `hotfix_0.1.1`, `hotfix_0.2.1`, ...
+  - enforce sprint rule: consolidate all sprint `feature_*` + `bug_*` scope into release branch first
+  - enforce final publishing path: `release_* -> master -> deploy`
+  - keep `devlop` as daily integration branch and not direct production publish source
+- Branch mapping:
+  - Process governance update (no standalone code branch required)

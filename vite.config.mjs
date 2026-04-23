@@ -13,6 +13,7 @@ export default defineConfig({
     }
   },
   server: {
+    allowedHosts: true,
     port: 9911,
     proxy: {
       '/api': {
@@ -30,6 +31,11 @@ export default defineConfig({
         rewrite: (pathName) => pathName.replace(/^\/foxapi/, '')
       }
     }
+  },
+  preview: {
+    host: true,
+    allowedHosts: true,
+    port: 4173
   },
   css: {
     preprocessorOptions: {
