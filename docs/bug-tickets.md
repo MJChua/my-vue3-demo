@@ -17,3 +17,18 @@
 - Validation:
   - `pnpm lint` passed
   - `pnpm build` passed (warnings only)
+
+## BUG-002 - Desktop footer throws i18n linked-format compile error
+- Status: Fixed (Pending merge to `devlop`)
+- Branch: `bug_i18n-linked-format`
+- Reported symptom:
+  - Desktop page logs `Message compilation error: Invalid linked format`.
+  - Error points to `@2026 Demo` in footer locale text.
+- Root cause:
+  - In `vue-i18n`, `@` is reserved for linked-message syntax.
+  - Raw text starting with `@` is parsed as an invalid linked format.
+- Fix:
+  - replaced footer copyright text from `@2026 Demo` to `© 2026 Demo`
+  - updated both locale packs: `en` and `zh-TW`
+- Validation:
+  - `pnpm pre:pr:quick` passed
