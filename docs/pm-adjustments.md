@@ -73,3 +73,17 @@
   - keep API-driven remote image loading and friendly load-failure feedback
 - Branch mapping:
   - Feature branch: `feature_07_lacedb-home-pet-wall`
+
+## 08 - Vite Migration and Immersive Home Experience
+- Goal: migrate build system to Vite and redesign home as a commercial-grade pet content entry page.
+- Scope:
+  - replace Vue CLI runtime/build config with Vite config and scripts
+  - keep existing pnpm + test workflow compatible after migration
+  - upgrade hero to high-impact visual section (video/slider-ready structure + CTA)
+  - add Daily Star spotlight card with route-ready interaction
+  - add category explorer with interactive hover motion
+  - upgrade wall into infinite-style paw-wall with segment tabs and engagement stats placeholders
+  - add upcoming upload teaser section with notification CTA
+  - update footer with adoption advocacy and social links
+- Branch mapping:
+  - Feature branch: `feature_08_vite-home-immersive`

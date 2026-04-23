@@ -48,17 +48,17 @@ export default {
 // Global background appearance classes
 .light-mode
   #app
-    background var(--normal-background) url('~@/assets/images/bg.webp') repeat-y center top
+    background var(--normal-background) url('@/assets/images/bg.webp') repeat-y center top
     background-size 100% auto
 
 .dark-mode
   #app
-    background var(--normal-background) url('~@/assets/images/bg-dark.webp') repeat-y center top
+    background var(--normal-background) url('@/assets/images/bg-dark.webp') repeat-y center top
     background-size 100% auto
 
 @media (prefers-color-scheme: dark)
   #app
-    background var(--normal-background) url('~@/assets/images/bg-dark.webp') repeat-y center top
+    background var(--normal-background) url('@/assets/images/bg-dark.webp') repeat-y center top
     background-size 100% auto
 
 </style>

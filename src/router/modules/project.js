@@ -1,5 +1,5 @@
 export default {
   path: '/project',
   name: 'Project',
-  component: () => import(/* webpackChunkName: "Project" */ '@/views/stationery/project')
+  component: () => import('@/views/stationery/project.vue')
 }
