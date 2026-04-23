@@ -38,6 +38,14 @@ This file tracks reusable features from the app that should be extracted into in
   - `install(app)` plugin helper
 - Status: planned
 
+5. Read-only pet data repository (LaceDB-style)
+- Source: `src/data/laceDb/readOnlyPetRepository.js`, `src/api/petFeedApi.js`
+- Target package: `@my-vue3/core` (or future `@my-vue3/data`)
+- Planned exports:
+  - `fetchReadOnlyPetRows(options?)`
+  - `laceDbSchema`
+- Status: in-app implementation completed, package extraction planned
+
 ## Notes
 - Keep app-specific content (copywriting, business routes, brand styles) inside the app.
 - Extract only reusable logic and presentational components with stable props/events.

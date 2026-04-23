@@ -13,5 +13,19 @@ export const handlers = [
       status: 'success',
       message: makeImageUrls(count)
     })
+  }),
+  http.get('https://api.thecatapi.com/v1/images/search', ({ request }) => {
+    const url = new URL(request.url)
+    const count = Number(url.searchParams.get('limit') || 1)
+    const payload = Array.from({ length: count }, (_, index) => ({
+      id: `cat-${index + 1}`,
+      url: `https://api.thecatapi.com/mock/cat-${index + 1}.jpg`
+    }))
+    return HttpResponse.json(payload)
+  }),
+  http.get('https://randomfox.ca/floof/', () => {
+    return HttpResponse.json({
+      image: 'https://randomfox.ca/mock/fox-1.jpg'
+    })
   })
 ]

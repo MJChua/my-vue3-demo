@@ -62,3 +62,14 @@
   - improve header language toggle contrast in light/dark themes with dedicated control color tokens
 - Branch mapping:
   - Feature branch: `feature_05_i18n-theme-controls`
+
+## 07 - LaceDB Read-Only Model and Home Core Experience Upgrade
+- Goal: finalize read-only data architecture for pet content and deliver home-page conversion flow.
+- Scope:
+  - define LaceDB schema for read-only pet browsing with future `User -> Pets (1:N)` relation fields reserved
+  - implement hero section with optimized WebP pet visual
+  - implement masonry pet wall with smooth scrolling behavior and image-failure placeholders
+  - implement category filters (`cat`, `dog`, `exotic`) for efficient discovery
+  - keep API-driven remote image loading and friendly load-failure feedback
+- Branch mapping:
+  - Feature branch: `feature_07_lacedb-home-pet-wall`

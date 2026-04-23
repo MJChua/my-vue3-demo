@@ -1,51 +1,91 @@
 const { test, expect } = require('@playwright/test')
 
-function createImages (count) {
+function createImageDataUri (label) {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400"><rect width="100%" height="100%" fill="#d7e4ff"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#2d3b55" font-size="32">${label}</text></svg>`
+  return `data:image/svg+xml,${encodeURIComponent(svg)}`
+}
+
+function createDogImages (count, withBrokenImage = false) {
   return Array.from({ length: count }, (_, index) => {
-    return `https://images.dog.ceo/mock/e2e-dog-${index + 1}.jpg`
+    if (withBrokenImage && index === 0) return '/broken-image.jpg'
+    return createImageDataUri(`Dog-${index + 1}`)
   })
 }
 
-async function mockHomeImageApi (page, count = 18) {
-  await page.route(`**/api/breeds/image/random/${count}`, async (route) => {
+function createCatImages (count) {
+  return Array.from({ length: count }, (_, index) => {
+    return { id: `cat-${index + 1}`, url: createImageDataUri(`Cat-${index + 1}`) }
+  })
+}
+
+function createFoxImage (index) {
+  return createImageDataUri(`Fox-${index + 1}`)
+}
+
+async function mockPetApis (page, options = {}) {
+  const {
+    dogCount = 8,
+    catCount = 8,
+    foxCount = 8,
+    withBrokenImage = false
+  } = options
+
+  const dogImages = createDogImages(dogCount, withBrokenImage)
+  const catImages = createCatImages(catCount)
+  let foxIndex = 0
+
+  await page.route(`**/api/breeds/image/random/${dogCount}`, async (route) => {
     await route.fulfill({
       status: 200,
       contentType: 'application/json',
       body: JSON.stringify({
         status: 'success',
-        message: createImages(count)
+        message: dogImages
       })
+    })
+  })
+
+  await page.route(`**/v1/images/search?limit=${catCount}`, async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify(catImages)
+    })
+  })
+
+  await page.route('**/floof/', async (route) => {
+    const image = foxIndex < foxCount
+      ? createFoxImage(foxIndex)
+      : createFoxImage(foxCount - 1)
+    foxIndex += 1
+
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({ image })
     })
   })
 }
 
-test('home renders images from API', async ({ page }) => {
-  await mockHomeImageApi(page)
+test('home renders hero section and masonry cards from pet APIs', async ({ page }) => {
+  await mockPetApis(page)
   await page.goto('/')
 
-  const imageCards = page.locator('.card-wrap .card img')
-  await expect(imageCards).toHaveCount(18)
-  await expect(imageCards.first()).toBeVisible()
+  await expect(page.locator('.hero__img')).toBeVisible()
+  await expect(page.locator('.pet-wall .pet-card')).toHaveCount(24)
 })
 
-test('home card size follows mobile width rule', async ({ page }) => {
-  await page.setViewportSize({ width: 375, height: 812 })
-  await mockHomeImageApi(page)
+test('home category filter narrows visible cards', async ({ page }) => {
+  await mockPetApis(page)
   await page.goto('/')
 
-  const firstCard = page.locator('.card-wrap .card').first()
-  await expect(firstCard).toHaveCSS('width', '150px')
-  await expect(firstCard).toHaveCSS('height', '100px')
+  await page.locator('.filter-chip').nth(1).click()
+  await expect(page.locator('.pet-wall .pet-card')).toHaveCount(8)
 })
 
-test('home card size follows desktop width rule', async ({ page }) => {
-  await page.setViewportSize({ width: 1280, height: 800 })
-  await mockHomeImageApi(page)
+test('home shows placeholder when image loading fails', async ({ page }) => {
+  await mockPetApis(page, { withBrokenImage: true })
   await page.goto('/')
 
-  const firstCard = page.locator('.card-wrap .card').first()
-  const firstImage = page.locator('.card-wrap .card img').first()
-  await expect(firstCard).toHaveCSS('width', '300px')
-  await expect(firstCard).toHaveCSS('height', '120px')
-  await expect(firstImage).toHaveCSS('border-radius', '8px')
+  await expect(page.locator('.pet-card__placeholder').first()).toBeVisible()
 })
