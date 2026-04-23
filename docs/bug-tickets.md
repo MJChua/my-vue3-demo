@@ -13,6 +13,7 @@
   - replaced source with public free API: `https://dog.ceo/api/breeds/image/random/{count}`
   - updated home flow to consume array responses and render image cards
   - adjusted HTTP request wrapper to pass URL directly
+  - renamed API module to `dogApi.js` to match naming convention and domain meaning
 - Validation:
   - `pnpm lint` passed
   - `pnpm build` passed (warnings only)

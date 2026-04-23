@@ -30,7 +30,7 @@ import { useHomeStore } from '@/store/home'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
-import { getPublicImages } from '@/api/diablo4'
+import { getPublicImages } from '@/api/dogApi'
 
 export default {
   name: 'HomeView',
