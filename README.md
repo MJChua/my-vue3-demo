@@ -25,5 +25,15 @@ pnpm lint
 pnpm lint:workspace
 ```
 
+### Unit tests
+```
+pnpm test:unit
+```
+
+### E2E tests
+```
+pnpm test:e2e
+```
+
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).

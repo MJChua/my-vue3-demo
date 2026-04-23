@@ -1,8 +1,10 @@
 import { devRequest as request } from '@/utils/http'
 
+const DOG_API_BASE = process.env.VITEST ? 'https://dog.ceo/api' : '/api'
+
 export const getPublicImages = async (count = 18) => {
   const data = await request({
-    url: `/api/breeds/image/random/${count}`,
+    url: `${DOG_API_BASE}/breeds/image/random/${count}`,
     method: 'get'
   })
 
