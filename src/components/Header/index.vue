@@ -1,8 +1,8 @@
 <template>
-  <div :class="$isMobile() ? 'px-24' : 'px-40'" class="header fw-700 row py-16">
+  <div :class="$isMobile() ? 'px-24' : 'px-40'" class="header fw-700 py-16">
     <div :class="$isMobile() ? 'fz-20' : 'fz-24'" class="logo" @click="$goHome()">Demo</div>
 
-    <div v-if="$isMobile()" class="mobile-actions row">
+    <div v-if="$isMobile()" class="mobile-actions">
       <van-switch
         v-if="showAppearanceSwitch"
         v-model="checkedSwitch"
@@ -13,8 +13,8 @@
       <HamburgerMenu :opened="show" :absolute="false" @click="() => show = true" />
     </div>
 
-    <div v-else class="desktop-actions row">
-      <van-cell-group :border="false" class="row">
+    <div v-else class="desktop-actions">
+      <van-cell-group :border="false" class="desktop-nav">
         <van-cell
           v-for="(item, index) in homeTabs"
           :key="index"
@@ -113,6 +113,9 @@ export default {
 
 <style lang="stylus" scoped>
   .header
+    display flex
+    align-items center
+    flex-wrap nowrap
     position sticky
     top 0
     z-index $z-index-header
@@ -123,7 +126,7 @@ export default {
     overflow hidden
 
     .logo
-      margin-right calc(100% / 2 - 40px)
+      margin-right auto
       font-style italic
       transform rotate(-5deg)
       background linear-gradient(to right, red, blue)
@@ -132,23 +135,30 @@ export default {
       cursor pointer
 
     .mobile-actions
+      display flex
       align-items center
+      margin-left auto
       gap 12px
 
     .desktop-actions
+      display flex
       align-items center
+      margin-left auto
+      flex-wrap nowrap
 
     .appearance-switch
       margin-top 0
 
       &--desktop
-        margin-left 16px
+        margin-left 12px
 
   /deep/
     .van-cell-group
-      width calc(100% / 2 - 40px)
+      display flex
+      align-items center
+      flex-wrap nowrap
+      width auto
       background transparent
-      justify-content space-between
 
       .van-cell
         width auto
