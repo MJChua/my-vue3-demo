@@ -11,7 +11,20 @@ const enMessages = {
   },
   home: {
     introItem: 'This is a demo page showing API integration and image card rendering.',
-    imageAlt: 'Dog image',
+    heroAlt: 'Hero pet visual',
+    heroBadge: 'Read-only pet feed',
+    heroTitle: 'Find a companion across dog, cat, and exotic categories.',
+    heroSubtitle: 'Fast browsing, category filtering, and image-fallback handling are ready for future community uploads.',
+    wallTitle: 'Live pet wall',
+    wallSubtitle: 'Masonry layout optimized for smooth browsing.',
+    filterAll: 'All',
+    filterDog: 'Dog',
+    filterCat: 'Cat',
+    filterExotic: 'Exotic',
+    imageAlt: 'Pet image',
+    imageLoadFailed: 'Image failed to load',
+    imageLoadHint: 'Fallback placeholder is shown to keep browsing smooth.',
+    partialLoadHint: 'Some feeds are delayed. Showing available results first.',
     loadFailed: 'Failed to load images. Please try again later.'
   },
   mine: {
