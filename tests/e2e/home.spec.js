@@ -34,7 +34,7 @@ async function mockPetApis (page, options = {}) {
   const catImages = createCatImages(catCount)
   let foxIndex = 0
 
-  await page.route(`**/api/breeds/image/random/${dogCount}`, async (route) => {
+  await page.route(`**/dog.ceo/api/breeds/image/random/${dogCount}`, async (route) => {
     await route.fulfill({
       status: 200,
       contentType: 'application/json',
@@ -45,7 +45,7 @@ async function mockPetApis (page, options = {}) {
     })
   })
 
-  await page.route(`**/v1/images/search?limit=${catCount}`, async (route) => {
+  await page.route(`**/api.thecatapi.com/v1/images/search?limit=${catCount}`, async (route) => {
     await route.fulfill({
       status: 200,
       contentType: 'application/json',
@@ -53,7 +53,7 @@ async function mockPetApis (page, options = {}) {
     })
   })
 
-  await page.route('**/floof/', async (route) => {
+  await page.route('**/randomfox.ca/floof/', async (route) => {
     const image = foxIndex < foxCount
       ? createFoxImage(foxIndex)
       : createFoxImage(foxCount - 1)
@@ -67,20 +67,21 @@ async function mockPetApis (page, options = {}) {
   })
 }
 
-test('home renders hero section and masonry cards from pet APIs', async ({ page }) => {
+test('home renders hero section, daily star, and paw wall', async ({ page }) => {
   await mockPetApis(page)
   await page.goto('/')
 
-  await expect(page.locator('.hero__img')).toBeVisible()
-  await expect(page.locator('.pet-wall .pet-card')).toHaveCount(24)
+  await expect(page.locator('.hero__slide.is-active')).toBeVisible()
+  await expect(page.locator('.daily-star__card')).toBeVisible()
+  await expect(page.locator('.pet-wall .pet-card')).toHaveCount(18)
 })
 
-test('home category filter narrows visible cards', async ({ page }) => {
+test('home explorer interaction updates wall category', async ({ page }) => {
   await mockPetApis(page)
   await page.goto('/')
 
-  await page.locator('.filter-chip').nth(1).click()
-  await expect(page.locator('.pet-wall .pet-card')).toHaveCount(8)
+  await page.locator('.explorer__item').first().click()
+  await expect(page.locator('.paw-wall__filters .chip--outline').nth(2)).toHaveClass(/is-active/)
 })
 
 test('home shows placeholder when image loading fails', async ({ page }) => {

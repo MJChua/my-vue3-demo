@@ -1,6 +1,6 @@
 <template>
   <div :class="$isMobile() ? 'px-24' : 'px-40'" class="header fw-700 py-16">
-    <div :class="$isMobile() ? 'fz-20' : 'fz-24'" class="logo" @click="$goHome()">Demo</div>
+    <div :class="$isMobile() ? 'fz-20' : 'fz-24'" class="logo" @click="$goHome()">{{ $t('header.brand') }}</div>
 
     <van-cell-group v-if="!$isMobile()" :border="false" class="desktop-nav">
       <van-cell
@@ -64,7 +64,7 @@ import { useAppStore } from '@/store/main'
 import { getLocale, toggleLocale } from '@/i18n'
 import { homeTabs } from '@/store/constant'
 
-import HamburgerMenu from '@/components/HamburgerMenu'
+import HamburgerMenu from '@/components/HamburgerMenu/index.vue'
 
 export default {
   name: 'HeaderMenu',
@@ -195,33 +195,32 @@ export default {
   .menu-trigger
     margin-left 12px
 
-/deep/
-  .desktop-nav
-    .van-cell
-      flex none
-      width auto
-      cursor pointer
-      color var(--black-70-percent)
-      background transparent
-      padding 6px 8px
+:deep(.desktop-nav)
+  .van-cell
+    flex none
+    width auto
+    cursor pointer
+    color var(--black-70-percent)
+    background transparent
+    padding 6px 8px
 
-      &__title
-        text-shadow 0 2px 6px var(--black-30-percent)
+    &__title
+      text-shadow 0 2px 6px var(--black-30-percent)
 
-      &:active
-        .van-icon
-          transition all .1s ease
-          transform rotate(45deg)
-
-  .van-popup
-    background var(--main-color)
-    top 24%
-
-    .van-cell
-      padding-left 10px
-
+    &:active
       .van-icon
-        color var(--black-70-percent)
+        transition all .1s ease
+        transform rotate(45deg)
+
+:deep(.van-popup)
+  background var(--main-color)
+  top 24%
+
+  .van-cell
+    padding-left 10px
+
+    .van-icon
+      color var(--black-70-percent)
 
 @media (max-width: 767px)
   .header

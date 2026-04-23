@@ -1,6 +1,6 @@
 import { devRequest as request } from '@/utils/http'
 
-const DOG_API_BASE = process.env.VITEST ? 'https://dog.ceo/api' : '/api'
+const DOG_API_BASE = 'https://dog.ceo/api'
 const CAT_API_BASE = 'https://api.thecatapi.com/v1'
 const EXOTIC_API_BASE = 'https://randomfox.ca'
 

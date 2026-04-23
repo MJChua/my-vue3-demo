@@ -7,7 +7,7 @@ pnpm install
 
 ### Compiles and hot-reloads for development
 ```
-pnpm serve
+pnpm dev
 ```
 
 ### Compiles and minifies for production
@@ -35,5 +35,10 @@ pnpm test:unit
 pnpm test:e2e
 ```
 
+### Preview built app
+```
+pnpm preview
+```
+
 ### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+See [Vite Configuration Reference](https://vitejs.dev/config/).

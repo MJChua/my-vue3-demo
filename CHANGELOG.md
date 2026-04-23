@@ -13,6 +13,8 @@ All notable changes to this project will be documented in this file.
 - LaceDB read-only architecture document with future `User -> Pets` relation planning.
 - Read-only pet repository (`src/data/laceDb`) and multi-source pet feed API integration.
 - Hero section WebP main visual and category-driven pet feed wall on home page.
+- Immersive home sections: Hero CTA, Daily Star, category explorer, infinite-style paw-wall, and upcoming upload teaser.
+- Adoption advocacy footer with social links (IG / FB / Threads).
 
 ### Changed
 - Standardized local workflow to `pnpm` commands in `README.md`.
@@ -22,6 +24,7 @@ All notable changes to this project will be documented in this file.
 - Improved language-toggle contrast tokens for dark/light theme readability.
 - Upgraded home page to masonry layout with category filters (`cat`, `dog`, `exotic`).
 - Added image-load fallback placeholders with friendly failure messaging on pet cards.
+- Migrated project build/dev pipeline from Vue CLI to Vite (`vite.config.mjs`, root `index.html`, Vite scripts).
 
 ### Removed
 - Deprecated standalone appearance switch component in `src/components/Switch/index.vue`.

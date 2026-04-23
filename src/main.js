@@ -5,6 +5,7 @@ import App from './App.vue'
 import router from './router'
 import { i18n, setupI18n } from './i18n'
 import './assets/styles/index.js'
+import 'vant/lib/index.css'
 
 import { Toast } from 'vant'
 
