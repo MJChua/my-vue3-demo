@@ -42,7 +42,7 @@ const enMessages = {
     demo: 'Demo',
     aboutUs: 'About Us',
     mine: 'Profile',
-    copyright: '@2026 Demo',
+    copyright: '\u00a9 2026 Demo',
     privacy: 'Privacy',
     cookies: 'Cookie Policy',
     tags: 'Tags',

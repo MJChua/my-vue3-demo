@@ -42,7 +42,7 @@ const zhTwMessages = {
     demo: 'Demo',
     aboutUs: '\u95dc\u65bc\u6211\u5011',
     mine: '\u500b\u4eba',
-    copyright: '@2026 Demo',
+    copyright: '\u00a9 2026 Demo',
     privacy: '\u96b1\u79c1\u6b0a',
     cookies: 'Cookie \u653f\u7b56',
     tags: '\u6a19\u7c64',
