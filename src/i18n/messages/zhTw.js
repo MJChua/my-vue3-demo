@@ -3,12 +3,24 @@ const zhTwMessages = {
     aboutUs: '\u95dc\u65bc\u6211\u5011',
     service: '\u670d\u52d9',
     project: '\u5c08\u6848',
-    mine: '\u500b\u4eba'
+    mine: '\u6211\u7684'
   },
   header: {
     brand: '\u840c\u5bf5\u65e5\u8a18',
     switchToEnglish: 'EN',
-    switchToChinese: '\u7e41\u4e2d'
+    switchToChinese: '\u7e41\u4e2d',
+    loginRegister: '\u767b\u5165/\u8a3b\u518a'
+  },
+  mobileNav: {
+    navLabel: '\u624b\u6a5f\u5e95\u90e8\u5c0e\u89bd',
+    quickAccess: '\u5feb\u901f\u9032\u5165',
+    home: '\u9996\u9801',
+    diary: '\u65e5\u8a18',
+    plus: '\u5feb\u6377\u64cd\u4f5c',
+    newDiary: '\u5beb\u65e5\u8a18',
+    uploadImage: '\u4e0a\u50b3\u5716\u7247',
+    mine: '\u6211\u7684',
+    more: '\u66f4\u591a'
   },
   home: {
     introItem: '\u9019\u662f\u4e00\u500b\u793a\u7bc4\u9801\uff0c\u5c55\u793a API \u4e32\u63a5\u8207\u5716\u7247\u5361\u7247\u6392\u7248\u80fd\u529b\u3002',
@@ -49,7 +61,56 @@ const zhTwMessages = {
     loadFailed: '\u5716\u7247\u8f09\u5165\u5931\u6557\uff0c\u8acb\u7a0d\u5f8c\u518d\u8a66\u3002'
   },
   mine: {
-    title: '\u500b\u4eba',
+    title: '\u6211\u7684\u4e3b\u9801',
+    subtitle: '\u6574\u7406\u4f60\u81ea\u5df1\u4e0a\u50b3\u7684\u5716\u7247\u8207\u5206\u4eab\u904e\u7684\u65e5\u8a18\u3002',
+    photoSection: '\u6211\u7684\u5716\u7247',
+    diarySection: '\u6211\u7684\u65e5\u8a18',
+    edit: '\u7de8\u8f2f',
+    photoEmpty: '\u76ee\u524d\u9084\u6c92\u6709\u4e0a\u50b3\u5716\u7247\u3002',
+    diaryEmpty: '\u76ee\u524d\u9084\u6c92\u6709\u65e5\u8a18\u8a18\u9304\u3002'
+  },
+  diary: {
+    title: '\u793e\u7fa4\u65e5\u8a18',
+    subtitle: '\u770b\u770b\u6240\u6709\u7528\u6236\u5206\u4eab\u7684\u6bdb\u5b69\u6545\u4e8b\u3002',
+    latest: '\u6700\u65b0',
+    popular: '\u71b1\u9580',
+    following: '\u8ffd\u8e64',
+    author: '\u4f5c\u8005',
+    readMore: '\u7e7c\u7e8c\u95b1\u8b80'
+  },
+  more: {
+    title: '\u66f4\u591a',
+    subtitle: '\u96c6\u4e2d\u653e\u7f6e\u5c08\u6848\u8cc7\u8a0a\u8207\u9032\u968e\u9801\u9762\u5165\u53e3\u3002',
+    aboutUs: '\u95dc\u65bc\u6211\u5011',
+    service: '\u670d\u52d9',
+    project: '\u5c08\u6848',
+    profileSettings: '\u500b\u4eba\u8a2d\u5b9a'
+  },
+  auth: {
+    title: '\u6703\u54e1\u5165\u53e3',
+    subtitle: '\u767b\u5165\u6216\u8a3b\u518a\u5f8c\uff0c\u5373\u53ef\u5206\u4eab\u8207\u7ba1\u7406\u5167\u5bb9\u3002',
+    loginTab: '\u767b\u5165',
+    registerTab: '\u8a3b\u518a',
+    email: '\u96fb\u5b50\u4fe1\u7bb1',
+    password: '\u5bc6\u78bc',
+    confirmPassword: '\u78ba\u8a8d\u5bc6\u78bc',
+    loginAction: '\u767b\u5165',
+    registerAction: '\u8a3b\u518a'
+  },
+  diaryCreate: {
+    title: '\u65b0\u589e\u65e5\u8a18',
+    subtitle: '\u628a\u4eca\u5929\u7684\u840c\u5bf5\u77ac\u9593\u8a18\u9304\u4e0b\u4f86\u5427\u3002',
+    saveDraft: '\u5132\u5b58\u8349\u7a3f',
+    publish: '\u767c\u4f48'
+  },
+  uploadImage: {
+    title: '\u4e0a\u50b3\u5716\u7247',
+    subtitle: '\u5c07\u5bf5\u7269\u5716\u7247\u4e0a\u50b3\u5230\u4f60\u7684\u4e3b\u9801\u8207\u793e\u7fa4\u7246\u3002',
+    uploadButton: '\u9078\u64c7\u5716\u7247',
+    submit: '\u9001\u51fa'
+  },
+  profileSettings: {
+    title: '\u500b\u4eba\u8a2d\u5b9a',
     appearance: '\u4ecb\u9762\u504f\u597d',
     descLine1: '\u53ef\u5728\u6b64\u7ba1\u7406\u500b\u4eba\u5316\u986f\u793a\u8a2d\u5b9a\u3002',
     descLine2: '\u5305\u542b\u4e3b\u984c\u8207\u8a9e\u8a00\u7684\u700f\u89bd\u9ad4\u9a57\u3002'
@@ -75,7 +136,7 @@ const zhTwMessages = {
   footer: {
     demo: 'Demo',
     aboutUs: '\u95dc\u65bc\u6211\u5011',
-    mine: '\u500b\u4eba',
+    mine: '\u6211\u7684',
     copyright: '\u00a9 2026 Demo',
     slogan: '\u9818\u990a\u4ee3\u66ff\u8cfc\u8cb7\uff0c\u611b\u7260\u5c31\u4e0d\u8981\u62cb\u68c4\u7260\u3002',
     socialTitle: '\u793e\u7fa4\u8ffd\u8e64',

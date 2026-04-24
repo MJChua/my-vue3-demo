@@ -1,5 +1,6 @@
 <template>
   <router-view/>
+  <MobileBottomNav />
 </template>
 
 <script>
@@ -8,9 +9,13 @@ import { useAppStore } from './store/main'
 import { storeToRefs } from 'pinia'
 
 import { attachAutoResize } from '@/utils/resizeScreen'
+import MobileBottomNav from '@/components/MobileBottomNav/index.vue'
 
 export default {
   name: 'App',
+  components: {
+    MobileBottomNav
+  },
   setup (_) {
     const { proxy } = getCurrentInstance()
     const store = useAppStore()
@@ -60,5 +65,9 @@ export default {
   #app
     background var(--normal-background) url('@/assets/images/bg-dark.webp') repeat-y center top
     background-size 100% auto
+
+@media (max-width: 767px)
+  main
+    padding-bottom 88px
 
 </style>
