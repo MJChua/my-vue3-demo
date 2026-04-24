@@ -52,3 +52,9 @@
 ## Cleanup Rule
 - When replacing images/files during feature or bug changes, remove old files that are no longer used.
 - Before PR, verify no stale assets or dead files remain in the branch.
+
+## Theme Contrast Rule
+- Any feature touching UI must validate light/dark readability before PR:
+  - text cannot blend into card/background after theme switch
+  - control labels/icons must keep sufficient contrast in both modes
+  - mobile drawer, footer actions, and primary forms are mandatory checkpoints

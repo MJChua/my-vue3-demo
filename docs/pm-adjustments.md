@@ -129,3 +129,21 @@
   - keep desktop behavior stable while isolating redesign to mobile UX
 - Branch mapping:
   - Feature branch: `feature_12_mobile-shell-rework`
+
+## 13 - Mobile Menu UX + User Content Flow Completion
+- Goal: finalize mobile navigation usability and make diary/image/profile workflows executable.
+- Scope:
+  - reorder mobile drawer actions:
+    - first row: theme toggle with sun/moon icon and right label (`theme` / `主題色`)
+    - second row: language toggle with right label (`EN/中`)
+  - remove old quick-access heading block and simplify drawer structure
+  - add avatar-based `Mine` icon in both drawer and mobile footer
+  - re-center footer `+` action and redesign dual quick actions to avoid overlap in light/dark themes
+  - make `DiaryCreate` and `UploadImage` pages truly submit data through local store flow
+  - make `Mine` page edit actions functional (content management + delete actions)
+  - enrich diary page with mock + user-created feed composition
+  - update `More` page to remove `Project` entry and add `Back to More` flow for internal pages
+  - add profile settings avatar update and sync avatar rendering to `Mine`/drawer/footer
+  - strengthen dark/light text-surface contrast tokens for newly adjusted modules
+- Branch mapping:
+  - Feature branch: `feature_13_mobile-ux-and-profile-flow`
