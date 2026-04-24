@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <router-view/>
   <GoToTop />
   <MobileBottomNav />
@@ -8,8 +8,7 @@
 import { onMounted, computed, getCurrentInstance } from 'vue'
 import { useAppStore } from './store/main'
 import { storeToRefs } from 'pinia'
-
-import { attachAutoResize } from '@/utils/resizeScreen'
+import { attachAutoResize, applyAppearanceClass } from '@my-vue3/core'
 import GoToTop from '@/components/GoToTop/index.vue'
 import MobileBottomNav from '@/components/MobileBottomNav/index.vue'
 
@@ -29,16 +28,10 @@ export default {
     })
 
     const detectAppearance = () => {
-      if (userAppearance.value === 'light') {
-        document.body.classList.add('light-mode')
-        document.body.classList.remove('dark-mode')
-      } else {
-        document.body.classList.add('dark-mode')
-        document.body.classList.remove('light-mode')
-      }
+      applyAppearanceClass(userAppearance.value)
     }
 
-    onMounted(async () => {
+    onMounted(() => {
       attachAutoResize(store.SetDevice, store.SetFontsize)
       detectAppearance()
     })
