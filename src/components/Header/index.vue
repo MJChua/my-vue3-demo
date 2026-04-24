@@ -37,24 +37,15 @@
           {{ localeToggleLabel }}
         </button>
 
-        <van-switch
-          v-model="checkedSwitch"
-          :size="'18px'"
-          class="appearance-switch"
-          @change="onAppearanceChange"
-        />
+        <ThemeSwitch :checked="checkedSwitch" @change="onAppearanceChange" />
       </div>
     </template>
 
     <van-popup v-model:show="show" class="mobile-drawer-popup" position="left">
       <aside class="mobile-drawer">
-        <button class="mobile-drawer__setting" type="button" @click="toggleAppearanceInDrawer">
-          <span class="mobile-drawer__setting-left">
-            <van-icon :name="checkedSwitch ? 'moon-o' : 'sun-o'" />
-            <span>{{ $t('header.theme') }}</span>
-          </span>
-          <span class="mobile-drawer__setting-right">{{ drawerThemeLabel }}</span>
-        </button>
+        <div class="mobile-drawer__theme-block">
+          <ThemeSwitch :checked="checkedSwitch" @change="onAppearanceChange" />
+        </div>
 
         <button
           :aria-label="localeToggleLabel"
@@ -67,7 +58,7 @@
             <van-icon name="globe-o" />
             <span>{{ $t('header.language') }}</span>
           </span>
-          <span class="mobile-drawer__setting-right">{{ drawerLocaleLabel }}</span>
+          <span class="mobile-drawer__setting-right">EN/中</span>
         </button>
 
         <button
@@ -92,7 +83,7 @@
 import { computed, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
-import { CellGroup, Cell, Popup, Switch, Icon } from 'vant'
+import { CellGroup, Cell, Popup, Icon } from 'vant'
 
 import { applyAppearanceClass } from '@my-vue3/core'
 import { useHomeStore } from '@/store/home'
@@ -101,7 +92,8 @@ import { useUserContentStore } from '@/store/userContent'
 import { getLocale, toggleLocale } from '@/i18n'
 import { homeTabs } from '@/store/constant'
 import HamburgerMenu from '@/components/HamburgerMenu/index.vue'
-import avatarPlaceholder from '@/assets/images/common/avatar-placeholder.svg'
+import ThemeSwitch from '@/components/ThemeSwitch/index.vue'
+import avatarPlaceholder from '@/assets/images/common/avatar-default.svg'
 
 const mobilePrimaryNav = [
   { name: 'Home', icon: 'wap-home-o', labelKey: 'mobileNav.home' },
@@ -116,9 +108,9 @@ export default {
     'van-cell': Cell,
     'van-cell-group': CellGroup,
     'van-popup': Popup,
-    'van-switch': Switch,
     'van-icon': Icon,
-    HamburgerMenu
+    HamburgerMenu,
+    ThemeSwitch
   },
   setup () {
     const router = useRouter()
@@ -136,14 +128,6 @@ export default {
 
     const localeToggleLabel = computed(() => {
       return currentLocale.value === 'zh-TW' ? 'EN' : '中'
-    })
-
-    const drawerThemeLabel = computed(() => {
-      return currentLocale.value === 'zh-TW' ? '主題色' : 'theme'
-    })
-
-    const drawerLocaleLabel = computed(() => {
-      return 'EN/中'
     })
 
     const mineAvatarUrl = computed(() => {
@@ -167,15 +151,11 @@ export default {
       goToRoute(homeStore.computePage)
     }
 
-    const onAppearanceChange = (checked) => {
-      const nextMode = checked ? 'dark' : 'light'
+    const onAppearanceChange = (nextChecked) => {
+      checkedSwitch.value = nextChecked
+      const nextMode = nextChecked ? 'dark' : 'light'
       applyAppearanceClass(nextMode)
       appStore.SetAppearance(nextMode)
-    }
-
-    const toggleAppearanceInDrawer = () => {
-      checkedSwitch.value = !checkedSwitch.value
-      onAppearanceChange(checkedSwitch.value)
     }
 
     const onLocaleToggle = async () => {
@@ -203,8 +183,6 @@ export default {
       checkedSwitch,
       isLocaleSwitching,
       localeToggleLabel,
-      drawerThemeLabel,
-      drawerLocaleLabel,
       mineAvatarUrl,
       mobilePrimaryNav,
       goToRoute,
@@ -212,7 +190,6 @@ export default {
       isRouteActive,
       onDesktopTab,
       onAppearanceChange,
-      toggleAppearanceInDrawer,
       onLocaleToggle
     }
   }
@@ -260,7 +237,7 @@ export default {
     display flex
     align-items center
     margin-left auto
-    gap 6px
+    gap 8px
 
   .locale-toggle
     border 1px solid var(--header-control-border)
@@ -348,6 +325,14 @@ export default {
   display flex
   flex-direction column
   gap 10px
+
+  &__theme-block
+    border 1px solid var(--black-30-percent)
+    border-radius 12px
+    background var(--surface-card)
+    padding 9px
+    display flex
+    justify-content center
 
   &__item
     border 1px solid var(--black-30-percent)

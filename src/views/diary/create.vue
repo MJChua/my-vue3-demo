@@ -13,8 +13,22 @@
 
       <label>
         <span>{{ $t('diaryCreate.contentLabel') }}</span>
-        <textarea v-model.trim="content" rows="6" :placeholder="$t('diaryCreate.contentPlaceholder')" />
+        <textarea
+          v-model.trim="content"
+          rows="6"
+          :placeholder="$t('diaryCreate.contentPlaceholder')"
+        />
       </label>
+
+      <label class="diary-create__image-picker">
+        <span>{{ $t('diaryCreate.imageLabel') }}</span>
+        <input accept="image/*" class="diary-create__image-input" type="file" @change="onImageChange">
+        <em>{{ selectedImageLabel }}</em>
+      </label>
+
+      <div v-if="imageUrl" class="diary-create__image-preview">
+        <img :src="imageUrl" :alt="$t('diaryCreate.imageLabel')">
+      </div>
 
       <label>
         <span>{{ $t('diaryCreate.filterLabel') }}</span>
@@ -34,10 +48,19 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserContentStore } from '@/store/userContent'
 import Header from '@/components/Header/index.vue'
+
+function readFileAsDataUrl (file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = () => resolve(reader.result)
+    reader.onerror = () => reject(new Error('Failed to read file'))
+    reader.readAsDataURL(file)
+  })
+}
 
 export default {
   name: 'DiaryCreatePage',
@@ -51,9 +74,27 @@ export default {
     const title = ref('')
     const content = ref('')
     const filterType = ref('latest')
+    const imageUrl = ref('')
+    const fileName = ref('')
+
+    const selectedImageLabel = computed(() => {
+      return fileName.value || proxy.$t('diaryCreate.imageEmpty')
+    })
 
     const isInputValid = () => {
       return Boolean(title.value) && Boolean(content.value)
+    }
+
+    const onImageChange = async (event) => {
+      const file = event.target.files?.[0]
+      if (!file) return
+
+      try {
+        imageUrl.value = await readFileAsDataUrl(file)
+        fileName.value = file.name
+      } catch (error) {
+        console.warn('diary image read failed:', error)
+      }
     }
 
     const onSaveDraft = () => {
@@ -66,6 +107,7 @@ export default {
         title: title.value,
         content: content.value,
         filterType: filterType.value,
+        imageUrl: imageUrl.value,
         draft: true
       })
 
@@ -83,6 +125,7 @@ export default {
         title: title.value,
         content: content.value,
         filterType: filterType.value,
+        imageUrl: imageUrl.value,
         draft: false
       })
 
@@ -94,6 +137,9 @@ export default {
       title,
       content,
       filterType,
+      imageUrl,
+      selectedImageLabel,
+      onImageChange,
       onSaveDraft,
       onPublish
     }
@@ -133,6 +179,26 @@ export default {
         padding 9px 10px
         background var(--surface-soft)
         color var(--text-primary)
+
+  &__image-picker
+    em
+      color var(--text-secondary)
+      font-size 12px
+      font-style normal
+
+  &__image-input
+    cursor pointer
+
+  &__image-preview
+    border-radius 12px
+    overflow hidden
+    border 1px solid var(--black-30-percent)
+
+    img
+      width 100%
+      max-height 280px
+      object-fit cover
+      display block
 
   &__actions
     display flex

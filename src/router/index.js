@@ -10,7 +10,6 @@ import auth from './modules/auth'
 import profileSettings from './modules/profileSettings'
 import aboutUs from './modules/aboutUs'
 import service from './modules/service'
-import project from './modules/project'
 
 const routes = []
 
@@ -24,7 +23,6 @@ routes.push(auth)
 routes.push(profileSettings)
 routes.push(aboutUs)
 routes.push(service)
-routes.push(project)
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

@@ -21,6 +21,30 @@
         <input v-model.trim="caption" type="text" :placeholder="$t('uploadImage.captionPlaceholder')">
       </label>
 
+      <label>
+        <span>{{ $t('uploadImage.categoryLabel') }}</span>
+        <select v-model="category">
+          <option value="dog">{{ $t('uploadImage.categoryDog') }}</option>
+          <option value="cat">{{ $t('uploadImage.categoryCat') }}</option>
+          <option value="exotic">{{ $t('uploadImage.categoryExotic') }}</option>
+        </select>
+      </label>
+
+      <label>
+        <span>{{ $t('uploadImage.relatedDiaryLabel') }}</span>
+        <select v-model="diaryId">
+          <option value="">{{ $t('uploadImage.noRelatedDiary') }}</option>
+          <option v-for="item in myPublishedDiaries" :key="item.id" :value="item.id">
+            {{ item.title }}
+          </option>
+        </select>
+      </label>
+
+      <label class="upload-page__confirm">
+        <input v-model="isPetConfirmed" type="checkbox">
+        <span>{{ $t('uploadImage.petOnlyConfirm') }}</span>
+      </label>
+
       <button class="upload-page__submit" type="button" @click="onSubmit">{{ $t('uploadImage.submit') }}</button>
     </section>
   </main>
@@ -28,6 +52,7 @@
 
 <script>
 import { ref } from 'vue'
+import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 
 import Header from '@/components/Header/index.vue'
@@ -50,9 +75,13 @@ export default {
   setup (_, { proxy }) {
     const router = useRouter()
     const userContentStore = useUserContentStore()
+    const { myPublishedDiaries } = storeToRefs(userContentStore)
 
     const previewUrl = ref('')
     const caption = ref('')
+    const category = ref('dog')
+    const diaryId = ref('')
+    const isPetConfirmed = ref(false)
 
     const onFileChange = async (event) => {
       const file = event.target.files?.[0]
@@ -71,9 +100,19 @@ export default {
         return
       }
 
+      if (!isPetConfirmed.value) {
+        proxy?.$toast?.({ message: proxy.$t('uploadImage.petOnlyError'), position: 'top' })
+        return
+      }
+
       userContentStore.addUpload({
         imageUrl: previewUrl.value,
-        caption: caption.value
+        caption: caption.value,
+        category: category.value,
+        diaryId: diaryId.value || null,
+        isPetConfirmed: true,
+        likes: 0,
+        views: 0
       })
 
       proxy?.$toast?.({ message: proxy.$t('uploadImage.submitSuccess'), position: 'top' })
@@ -81,8 +120,12 @@ export default {
     }
 
     return {
+      myPublishedDiaries,
       previewUrl,
       caption,
+      category,
+      diaryId,
+      isPetConfirmed,
       onFileChange,
       onSubmit
     }
@@ -116,12 +159,22 @@ export default {
       gap 6px
       color var(--text-primary)
 
-      input
+      input, select
         border 1px solid var(--black-30-percent)
         border-radius 10px
         padding 9px 10px
         background var(--surface-soft)
         color var(--text-primary)
+
+  &__confirm
+    display inline-flex !important
+    align-items center
+    gap 8px
+
+    input
+      width 16px
+      height 16px
+      margin 0
 
   &__picker
     position relative
@@ -129,7 +182,7 @@ export default {
     border-radius 12px
     background var(--surface-soft)
     min-height 44px
-    display flex
+    display flex !important
     align-items center
     justify-content center
     cursor pointer

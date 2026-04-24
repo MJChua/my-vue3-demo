@@ -2,15 +2,13 @@ const enMessages = {
   nav: {
     aboutUs: 'About Us',
     service: 'Service',
-    project: 'Project',
     mine: 'Mine'
   },
   header: {
     brand: 'PetPals',
     switchToEnglish: 'EN',
-    switchToChinese: '繁中',
+    switchToChinese: 'ZH',
     loginRegister: 'Login',
-    theme: 'Theme',
     language: 'Language'
   },
   mobileNav: {
@@ -31,7 +29,7 @@ const enMessages = {
     ctaCatMode: 'Start Cat Therapy Mode',
     ctaWhoCute: 'See Who Is The Cutest',
     dailyStarTitle: 'Daily Star',
-    dailyStarBadge: 'Today\'s spotlight',
+    dailyStarBadge: "Today's spotlight",
     dailyStarOpenGallery: 'Open Dedicated Gallery',
     dailyGalleryTitle: 'Daily Star Gallery',
     explorerTitle: 'Browse by Category',
@@ -59,11 +57,15 @@ const enMessages = {
     upcomingContest: 'Contest: Join monthly cutest-pet competitions.',
     upcomingCta: 'Subscribe For Launch Notification',
     upcomingSubscribed: 'You are on the notification list. We will ping you when upload goes live.',
-    loadFailed: 'Failed to load images. Please try again later.'
+    loadFailed: 'Failed to load images. Please try again later.',
+    linkDiary: 'Open linked diary',
+    noLinkedDiary: 'No diary linked'
   },
   mine: {
     title: 'My Space',
     subtitle: 'Manage your uploads and diaries in one place.',
+    quickCreateDiary: 'Write Diary',
+    quickUploadImage: 'Upload Pet Photo',
     photoSection: 'My Uploaded Photos',
     diarySection: 'My Shared Diaries',
     edit: 'Edit',
@@ -84,7 +86,8 @@ const enMessages = {
     following: 'Following',
     author: 'Author',
     readMore: 'Read More',
-    empty: 'No diary entries yet.'
+    empty: 'No diary entries yet.',
+    linkedFromWall: 'From pet wall'
   },
   more: {
     title: 'More',
@@ -106,11 +109,14 @@ const enMessages = {
   },
   diaryCreate: {
     title: 'Create Diary',
-    subtitle: 'Share today\'s cute moments with everyone.',
+    subtitle: "Record today's cute moments with text and image.",
     titleLabel: 'Title',
     titlePlaceholder: 'Today with my pet...',
     contentLabel: 'Content',
     contentPlaceholder: 'Write your diary...',
+    imageLabel: 'Diary Image',
+    imageEmpty: 'No image selected',
+    imageSelect: 'Select Image',
     filterLabel: 'Category',
     filterLatest: 'Latest',
     filterPopular: 'Popular',
@@ -122,15 +128,23 @@ const enMessages = {
     validation: 'Please enter title and content first.'
   },
   uploadImage: {
-    title: 'Upload Image',
+    title: 'Upload Pet Image',
     subtitle: 'Upload pet photos for your profile and community feed.',
     uploadButton: 'Select Image',
     preview: 'Image preview',
     captionLabel: 'Caption',
     captionPlaceholder: 'Write a short note for this photo.',
+    categoryLabel: 'Pet Type',
+    categoryDog: 'Dog',
+    categoryCat: 'Cat',
+    categoryExotic: 'Exotic',
+    relatedDiaryLabel: 'Related Diary',
+    noRelatedDiary: 'No linked diary',
+    petOnlyConfirm: 'I confirm this is a pet photo.',
     submit: 'Submit',
     submitSuccess: 'Photo uploaded.',
-    validation: 'Please select an image first.'
+    validation: 'Please select an image first.',
+    petOnlyError: 'Please confirm this is a pet photo.'
   },
   profileSettings: {
     title: 'Profile Settings',
@@ -157,12 +171,6 @@ const enMessages = {
     line1: 'We provide technical consulting and implementation support',
     line2: 'Contact',
     line3: '589234123 03-103'
-  },
-  project: {
-    title: 'Project',
-    line1: 'Showcasing practical recent development outcomes',
-    line2: 'Covering UI, API integration, and performance optimization',
-    line3: 'Content can be quickly replaced and extended for business needs'
   },
   footer: {
     demo: 'Demo',

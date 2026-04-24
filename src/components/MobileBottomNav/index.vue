@@ -34,7 +34,7 @@
         type="button"
         @click="onQuickAction('DiaryCreate')"
       >
-        <span class="mobile-bottom-nav__quick-emoji">📔</span>
+        <span class="mobile-bottom-nav__quick-badge">✍</span>
         <span>{{ $t('mobileNav.newDiary') }}</span>
       </button>
 
@@ -43,7 +43,7 @@
         type="button"
         @click="onQuickAction('UploadImage')"
       >
-        <span class="mobile-bottom-nav__quick-emoji">🖼️</span>
+        <span class="mobile-bottom-nav__quick-badge">📷</span>
         <span>{{ $t('mobileNav.uploadImage') }}</span>
       </button>
     </div>
@@ -77,7 +77,7 @@ import { storeToRefs } from 'pinia'
 import { Icon } from 'vant'
 
 import { useUserContentStore } from '@/store/userContent'
-import avatarPlaceholder from '@/assets/images/common/avatar-placeholder.svg'
+import avatarPlaceholder from '@/assets/images/common/avatar-default.svg'
 
 export default {
   name: 'MobileBottomNav',
@@ -95,7 +95,7 @@ export default {
     const homeRouteNames = ['Home']
     const diaryRouteNames = ['Diary', 'DiaryCreate']
     const mineRouteNames = ['Mine']
-    const moreRouteNames = ['More', 'AboutUs', 'Service', 'Project', 'ProfileSettings']
+    const moreRouteNames = ['More', 'AboutUs', 'Service', 'ProfileSettings']
 
     const isHomeActive = computed(() => homeRouteNames.includes(route.name))
     const isDiaryActive = computed(() => diaryRouteNames.includes(route.name))
@@ -206,7 +206,7 @@ export default {
   &__quick-action
     position absolute
     top -62px
-    width 108px
+    width 112px
     min-height 40px
     border 1px solid var(--black-30-percent)
     border-radius 999px
@@ -216,7 +216,7 @@ export default {
     display flex
     align-items center
     justify-content center
-    gap 4px
+    gap 6px
     font-size 11px
     font-weight 700
     opacity 0
@@ -229,20 +229,27 @@ export default {
 
     &--left
       left 50%
-      transform translate(-122%, 8px) scale(.92)
+      transform translate(-126%, 8px) scale(.92)
 
       &.is-open
-        transform translate(-122%, 0) scale(1)
+        transform translate(-126%, 0) scale(1)
 
     &--right
       left 50%
-      transform translate(22%, 8px) scale(.92)
+      transform translate(26%, 8px) scale(.92)
 
       &.is-open
-        transform translate(22%, 0) scale(1)
+        transform translate(26%, 0) scale(1)
 
-  &__quick-emoji
-    font-size 13px
+  &__quick-badge
+    width 18px
+    height 18px
+    border-radius 50%
+    display inline-flex
+    align-items center
+    justify-content center
+    font-size 11px
+    background linear-gradient(120deg, rgba(121, 165, 255, 0.24), rgba(255, 158, 182, 0.26))
 
   &__avatar-wrap
     width 20px
