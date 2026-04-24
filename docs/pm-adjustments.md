@@ -107,3 +107,14 @@
   - keep `devlop` as daily integration branch and not direct production publish source
 - Branch mapping:
   - Process governance update (no standalone code branch required)
+
+## 11 - Global Go-To-Top Floating Button
+- Goal: add a global back-to-top action that is discoverable but visually non-intrusive.
+- Scope:
+  - provide a reusable global floating button across all pages
+  - show button only after user scrolls past threshold
+  - keep industry-standard style with semi-transparent background to avoid blocking content
+  - support smooth scroll behavior and accessible button label
+  - adapt button size/position for mobile and desktop
+- Branch mapping:
+  - Feature branch: `feature_11_global-go-to-top`
