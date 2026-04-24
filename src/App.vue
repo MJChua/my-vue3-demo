@@ -1,6 +1,7 @@
 <template>
-  <router-view/>
+  <router-view />
   <GoToTop />
+  <MobileBottomNav />
 </template>
 
 <script>
@@ -9,11 +10,13 @@ import { useAppStore } from './store/main'
 import { storeToRefs } from 'pinia'
 import { attachAutoResize, applyAppearanceClass } from '@my-vue3/core'
 import GoToTop from '@/components/GoToTop/index.vue'
+import MobileBottomNav from '@/components/MobileBottomNav/index.vue'
 
 export default {
   name: 'App',
   components: {
-    GoToTop
+    GoToTop,
+    MobileBottomNav
   },
   setup (_) {
     const { proxy } = getCurrentInstance()
@@ -38,12 +41,9 @@ export default {
     }
   }
 }
-
 </script>
 
 <style lang="stylus">
-
-// Global background appearance classes
 .light-mode
   #app
     background var(--normal-background) url('@/assets/images/bg.webp') repeat-y center top
@@ -59,4 +59,8 @@ export default {
     background var(--normal-background) url('@/assets/images/bg-dark.webp') repeat-y center top
     background-size 100% auto
 
+@media (max-width: 767px)
+  main
+    padding-bottom 88px
 </style>
+

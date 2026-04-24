@@ -3,12 +3,24 @@ const enMessages = {
     aboutUs: 'About Us',
     service: 'Service',
     project: 'Project',
-    mine: 'Profile'
+    mine: 'Mine'
   },
   header: {
     brand: 'PetPals',
     switchToEnglish: 'EN',
-    switchToChinese: '\u7e41\u4e2d'
+    switchToChinese: '\u7e41\u4e2d',
+    loginRegister: 'Login'
+  },
+  mobileNav: {
+    navLabel: 'Mobile navigation',
+    quickAccess: 'Quick Access',
+    home: 'Home',
+    diary: 'Diary',
+    plus: 'Quick actions',
+    newDiary: 'Diary',
+    uploadImage: 'Upload',
+    mine: 'Mine',
+    more: 'More'
   },
   home: {
     introItem: 'This is a demo page showing API integration and image card rendering.',
@@ -49,7 +61,56 @@ const enMessages = {
     loadFailed: 'Failed to load images. Please try again later.'
   },
   mine: {
-    title: 'Profile',
+    title: 'My Space',
+    subtitle: 'Your uploaded photos and shared diaries are managed here.',
+    photoSection: 'My Uploaded Photos',
+    diarySection: 'My Shared Diaries',
+    edit: 'Edit',
+    photoEmpty: 'No uploaded photos yet.',
+    diaryEmpty: 'No diary records yet.'
+  },
+  diary: {
+    title: 'Community Diary',
+    subtitle: 'Read stories from pet lovers around the world.',
+    latest: 'Latest',
+    popular: 'Popular',
+    following: 'Following',
+    author: 'Author',
+    readMore: 'Read More'
+  },
+  more: {
+    title: 'More',
+    subtitle: 'Legacy entries and additional product information.',
+    aboutUs: 'About Us',
+    service: 'Service',
+    project: 'Project',
+    profileSettings: 'Profile Settings'
+  },
+  auth: {
+    title: 'Member Access',
+    subtitle: 'Login or create your account to post and manage content.',
+    loginTab: 'Login',
+    registerTab: 'Register',
+    email: 'Email',
+    password: 'Password',
+    confirmPassword: 'Confirm Password',
+    loginAction: 'Login',
+    registerAction: 'Register'
+  },
+  diaryCreate: {
+    title: 'Create Diary',
+    subtitle: 'Share today\'s cute moments with everyone.',
+    saveDraft: 'Save Draft',
+    publish: 'Publish'
+  },
+  uploadImage: {
+    title: 'Upload Image',
+    subtitle: 'Upload pet photos for your profile and community feed.',
+    uploadButton: 'Select Image',
+    submit: 'Submit'
+  },
+  profileSettings: {
+    title: 'Profile Settings',
     appearance: 'Appearance',
     descLine1: 'Manage your personal display preferences here.',
     descLine2: 'Includes theme and language browsing settings.'
@@ -75,7 +136,7 @@ const enMessages = {
   footer: {
     demo: 'Demo',
     aboutUs: 'About Us',
-    mine: 'Profile',
+    mine: 'Mine',
     copyright: '\u00a9 2026 Demo',
     slogan: 'Adopt, do not shop. Love them, never abandon them.',
     socialTitle: 'Follow Us',
