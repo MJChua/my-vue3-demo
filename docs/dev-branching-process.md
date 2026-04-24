@@ -48,3 +48,7 @@
 - Use incremental numeric title: `01`, `02`, `03`, ...
 - Keep one short summary line and affected scope.
 - Feature branch number should map to PM title number when applicable.
+
+## Cleanup Rule
+- When replacing images/files during feature or bug changes, remove old files that are no longer used.
+- Before PR, verify no stale assets or dead files remain in the branch.
