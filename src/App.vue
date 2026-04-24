@@ -1,5 +1,6 @@
 <template>
   <router-view/>
+  <GoToTop />
 </template>
 
 <script>
@@ -8,9 +9,13 @@ import { useAppStore } from './store/main'
 import { storeToRefs } from 'pinia'
 
 import { attachAutoResize } from '@/utils/resizeScreen'
+import GoToTop from '@/components/GoToTop/index.vue'
 
 export default {
   name: 'App',
+  components: {
+    GoToTop
+  },
   setup (_) {
     const { proxy } = getCurrentInstance()
     const store = useAppStore()
