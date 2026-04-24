@@ -43,7 +43,7 @@ import { useRoute, useRouter } from 'vue-router'
 
 import Header from '@/components/Header/index.vue'
 import { useUserContentStore } from '@/store/userContent'
-import avatarPlaceholder from '@/assets/images/common/avatar-placeholder.svg'
+import avatarPlaceholder from '@/assets/images/common/avatar-default.svg'
 
 function readFileAsDataUrl (file) {
   return new Promise((resolve, reject) => {

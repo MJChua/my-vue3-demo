@@ -18,6 +18,15 @@
 
         <button class="edit-button" type="button" @click="goProfileSettings">{{ $t('mine.profileEdit') }}</button>
       </div>
+
+      <div class="mine-page__quick-actions">
+        <button class="quick-action quick-action--diary" type="button" @click="goCreateDiary">
+          {{ $t('mine.quickCreateDiary') }}
+        </button>
+        <button class="quick-action quick-action--upload" type="button" @click="goUploadImage">
+          {{ $t('mine.quickUploadImage') }}
+        </button>
+      </div>
     </section>
 
     <section class="container mine-page__section">
@@ -64,6 +73,7 @@
             <span v-if="item.draft" class="mine-page__draft-chip">{{ $t('mine.draft') }}</span>
           </div>
 
+          <img v-if="item.imageUrl" :src="item.imageUrl" :alt="item.title" class="mine-page__diary-image">
           <p>{{ item.content }}</p>
 
           <button
@@ -87,7 +97,7 @@ import { useRouter } from 'vue-router'
 
 import Header from '@/components/Header/index.vue'
 import { useUserContentStore } from '@/store/userContent'
-import avatarPlaceholder from '@/assets/images/common/avatar-placeholder.svg'
+import avatarPlaceholder from '@/assets/images/common/avatar-default.svg'
 
 export default {
   name: 'MinePage',
@@ -115,6 +125,14 @@ export default {
       })
     }
 
+    const goCreateDiary = () => {
+      router.push({ name: 'DiaryCreate' })
+    }
+
+    const goUploadImage = () => {
+      router.push({ name: 'UploadImage' })
+    }
+
     const removeUpload = (id) => {
       userContentStore.removeUpload(id)
     }
@@ -131,6 +149,8 @@ export default {
       isDiaryEditMode,
       mineAvatarUrl,
       goProfileSettings,
+      goCreateDiary,
+      goUploadImage,
       removeUpload,
       removeDiary
     }
@@ -189,6 +209,12 @@ export default {
       color var(--text-secondary)
       padding 3px 8px
       font-size 11px
+
+  &__quick-actions
+    margin-top 10px
+    display grid
+    grid-template-columns repeat(2, minmax(0, 1fr))
+    gap 8px
 
   &__section
     margin-top 12px
@@ -259,6 +285,13 @@ export default {
     justify-content space-between
     gap 8px
 
+  &__diary-image
+    margin-top 10px
+    width 100%
+    max-height 240px
+    border-radius 10px
+    object-fit cover
+
   &__draft-chip
     border-radius 999px
     border 1px solid var(--black-30-percent)
@@ -266,6 +299,20 @@ export default {
     color var(--text-secondary)
     padding 3px 8px
     font-size 11px
+
+.quick-action
+  border 0
+  border-radius 999px
+  padding 9px 12px
+  font-weight 700
+  color #fff
+  cursor pointer
+
+  &--diary
+    background linear-gradient(120deg, #55a2ff, #5867ff)
+
+  &--upload
+    background linear-gradient(120deg, #ff8a73, #ff5b96)
 
 .edit-button
   border 0
@@ -288,6 +335,9 @@ export default {
 
     &__profile-card
       padding 14px 16px
+
+    &__quick-actions
+      grid-template-columns repeat(4, minmax(0, 1fr))
 
     &__upload-grid
       grid-template-columns repeat(3, minmax(0, 1fr))

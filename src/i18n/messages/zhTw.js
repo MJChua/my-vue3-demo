@@ -2,15 +2,13 @@ const zhTwMessages = {
   nav: {
     aboutUs: '關於我們',
     service: '服務',
-    project: '專案',
     mine: '我的'
   },
   header: {
     brand: '萌寵日記',
     switchToEnglish: 'EN',
-    switchToChinese: '繁中',
+    switchToChinese: '中',
     loginRegister: '登入/註冊',
-    theme: '主題切換',
     language: '語言切換'
   },
   mobileNav: {
@@ -35,11 +33,11 @@ const zhTwMessages = {
     dailyStarOpenGallery: '開啟專屬圖集',
     dailyGalleryTitle: '今日萌主專屬圖集',
     explorerTitle: '分類探險',
-    explorerCat: '🐱 傲嬌喵星人',
-    explorerDog: '🐶 忠誠汪星人',
-    explorerRabbit: '🐰 軟萌兔兔',
-    explorerBird: '🐦 帥氣飛羽',
-    explorerLizard: '🦎 酷炫異寵',
+    explorerCat: '傲嬌喵星人',
+    explorerDog: '忠誠汪星人',
+    explorerRabbit: '軟萌兔兔',
+    explorerBird: '帥氣飛羽',
+    explorerLizard: '酷炫異寵',
     pawWallTitle: '瀑布流展牆',
     feedLatest: '最新上傳',
     feedHot: '熱門排行',
@@ -56,14 +54,18 @@ const zhTwMessages = {
     upcomingDesc: '你的孩子也很可愛？我們知道你等不及想炫耀了！',
     upcomingUpload: '上傳：記錄毛孩成長點滴。',
     upcomingInteract: '互動：與其他家長交換養育心得。',
-    upcomingContest: '競賽：參與每月「萌王大賽」。',
+    upcomingContest: '競賽：參與每月萌王大賽。',
     upcomingCta: '訂閱開啟通知',
     upcomingSubscribed: '已加入上線通知清單，功能開放會第一時間通知你。',
-    loadFailed: '圖片載入失敗，請稍後再試。'
+    loadFailed: '圖片載入失敗，請稍後再試。',
+    linkDiary: '開啟相關日記',
+    noLinkedDiary: '尚未綁定日記'
   },
   mine: {
     title: '我的主頁',
     subtitle: '集中管理你上傳的圖片與分享過的日記。',
+    quickCreateDiary: '新增日記',
+    quickUploadImage: '上傳寵物圖片',
     photoSection: '我的圖片',
     diarySection: '我的日記',
     edit: '編輯',
@@ -84,7 +86,8 @@ const zhTwMessages = {
     following: '追蹤',
     author: '作者',
     readMore: '繼續閱讀',
-    empty: '目前還沒有日記內容。'
+    empty: '目前還沒有日記內容。',
+    linkedFromWall: '來自寵物展牆'
   },
   more: {
     title: '更多',
@@ -106,11 +109,14 @@ const zhTwMessages = {
   },
   diaryCreate: {
     title: '新增日記',
-    subtitle: '把今天的萌寵瞬間記錄下來吧。',
+    subtitle: '把今天的萌寵瞬間用文字與圖片記錄下來。',
     titleLabel: '標題',
     titlePlaceholder: '今天和毛孩一起...',
     contentLabel: '內容',
     contentPlaceholder: '寫下今天的故事...',
+    imageLabel: '日記圖片',
+    imageEmpty: '尚未選擇圖片',
+    imageSelect: '選擇圖片',
     filterLabel: '分類',
     filterLatest: '最新',
     filterPopular: '熱門',
@@ -122,15 +128,23 @@ const zhTwMessages = {
     validation: '請先填寫標題與內容。'
   },
   uploadImage: {
-    title: '上傳圖片',
-    subtitle: '將寵物圖片上傳到你的主頁與社群牆。',
+    title: '上傳寵物圖片',
+    subtitle: '上傳寵物圖片到我的頁面與首頁展牆。',
     uploadButton: '選擇圖片',
     preview: '圖片預覽',
     captionLabel: '圖片說明',
     captionPlaceholder: '幫這張照片寫一句話。',
+    categoryLabel: '寵物類型',
+    categoryDog: '狗',
+    categoryCat: '貓',
+    categoryExotic: '異寵',
+    relatedDiaryLabel: '關聯日記',
+    noRelatedDiary: '不綁定日記',
+    petOnlyConfirm: '我確認這是一張寵物圖片。',
     submit: '送出',
     submitSuccess: '圖片上傳完成。',
-    validation: '請先選擇圖片。'
+    validation: '請先選擇圖片。',
+    petOnlyError: '請先勾選寵物圖片確認。'
   },
   profileSettings: {
     title: '個人設定',
@@ -157,12 +171,6 @@ const zhTwMessages = {
     line1: '我們提供技術顧問與實作支援',
     line2: '聯絡方式',
     line3: '589234123 03-103'
-  },
-  project: {
-    title: '專案',
-    line1: '展示近期可落地的開發成果',
-    line2: '涵蓋 UI、資料串接與效能優化',
-    line3: '內容可依商業需求快速替換與擴充'
   },
   footer: {
     demo: 'Demo',

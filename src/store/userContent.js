@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-const STORAGE_KEY = 'petpals-user-content-v1'
+const STORAGE_KEY = 'petpals-user-content-v2'
 
 const communityDiarySeed = Object.freeze([
   {
@@ -10,6 +10,7 @@ const communityDiarySeed = Object.freeze([
     author: 'Amy',
     filterType: 'latest',
     likes: 128,
+    imageUrl: 'https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=1200&q=80&fm=webp',
     createdAt: '2026-04-20T08:30:00.000Z',
     source: 'community'
   },
@@ -20,6 +21,7 @@ const communityDiarySeed = Object.freeze([
     author: 'Leo',
     filterType: 'popular',
     likes: 462,
+    imageUrl: 'https://images.unsplash.com/photo-1574158622682-e40e69881006?auto=format&fit=crop&w=1200&q=80&fm=webp',
     createdAt: '2026-04-18T06:00:00.000Z',
     source: 'community'
   },
@@ -30,27 +32,8 @@ const communityDiarySeed = Object.freeze([
     author: 'Nina',
     filterType: 'following',
     likes: 275,
+    imageUrl: 'https://images.unsplash.com/photo-1585110396000-c9ffd4e4b308?auto=format&fit=crop&w=1200&q=80&fm=webp',
     createdAt: '2026-04-16T02:45:00.000Z',
-    source: 'community'
-  },
-  {
-    id: 'community_004',
-    title: 'Parrot breakfast challenge',
-    content: 'Tried a new toy puzzle and got ten minutes of focused solving time.',
-    author: 'Mason',
-    filterType: 'popular',
-    likes: 390,
-    createdAt: '2026-04-15T01:15:00.000Z',
-    source: 'community'
-  },
-  {
-    id: 'community_005',
-    title: 'First day after adoption',
-    content: 'Small wins today: finished dinner and finally slept in a soft nest bed.',
-    author: 'Yuki',
-    filterType: 'latest',
-    likes: 210,
-    createdAt: '2026-04-22T10:10:00.000Z',
     source: 'community'
   }
 ])
@@ -66,6 +49,32 @@ function createDefaultState () {
   }
 }
 
+function normalizeDiary (item) {
+  return {
+    id: item.id || `mine_diary_${Date.now()}`,
+    title: item.title || '',
+    content: item.content || '',
+    filterType: item.filterType || 'latest',
+    likes: Number(item.likes || 0),
+    imageUrl: item.imageUrl || '',
+    draft: Boolean(item.draft),
+    createdAt: item.createdAt || new Date().toISOString()
+  }
+}
+
+function normalizeUpload (item) {
+  return {
+    id: item.id || `mine_upload_${Date.now()}`,
+    imageUrl: item.imageUrl || '',
+    caption: item.caption || '',
+    likes: Number(item.likes || 0),
+    views: Number(item.views || 0),
+    category: item.category || 'dog',
+    diaryId: item.diaryId || null,
+    createdAt: item.createdAt || new Date().toISOString()
+  }
+}
+
 function parseStoredState (rawValue) {
   if (!rawValue) return createDefaultState()
 
@@ -78,8 +87,8 @@ function parseStoredState (rawValue) {
         ...defaultState.profile,
         ...(parsedValue.profile || {})
       },
-      diaries: Array.isArray(parsedValue.diaries) ? parsedValue.diaries : [],
-      uploads: Array.isArray(parsedValue.uploads) ? parsedValue.uploads : []
+      diaries: Array.isArray(parsedValue.diaries) ? parsedValue.diaries.map(normalizeDiary) : [],
+      uploads: Array.isArray(parsedValue.uploads) ? parsedValue.uploads.map(normalizeUpload) : []
     }
   } catch (error) {
     console.warn('Failed to parse user content state:', error)
@@ -106,18 +115,25 @@ export const useUserContentStore = defineStore('userContent', {
     myDiaries (state) {
       return sortByCreatedAtDesc(state.diaries)
     },
+    myPublishedDiaries (state) {
+      return sortByCreatedAtDesc(state.diaries.filter((item) => !item.draft))
+    },
     myUploads (state) {
       return sortByCreatedAtDesc(state.uploads)
     },
     communityDiaryFeed (state) {
-      const myPosts = state.diaries.map((item) => ({
-        ...item,
-        source: 'mine',
-        author: state.profile.displayName || 'You',
-        likes: item.likes || 0
-      }))
+      const myPosts = state.diaries
+        .filter((item) => !item.draft)
+        .map((item) => ({
+          ...item,
+          source: 'mine',
+          author: state.profile.displayName || 'You'
+        }))
 
       return sortByCreatedAtDesc([...communityDiarySeed, ...myPosts])
+    },
+    wallUploads (state) {
+      return sortByCreatedAtDesc(state.uploads)
     }
   },
   actions: {
@@ -139,32 +155,63 @@ export const useUserContentStore = defineStore('userContent', {
       this.profile.avatarUrl = avatarUrl
       this.persistState()
     },
-    addDiary ({ title, content, filterType = 'latest', draft = false }) {
-      const newDiary = {
-        id: `mine_diary_${Date.now()}`,
+    addDiary ({ title, content, filterType = 'latest', draft = false, imageUrl = '' }) {
+      const diaryId = `mine_diary_${Date.now()}`
+      const newDiary = normalizeDiary({
+        id: diaryId,
         title,
         content,
         filterType,
         likes: 0,
-        draft,
-        createdAt: new Date().toISOString()
-      }
+        imageUrl,
+        draft
+      })
 
       this.diaries = [newDiary, ...this.diaries]
-      this.persistState()
+
+      if (!draft && imageUrl) {
+        this.addUpload({
+          imageUrl,
+          caption: title,
+          category: 'dog',
+          diaryId,
+          isPetConfirmed: true,
+          likes: 0,
+          views: 0
+        })
+      } else {
+        this.persistState()
+      }
+
       return newDiary
     },
     removeDiary (id) {
       this.diaries = this.diaries.filter((item) => item.id !== id)
+      this.uploads = this.uploads.filter((item) => item.diaryId !== id)
       this.persistState()
     },
-    addUpload ({ imageUrl, caption = '' }) {
-      const newUpload = {
+    addUpload ({
+      imageUrl,
+      caption = '',
+      category = 'dog',
+      diaryId = null,
+      isPetConfirmed = false,
+      likes = 0,
+      views = 0
+    }) {
+      if (!isPetConfirmed) {
+        throw new Error('Only pet images are allowed.')
+      }
+
+      const newUpload = normalizeUpload({
         id: `mine_upload_${Date.now()}`,
         imageUrl,
         caption,
-        createdAt: new Date().toISOString()
-      }
+        likes,
+        views,
+        category,
+        diaryId
+      })
 
       this.uploads = [newUpload, ...this.uploads]
       this.persistState()
@@ -172,6 +219,16 @@ export const useUserContentStore = defineStore('userContent', {
     },
     removeUpload (id) {
       this.uploads = this.uploads.filter((item) => item.id !== id)
+      this.persistState()
+    },
+    increaseUploadLike (id) {
+      this.uploads = this.uploads.map((item) => {
+        if (item.id !== id) return item
+        return {
+          ...item,
+          likes: item.likes + 1
+        }
+      })
       this.persistState()
     }
   }

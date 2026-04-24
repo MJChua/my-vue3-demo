@@ -22,18 +22,24 @@
     <section class="container diary-page__list">
       <p v-if="!filteredPosts.length" class="diary-page__empty">{{ $t('diary.empty') }}</p>
 
-      <article v-for="post in filteredPosts" :key="post.id" class="diary-card">
+      <article
+        v-for="post in filteredPosts"
+        :key="post.id"
+        :id="`diary-${post.id}`"
+        :class="['diary-card', { 'is-focused': focusedDiaryId === post.id }]"
+      >
         <div class="diary-card__top">
           <h3>{{ post.title }}</h3>
           <span>{{ formatDate(post.createdAt) }}</span>
         </div>
 
         <p class="diary-card__meta">{{ $t('diary.author') }}: {{ post.author }}</p>
+        <img v-if="post.imageUrl" :src="post.imageUrl" :alt="post.title" class="diary-card__image">
         <p>{{ post.content }}</p>
 
         <div class="diary-card__bottom">
-          <span class="diary-card__likes">❤ {{ post.likes || 0 }}</span>
-          <button class="diary-card__cta" type="button" @click="onReadMore">{{ $t('diary.readMore') }}</button>
+          <span class="diary-card__likes">♥ {{ post.likes || 0 }}</span>
+          <button class="diary-card__cta" type="button" @click="onReadMore(post.id)">{{ $t('diary.readMore') }}</button>
         </div>
       </article>
     </section>
@@ -41,8 +47,9 @@
 </template>
 
 <script>
-import { computed, ref } from 'vue'
+import { computed, nextTick, onMounted, ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
+import { useRoute } from 'vue-router'
 
 import Header from '@/components/Header/index.vue'
 import { useUserContentStore } from '@/store/userContent'
@@ -59,10 +66,12 @@ export default {
     Header
   },
   setup (_, { proxy }) {
+    const route = useRoute()
     const userContentStore = useUserContentStore()
     const { communityDiaryFeed } = storeToRefs(userContentStore)
 
     const activeFilter = ref('latest')
+    const focusedDiaryId = ref('')
 
     const filteredPosts = computed(() => {
       return communityDiaryFeed.value.filter((item) => item.filterType === activeFilter.value)
@@ -76,13 +85,39 @@ export default {
       }).format(new Date(value))
     }
 
-    const onReadMore = () => {
+    const focusDiaryCard = async (diaryId) => {
+      if (!diaryId) return
+      focusedDiaryId.value = diaryId
+      await nextTick()
+      const target = document.getElementById(`diary-${diaryId}`)
+      target?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    }
+
+    const onReadMore = (id) => {
+      focusDiaryCard(id)
       proxy?.$toast?.({ message: proxy.$t('diary.readMore'), position: 'top' })
     }
+
+    watch(
+      () => route.query.diaryId,
+      (value) => {
+        if (typeof value === 'string') {
+          focusDiaryCard(value)
+        }
+      },
+      { immediate: true }
+    )
+
+    onMounted(() => {
+      if (route.query.fromWall) {
+        proxy?.$toast?.({ message: proxy.$t('diary.linkedFromWall'), position: 'top' })
+      }
+    })
 
     return {
       filters,
       activeFilter,
+      focusedDiaryId,
       filteredPosts,
       formatDate,
       onReadMore
@@ -140,6 +175,10 @@ export default {
   border-radius 14px
   background var(--surface-card)
   padding 14px
+  transition box-shadow .2s ease
+
+  &.is-focused
+    box-shadow 0 0 0 2px rgba(93, 104, 255, 0.4)
 
   h3
     margin 0
@@ -148,6 +187,13 @@ export default {
   p
     margin 8px 0 0
     color var(--text-secondary)
+
+  &__image
+    margin-top 10px
+    width 100%
+    max-height 260px
+    border-radius 10px
+    object-fit cover
 
   &__top
     display flex
