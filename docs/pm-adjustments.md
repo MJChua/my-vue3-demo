@@ -1,4 +1,4 @@
-# PM Adjustments Log
+﻿# PM Adjustments Log
 
 ## 01 - Workspace and Shared Library Foundation
 - Goal: standardize package management to `pnpm`, add workspace package structure, and prepare reusable shared modules.
@@ -130,3 +130,38 @@
   - keep desktop behavior stable while isolating redesign to mobile UX
 - Branch mapping:
   - Feature branch: `feature_12_mobile-shell-rework`
+
+## 13 - Mobile Menu UX + User Content Flow Completion
+- Goal: finalize mobile navigation usability and make diary/image/profile workflows executable.
+- Scope:
+  - reorder mobile drawer actions:
+    - first row: theme toggle with sun/moon icon and right label (`theme` / `主題色`)
+    - second row: language toggle with right label (`EN/中`)
+  - remove old quick-access heading block and simplify drawer structure
+  - add avatar-based `Mine` icon in both drawer and mobile footer
+  - re-center footer `+` action and redesign dual quick actions to avoid overlap in light/dark themes
+  - make `DiaryCreate` and `UploadImage` pages truly submit data through local store flow
+  - make `Mine` page edit actions functional (content management + delete actions)
+  - enrich diary page with mock + user-created feed composition
+  - update `More` page to remove `Project` entry and add `Back to More` flow for internal pages
+  - add profile settings avatar update and sync avatar rendering to `Mine`/drawer/footer
+  - strengthen dark/light text-surface contrast tokens for newly adjusted modules
+- Branch mapping:
+  - Feature branch: `feature_13_mobile-ux-and-profile-flow`
+
+## 14 - Pet-Only Upload Linkage, Diary Binding, and Release Governance Refinement
+- Goal: ensure user-generated pet media and diary content are connected end-to-end, and tighten release merge governance before master.
+- Scope:
+  - replace old switch field with icon-first theme switch component (sun/moon style, web.dev-inspired interaction)
+  - keep language switch as second drawer control with compact `EN/中` expression
+  - upgrade `Mine` page to include direct entry buttons for diary creation and pet image upload
+  - diary creation now supports text + optional image, and can generate wall-linked entries
+  - upload flow now enforces pet-only confirmation and supports category + optional linked diary selection
+  - home paw-wall now merges user uploads into feed, supports like interaction, and routes linked cards to corresponding diary content
+  - daily star selection now follows highest-like rule from current wall data
+  - remove `Project` route/module/view and related nav dependencies
+  - refresh default avatar asset to a neutral profile icon baseline
+  - document release gating rule: aggregate sprint `feature_*` and `bug_*` branches into `release_*` (from `master`) individually; never merge `devlop` directly into `master`
+  - document CSS standardization direction with optional Tailwind CSS adoption path for future simplification
+- Branch mapping:
+  - Feature branch: `feature_14_mine-feed-linkage-and-theme-switch`

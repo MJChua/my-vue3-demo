@@ -48,7 +48,27 @@
 
     <van-popup v-model:show="show" class="mobile-drawer-popup" position="left">
       <aside class="mobile-drawer">
-        <h3 class="mobile-drawer__title">{{ $t('mobileNav.quickAccess') }}</h3>
+        <button class="mobile-drawer__setting" type="button" @click="toggleAppearanceInDrawer">
+          <span class="mobile-drawer__setting-left">
+            <van-icon :name="checkedSwitch ? 'moon-o' : 'sun-o'" />
+            <span>{{ $t('header.theme') }}</span>
+          </span>
+          <span class="mobile-drawer__setting-right">{{ drawerThemeLabel }}</span>
+        </button>
+
+        <button
+          :aria-label="localeToggleLabel"
+          :disabled="isLocaleSwitching"
+          class="mobile-drawer__setting"
+          type="button"
+          @click="onLocaleToggle"
+        >
+          <span class="mobile-drawer__setting-left">
+            <van-icon name="globe-o" />
+            <span>{{ $t('header.language') }}</span>
+          </span>
+          <span class="mobile-drawer__setting-right">{{ drawerLocaleLabel }}</span>
+        </button>
 
         <button
           v-for="item in mobilePrimaryNav"
@@ -57,28 +77,12 @@
           type="button"
           @click="onDrawerNavigate(item.name)"
         >
-          <van-icon :name="item.icon" />
+          <span v-if="item.name === 'Mine'" class="mobile-drawer__avatar-wrap">
+            <img :src="mineAvatarUrl" :alt="$t('mobileNav.mine')" class="mobile-drawer__avatar">
+          </span>
+          <van-icon v-else :name="item.icon" />
           <span>{{ $t(item.labelKey) }}</span>
         </button>
-
-        <div class="mobile-drawer__tools">
-          <button
-            :aria-label="localeToggleLabel"
-            :disabled="isLocaleSwitching"
-            class="locale-toggle"
-            type="button"
-            @click="onLocaleToggle"
-          >
-            {{ localeToggleLabel }}
-          </button>
-
-          <van-switch
-            v-model="checkedSwitch"
-            :size="'16px'"
-            class="appearance-switch"
-            @change="onAppearanceChange"
-          />
-        </div>
       </aside>
     </van-popup>
   </header>
@@ -93,9 +97,11 @@ import { CellGroup, Cell, Popup, Switch, Icon } from 'vant'
 import { applyAppearanceClass } from '@my-vue3/core'
 import { useHomeStore } from '@/store/home'
 import { useAppStore } from '@/store/main'
+import { useUserContentStore } from '@/store/userContent'
 import { getLocale, toggleLocale } from '@/i18n'
 import { homeTabs } from '@/store/constant'
 import HamburgerMenu from '@/components/HamburgerMenu/index.vue'
+import avatarPlaceholder from '@/assets/images/common/avatar-placeholder.svg'
 
 const mobilePrimaryNav = [
   { name: 'Home', icon: 'wap-home-o', labelKey: 'mobileNav.home' },
@@ -119,7 +125,9 @@ export default {
     const route = useRoute()
     const homeStore = useHomeStore()
     const appStore = useAppStore()
+    const userContentStore = useUserContentStore()
     const { userAppearance } = storeToRefs(appStore)
+    const { profile } = storeToRefs(userContentStore)
 
     const show = ref(false)
     const checkedSwitch = ref(userAppearance.value === 'dark')
@@ -127,7 +135,19 @@ export default {
     const isLocaleSwitching = ref(false)
 
     const localeToggleLabel = computed(() => {
-      return currentLocale.value === 'zh-TW' ? 'EN' : '繁中'
+      return currentLocale.value === 'zh-TW' ? 'EN' : '中'
+    })
+
+    const drawerThemeLabel = computed(() => {
+      return currentLocale.value === 'zh-TW' ? '主題色' : 'theme'
+    })
+
+    const drawerLocaleLabel = computed(() => {
+      return 'EN/中'
+    })
+
+    const mineAvatarUrl = computed(() => {
+      return profile.value.avatarUrl || avatarPlaceholder
     })
 
     const goToRoute = (name) => {
@@ -151,6 +171,11 @@ export default {
       const nextMode = checked ? 'dark' : 'light'
       applyAppearanceClass(nextMode)
       appStore.SetAppearance(nextMode)
+    }
+
+    const toggleAppearanceInDrawer = () => {
+      checkedSwitch.value = !checkedSwitch.value
+      onAppearanceChange(checkedSwitch.value)
     }
 
     const onLocaleToggle = async () => {
@@ -178,12 +203,16 @@ export default {
       checkedSwitch,
       isLocaleSwitching,
       localeToggleLabel,
+      drawerThemeLabel,
+      drawerLocaleLabel,
+      mineAvatarUrl,
       mobilePrimaryNav,
       goToRoute,
       onDrawerNavigate,
       isRouteActive,
       onDesktopTab,
       onAppearanceChange,
+      toggleAppearanceInDrawer,
       onLocaleToggle
     }
   }
@@ -320,16 +349,11 @@ export default {
   flex-direction column
   gap 10px
 
-  &__title
-    margin 0 0 6px
-    color var(--black-70-percent)
-    font-size 15px
-
   &__item
     border 1px solid var(--black-30-percent)
     border-radius 12px
-    background var(--header-control-bg)
-    color var(--header-control-text)
+    background var(--surface-card)
+    color var(--text-primary)
     padding 10px 12px
     display flex
     align-items center
@@ -341,15 +365,42 @@ export default {
       border-color var(--main-color)
       box-shadow 0 6px 12px var(--black-30-percent)
 
-  &__tools
-    margin-top 6px
+  &__setting
+    border 1px solid var(--black-30-percent)
+    border-radius 12px
+    padding 10px 12px
+    background var(--surface-card)
+    color var(--text-primary)
     display flex
     align-items center
     justify-content space-between
+    gap 10px
+    cursor pointer
+
+    &:disabled
+      opacity .6
+      cursor not-allowed
+
+  &__setting-left
+    display inline-flex
+    align-items center
+    gap 8px
+
+  &__setting-right
+    font-size 12px
+    color var(--text-secondary)
+
+  &__avatar-wrap
+    width 20px
+    height 20px
+    border-radius 50%
+    overflow hidden
     border 1px solid var(--black-30-percent)
-    border-radius 12px
-    padding 10px
-    background var(--header-control-bg)
+
+  &__avatar
+    width 100%
+    height 100%
+    object-fit cover
 
 @media (min-width: 768px)
   .header--mobile

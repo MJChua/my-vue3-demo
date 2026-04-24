@@ -34,7 +34,7 @@
         type="button"
         @click="onQuickAction('DiaryCreate')"
       >
-        <van-icon class="mobile-bottom-nav__quick-icon" name="edit" />
+        <span class="mobile-bottom-nav__quick-emoji">📔</span>
         <span>{{ $t('mobileNav.newDiary') }}</span>
       </button>
 
@@ -43,7 +43,7 @@
         type="button"
         @click="onQuickAction('UploadImage')"
       >
-        <van-icon class="mobile-bottom-nav__quick-icon" name="photo-o" />
+        <span class="mobile-bottom-nav__quick-emoji">🖼️</span>
         <span>{{ $t('mobileNav.uploadImage') }}</span>
       </button>
     </div>
@@ -53,7 +53,9 @@
       type="button"
       @click="goToRoute('Mine')"
     >
-      <van-icon name="contact-o" />
+      <span class="mobile-bottom-nav__avatar-wrap">
+        <img :src="mineAvatarUrl" :alt="$t('mobileNav.mine')" class="mobile-bottom-nav__avatar">
+      </span>
       <span>{{ $t('mobileNav.mine') }}</span>
     </button>
 
@@ -71,7 +73,11 @@
 <script>
 import { computed, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { storeToRefs } from 'pinia'
 import { Icon } from 'vant'
+
+import { useUserContentStore } from '@/store/userContent'
+import avatarPlaceholder from '@/assets/images/common/avatar-placeholder.svg'
 
 export default {
   name: 'MobileBottomNav',
@@ -81,6 +87,9 @@ export default {
   setup () {
     const route = useRoute()
     const router = useRouter()
+    const userContentStore = useUserContentStore()
+    const { profile } = storeToRefs(userContentStore)
+
     const isFabOpen = ref(false)
 
     const homeRouteNames = ['Home']
@@ -92,6 +101,10 @@ export default {
     const isDiaryActive = computed(() => diaryRouteNames.includes(route.name))
     const isMineActive = computed(() => mineRouteNames.includes(route.name))
     const isMoreActive = computed(() => moreRouteNames.includes(route.name))
+
+    const mineAvatarUrl = computed(() => {
+      return profile.value.avatarUrl || avatarPlaceholder
+    })
 
     const goToRoute = (name) => {
       isFabOpen.value = false
@@ -118,6 +131,7 @@ export default {
       isDiaryActive,
       isMineActive,
       isMoreActive,
+      mineAvatarUrl,
       goToRoute,
       toggleFab,
       onQuickAction
@@ -133,10 +147,10 @@ export default {
   right 0
   bottom 0
   z-index ($z-index-footer-navbar + 2)
-  height 72px
+  height 74px
   padding 8px 8px calc(8px + env(safe-area-inset-bottom, 0px))
   display grid
-  grid-template-columns repeat(5, minmax(0, 1fr))
+  grid-template-columns minmax(0, 1fr) minmax(0, 1fr) 84px minmax(0, 1fr) minmax(0, 1fr)
   align-items end
   background var(--header-control-bg)
   backdrop-filter blur(10px)
@@ -147,7 +161,7 @@ export default {
   &__item
     border 0
     background transparent
-    color var(--black-70-percent)
+    color var(--text-secondary)
     display flex
     flex-direction column
     align-items center
@@ -165,19 +179,21 @@ export default {
 
   &__fab-slot
     position relative
+    width 84px
+    justify-self center
     display flex
     justify-content center
     align-items center
 
   &__fab
-    width 44px
-    height 44px
+    width 46px
+    height 46px
     border 0
     border-radius 999px
     background linear-gradient(120deg, #4ea6ff, #5d68ff)
     color #fff
     box-shadow 0 8px 16px rgba(38, 74, 188, 0.35)
-    transform translateY(-14px)
+    transform translateY(-16px)
     cursor pointer
     transition transform .2s ease, box-shadow .2s ease
 
@@ -185,18 +201,18 @@ export default {
       font-size 24px
 
     &.is-open
-      transform translateY(-14px) rotate(45deg)
+      transform translateY(-16px) rotate(45deg)
 
   &__quick-action
     position absolute
-    top -56px
-    width 88px
-    height 38px
-    border 0
+    top -62px
+    width 108px
+    min-height 40px
+    border 1px solid var(--black-30-percent)
     border-radius 999px
-    background rgba(255, 255, 255, 0.94)
-    color var(--header-control-text)
-    box-shadow 0 8px 16px rgba(13, 18, 34, 0.2)
+    background var(--surface-card)
+    color var(--text-primary)
+    box-shadow 0 10px 18px rgba(13, 18, 34, 0.22)
     display flex
     align-items center
     justify-content center
@@ -205,22 +221,40 @@ export default {
     font-weight 700
     opacity 0
     pointer-events none
-    transform translateY(6px) scale(.92)
     transition opacity .2s ease, transform .2s ease
 
     &.is-open
       opacity 1
       pointer-events auto
-      transform translateY(0) scale(1)
 
     &--left
-      right 26px
+      left 50%
+      transform translate(-122%, 8px) scale(.92)
+
+      &.is-open
+        transform translate(-122%, 0) scale(1)
 
     &--right
-      left 26px
+      left 50%
+      transform translate(22%, 8px) scale(.92)
 
-  &__quick-icon
-    font-size 14px
+      &.is-open
+        transform translate(22%, 0) scale(1)
+
+  &__quick-emoji
+    font-size 13px
+
+  &__avatar-wrap
+    width 20px
+    height 20px
+    border-radius 50%
+    overflow hidden
+    border 1px solid var(--black-30-percent)
+
+  &__avatar
+    width 100%
+    height 100%
+    object-fit cover
 
 @media (min-width: 768px)
   .mobile-bottom-nav

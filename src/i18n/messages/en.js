@@ -8,12 +8,13 @@ const enMessages = {
   header: {
     brand: 'PetPals',
     switchToEnglish: 'EN',
-    switchToChinese: '\u7e41\u4e2d',
-    loginRegister: 'Login'
+    switchToChinese: '繁中',
+    loginRegister: 'Login',
+    theme: 'Theme',
+    language: 'Language'
   },
   mobileNav: {
     navLabel: 'Mobile navigation',
-    quickAccess: 'Quick Access',
     home: 'Home',
     diary: 'Diary',
     plus: 'Quick actions',
@@ -30,7 +31,7 @@ const enMessages = {
     ctaCatMode: 'Start Cat Therapy Mode',
     ctaWhoCute: 'See Who Is The Cutest',
     dailyStarTitle: 'Daily Star',
-    dailyStarBadge: "Today's spotlight",
+    dailyStarBadge: 'Today\'s spotlight',
     dailyStarOpenGallery: 'Open Dedicated Gallery',
     dailyGalleryTitle: 'Daily Star Gallery',
     explorerTitle: 'Browse by Category',
@@ -62,12 +63,18 @@ const enMessages = {
   },
   mine: {
     title: 'My Space',
-    subtitle: 'Your uploaded photos and shared diaries are managed here.',
+    subtitle: 'Manage your uploads and diaries in one place.',
     photoSection: 'My Uploaded Photos',
     diarySection: 'My Shared Diaries',
     edit: 'Edit',
+    done: 'Done',
+    profileEdit: 'Edit Profile',
+    photosCount: 'Photos',
+    diariesCount: 'Diaries',
     photoEmpty: 'No uploaded photos yet.',
-    diaryEmpty: 'No diary records yet.'
+    diaryEmpty: 'No diary records yet.',
+    delete: 'Delete',
+    draft: 'Draft'
   },
   diary: {
     title: 'Community Diary',
@@ -76,14 +83,14 @@ const enMessages = {
     popular: 'Popular',
     following: 'Following',
     author: 'Author',
-    readMore: 'Read More'
+    readMore: 'Read More',
+    empty: 'No diary entries yet.'
   },
   more: {
     title: 'More',
-    subtitle: 'Legacy entries and additional product information.',
+    subtitle: 'Additional product information and settings.',
     aboutUs: 'About Us',
     service: 'Service',
-    project: 'Project',
     profileSettings: 'Profile Settings'
   },
   auth: {
@@ -100,20 +107,44 @@ const enMessages = {
   diaryCreate: {
     title: 'Create Diary',
     subtitle: 'Share today\'s cute moments with everyone.',
+    titleLabel: 'Title',
+    titlePlaceholder: 'Today with my pet...',
+    contentLabel: 'Content',
+    contentPlaceholder: 'Write your diary...',
+    filterLabel: 'Category',
+    filterLatest: 'Latest',
+    filterPopular: 'Popular',
+    filterFollowing: 'Following',
     saveDraft: 'Save Draft',
-    publish: 'Publish'
+    publish: 'Publish',
+    draftSaved: 'Draft saved.',
+    publishSuccess: 'Diary published.',
+    validation: 'Please enter title and content first.'
   },
   uploadImage: {
     title: 'Upload Image',
     subtitle: 'Upload pet photos for your profile and community feed.',
     uploadButton: 'Select Image',
-    submit: 'Submit'
+    preview: 'Image preview',
+    captionLabel: 'Caption',
+    captionPlaceholder: 'Write a short note for this photo.',
+    submit: 'Submit',
+    submitSuccess: 'Photo uploaded.',
+    validation: 'Please select an image first.'
   },
   profileSettings: {
     title: 'Profile Settings',
     appearance: 'Appearance',
+    avatarSection: 'Avatar & Name',
+    avatarUpload: 'Upload Avatar',
+    displayName: 'Display Name',
+    save: 'Save',
+    saveSuccess: 'Profile updated.',
     descLine1: 'Manage your personal display preferences here.',
     descLine2: 'Includes theme and language browsing settings.'
+  },
+  common: {
+    backToMore: 'Back to More'
   },
   aboutUs: {
     title: 'About Us',
@@ -137,7 +168,7 @@ const enMessages = {
     demo: 'Demo',
     aboutUs: 'About Us',
     mine: 'Mine',
-    copyright: '\u00a9 2026 Demo',
+    copyright: '© 2026 Demo',
     slogan: 'Adopt, do not shop. Love them, never abandon them.',
     socialTitle: 'Follow Us',
     socialIg: 'Instagram',

@@ -1,5 +1,5 @@
-<template>
-  <router-view />
+﻿<template>
+  <router-view/>
   <GoToTop />
   <MobileBottomNav />
 </template>
@@ -8,7 +8,8 @@
 import { onMounted, computed, getCurrentInstance } from 'vue'
 import { useAppStore } from './store/main'
 import { storeToRefs } from 'pinia'
-import { attachAutoResize, applyAppearanceClass } from '@my-vue3/core'
+
+import { attachAutoResize } from '@/utils/resizeScreen'
 import GoToTop from '@/components/GoToTop/index.vue'
 import MobileBottomNav from '@/components/MobileBottomNav/index.vue'
 
@@ -28,10 +29,16 @@ export default {
     })
 
     const detectAppearance = () => {
-      applyAppearanceClass(userAppearance.value)
+      if (userAppearance.value === 'light') {
+        document.body.classList.add('light-mode')
+        document.body.classList.remove('dark-mode')
+      } else {
+        document.body.classList.add('dark-mode')
+        document.body.classList.remove('light-mode')
+      }
     }
 
-    onMounted(() => {
+    onMounted(async () => {
       attachAutoResize(store.SetDevice, store.SetFontsize)
       detectAppearance()
     })
@@ -41,9 +48,12 @@ export default {
     }
   }
 }
+
 </script>
 
 <style lang="stylus">
+
+// Global background appearance classes
 .light-mode
   #app
     background var(--normal-background) url('@/assets/images/bg.webp') repeat-y center top
@@ -62,5 +72,5 @@ export default {
 @media (max-width: 767px)
   main
     padding-bottom 88px
-</style>
 
+</style>

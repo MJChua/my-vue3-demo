@@ -20,11 +20,21 @@
     </section>
 
     <section class="container diary-page__list">
+      <p v-if="!filteredPosts.length" class="diary-page__empty">{{ $t('diary.empty') }}</p>
+
       <article v-for="post in filteredPosts" :key="post.id" class="diary-card">
-        <h3>{{ post.title }}</h3>
+        <div class="diary-card__top">
+          <h3>{{ post.title }}</h3>
+          <span>{{ formatDate(post.createdAt) }}</span>
+        </div>
+
         <p class="diary-card__meta">{{ $t('diary.author') }}: {{ post.author }}</p>
-        <p>{{ post.excerpt }}</p>
-        <button class="diary-card__cta" type="button">{{ $t('diary.readMore') }}</button>
+        <p>{{ post.content }}</p>
+
+        <div class="diary-card__bottom">
+          <span class="diary-card__likes">❤ {{ post.likes || 0 }}</span>
+          <button class="diary-card__cta" type="button" @click="onReadMore">{{ $t('diary.readMore') }}</button>
+        </div>
       </article>
     </section>
   </main>
@@ -32,7 +42,10 @@
 
 <script>
 import { computed, ref } from 'vue'
+import { storeToRefs } from 'pinia'
+
 import Header from '@/components/Header/index.vue'
+import { useUserContentStore } from '@/store/userContent'
 
 const filters = [
   { value: 'latest', labelKey: 'diary.latest' },
@@ -40,28 +53,39 @@ const filters = [
   { value: 'following', labelKey: 'diary.following' }
 ]
 
-const posts = [
-  { id: 1, title: 'Mochi learned to spin today', author: 'Amy', type: 'latest', excerpt: 'Sharing the cutest trick training progress from today.' },
-  { id: 2, title: 'Rainy day cat window diary', author: 'Leo', type: 'popular', excerpt: 'A short visual diary about a cat watching the rain all afternoon.' },
-  { id: 3, title: 'How we built a bunny-safe room', author: 'Nina', type: 'following', excerpt: 'A practical setup note for people living with curious rabbits.' }
-]
-
 export default {
   name: 'DiaryPage',
   components: {
     Header
   },
-  setup () {
+  setup (_, { proxy }) {
+    const userContentStore = useUserContentStore()
+    const { communityDiaryFeed } = storeToRefs(userContentStore)
+
     const activeFilter = ref('latest')
 
     const filteredPosts = computed(() => {
-      return posts.filter((item) => item.type === activeFilter.value)
+      return communityDiaryFeed.value.filter((item) => item.filterType === activeFilter.value)
     })
+
+    const formatDate = (value) => {
+      return new Intl.DateTimeFormat('zh-TW', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+      }).format(new Date(value))
+    }
+
+    const onReadMore = () => {
+      proxy?.$toast?.({ message: proxy.$t('diary.readMore'), position: 'top' })
+    }
 
     return {
       filters,
       activeFilter,
-      filteredPosts
+      filteredPosts,
+      formatDate,
+      onReadMore
     }
   }
 }
@@ -70,17 +94,18 @@ export default {
 <style lang="stylus" scoped>
 .diary-page
   min-height 100vh
+  padding-bottom 96px
 
   &__hero
     margin-top 16px
 
     h1
       margin 0
-      color var(--black-70-percent)
+      color var(--text-primary)
 
     p
       margin 8px 0 0
-      color var(--black-70-percent)
+      color var(--text-secondary)
 
   &__filters
     margin-top 14px
@@ -93,11 +118,15 @@ export default {
     display grid
     gap 10px
 
+  &__empty
+    margin 0
+    color var(--text-secondary)
+
 .chip
   border 1px solid var(--black-30-percent)
   border-radius 999px
-  background var(--header-control-bg)
-  color var(--header-control-text)
+  background var(--surface-soft)
+  color var(--text-primary)
   padding 7px 12px
   cursor pointer
 
@@ -109,25 +138,49 @@ export default {
 .diary-card
   border 1px solid var(--black-30-percent)
   border-radius 14px
-  background var(--white-80-percent-header)
+  background var(--surface-card)
   padding 14px
 
   h3
     margin 0
-    color var(--black-70-percent)
+    color var(--text-primary)
 
   p
     margin 8px 0 0
-    color var(--black-70-percent)
+    color var(--text-secondary)
+
+  &__top
+    display flex
+    align-items center
+    justify-content space-between
+    gap 8px
+
+    span
+      color var(--text-secondary)
+      font-size 11px
 
   &__meta
     font-size 12px
 
-  &__cta
+  &__bottom
     margin-top 12px
+    display flex
+    align-items center
+    justify-content space-between
+    gap 8px
+
+  &__likes
+    color var(--text-secondary)
+    font-size 12px
+
+  &__cta
     border 0
     border-radius 999px
     padding 8px 12px
     color #fff
     background linear-gradient(120deg, #4ea6ff, #5d68ff)
+
+@media (min-width: 768px)
+  .diary-page
+    padding-bottom 36px
 </style>
