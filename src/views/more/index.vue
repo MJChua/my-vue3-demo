@@ -28,7 +28,6 @@ import Header from '@/components/Header/index.vue'
 const moreItems = [
   { name: 'AboutUs', labelKey: 'more.aboutUs' },
   { name: 'Service', labelKey: 'more.service' },
-  { name: 'Project', labelKey: 'more.project' },
   { name: 'ProfileSettings', labelKey: 'more.profileSettings' }
 ]
 
@@ -41,7 +40,12 @@ export default {
     const router = useRouter()
 
     const goTo = (name) => {
-      router.push({ name })
+      router.push({
+        name,
+        query: {
+          from: 'more'
+        }
+      })
     }
 
     return {
@@ -55,17 +59,18 @@ export default {
 <style lang="stylus" scoped>
 .more-page
   min-height 100vh
+  padding-bottom 96px
 
   &__hero
     margin-top 16px
 
     h1
       margin 0
-      color var(--black-70-percent)
+      color var(--text-primary)
 
     p
       margin 8px 0 0
-      color var(--black-70-percent)
+      color var(--text-secondary)
 
   &__list
     margin-top 14px
@@ -75,8 +80,12 @@ export default {
 .more-card
   border 1px solid var(--black-30-percent)
   border-radius 14px
-  background var(--white-80-percent-header)
+  background var(--surface-card)
   padding 14px
   text-align left
-  color var(--black-70-percent)
+  color var(--text-primary)
+
+@media (min-width: 768px)
+  .more-page
+    padding-bottom 36px
 </style>

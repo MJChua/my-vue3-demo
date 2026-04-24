@@ -7,30 +7,96 @@
       <p>{{ $t('diaryCreate.subtitle') }}</p>
 
       <label>
-        <span>Title</span>
-        <input type="text" placeholder="Today with my pet..." />
+        <span>{{ $t('diaryCreate.titleLabel') }}</span>
+        <input v-model.trim="title" type="text" :placeholder="$t('diaryCreate.titlePlaceholder')">
       </label>
 
       <label>
-        <span>Content</span>
-        <textarea rows="6" placeholder="Write your diary..." />
+        <span>{{ $t('diaryCreate.contentLabel') }}</span>
+        <textarea v-model.trim="content" rows="6" :placeholder="$t('diaryCreate.contentPlaceholder')" />
+      </label>
+
+      <label>
+        <span>{{ $t('diaryCreate.filterLabel') }}</span>
+        <select v-model="filterType">
+          <option value="latest">{{ $t('diaryCreate.filterLatest') }}</option>
+          <option value="popular">{{ $t('diaryCreate.filterPopular') }}</option>
+          <option value="following">{{ $t('diaryCreate.filterFollowing') }}</option>
+        </select>
       </label>
 
       <div class="diary-create__actions">
-        <button class="button button--ghost" type="button">{{ $t('diaryCreate.saveDraft') }}</button>
-        <button class="button" type="button">{{ $t('diaryCreate.publish') }}</button>
+        <button class="button button--ghost" type="button" @click="onSaveDraft">{{ $t('diaryCreate.saveDraft') }}</button>
+        <button class="button" type="button" @click="onPublish">{{ $t('diaryCreate.publish') }}</button>
       </div>
     </section>
   </main>
 </template>
 
 <script>
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useUserContentStore } from '@/store/userContent'
 import Header from '@/components/Header/index.vue'
 
 export default {
   name: 'DiaryCreatePage',
   components: {
     Header
+  },
+  setup (_, { proxy }) {
+    const router = useRouter()
+    const userContentStore = useUserContentStore()
+
+    const title = ref('')
+    const content = ref('')
+    const filterType = ref('latest')
+
+    const isInputValid = () => {
+      return Boolean(title.value) && Boolean(content.value)
+    }
+
+    const onSaveDraft = () => {
+      if (!isInputValid()) {
+        proxy?.$toast?.({ message: proxy.$t('diaryCreate.validation'), position: 'top' })
+        return
+      }
+
+      userContentStore.addDiary({
+        title: title.value,
+        content: content.value,
+        filterType: filterType.value,
+        draft: true
+      })
+
+      proxy?.$toast?.({ message: proxy.$t('diaryCreate.draftSaved'), position: 'top' })
+      router.push({ name: 'Mine' })
+    }
+
+    const onPublish = () => {
+      if (!isInputValid()) {
+        proxy?.$toast?.({ message: proxy.$t('diaryCreate.validation'), position: 'top' })
+        return
+      }
+
+      userContentStore.addDiary({
+        title: title.value,
+        content: content.value,
+        filterType: filterType.value,
+        draft: false
+      })
+
+      proxy?.$toast?.({ message: proxy.$t('diaryCreate.publishSuccess'), position: 'top' })
+      router.push({ name: 'Diary' })
+    }
+
+    return {
+      title,
+      content,
+      filterType,
+      onSaveDraft,
+      onPublish
+    }
   }
 }
 </script>
@@ -45,28 +111,28 @@ export default {
     gap 12px
     border 1px solid var(--black-30-percent)
     border-radius 16px
-    background var(--white-80-percent-header)
+    background var(--surface-card)
     padding 14px
 
     h1
       margin 0
-      color var(--black-70-percent)
+      color var(--text-primary)
 
     p
       margin 0
-      color var(--black-70-percent)
+      color var(--text-secondary)
 
     label
       display grid
       gap 6px
-      color var(--black-70-percent)
+      color var(--text-primary)
 
-      input, textarea
+      input, textarea, select
         border 1px solid var(--black-30-percent)
         border-radius 10px
         padding 9px 10px
-        background rgba(255, 255, 255, 0.86)
-        color #1d2431
+        background var(--surface-soft)
+        color var(--text-primary)
 
   &__actions
     display flex
@@ -82,6 +148,6 @@ export default {
 
   &--ghost
     border 1px solid var(--black-30-percent)
-    color var(--header-control-text)
-    background var(--header-control-bg)
+    color var(--text-primary)
+    background var(--surface-soft)
 </style>
