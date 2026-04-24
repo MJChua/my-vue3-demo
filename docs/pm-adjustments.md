@@ -118,3 +118,14 @@
   - adapt button size/position for mobile and desktop
 - Branch mapping:
   - Feature branch: `feature_11_global-go-to-top`
+## 12 - Mobile Header and Footer Navigation Rework
+- Goal: redesign mobile shell navigation with stronger UX flow and action-oriented information architecture.
+- Scope:
+  - mobile header: left hamburger menu, centered brand logo, right-side login/register entry
+  - mobile footer: fixed 5-zone nav (`home`, `diary`, `plus`, `mine`, `more`)
+  - center plus action: expandable dual quick actions (`new diary`, `upload image`)
+  - move legacy top-level entries (`about us`, `service`, legacy profile content) into `more`
+  - add route and page skeletons for diary feed, auth entry, mine profile center, and more hub
+  - keep desktop behavior stable while isolating redesign to mobile UX
+- Branch mapping:
+  - Feature branch: `feature_12_mobile-shell-rework`
