@@ -7,7 +7,9 @@ All notable changes to this project will be documented in this file.
 ### Added
 - Workspace foundation with `pnpm-workspace.yaml`.
 - Internal package skeletons in `packages/ui`, `packages/core`, and `packages/http`.
-- Reusable capability inventory document in `docs/reusable-catalog.md`.
+- Reusable capability inventory document in `docs/ai/reusable-catalog.md`.
+- Split documentation into `docs/ai/` for engineering context and `docs/human/` for Chinese user-facing docs.
+- Agent working-pattern report in `docs/ai/agent-working-patterns.md` to guide future scoped edits.
 - Global i18n foundation with `vue-i18n` and locale persistence (`zh-TW` / `en`).
 - Locale-pack loader structure for i18n (`src/i18n/localePackDb.js` and `src/i18n/messages/*`).
 - LaceDB read-only architecture document with future `User -> Pets` relation planning.
