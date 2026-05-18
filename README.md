@@ -1,4 +1,6 @@
-# my-vue3-demo
+<img width="912" height="523" alt="image" src="https://github.com/user-attachments/assets/5e135341-e591-46ea-bbe2-d5fd235e1232" />
+
+# PetPals
 
 ## Project setup
 ```
