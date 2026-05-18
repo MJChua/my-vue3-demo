@@ -1,28 +1,76 @@
 <template>
   <router-view/>
+  <GoToTop />
+  <MobileBottomNav />
 </template>
 
 <script>
-import { onMounted } from 'vue'
+import { onMounted, computed, getCurrentInstance } from 'vue'
+import { useAppStore } from './store/main'
+import { storeToRefs } from 'pinia'
+
+import { attachAutoResize } from '@/utils/resizeScreen'
+import GoToTop from '@/components/GoToTop/index.vue'
+import MobileBottomNav from '@/components/MobileBottomNav/index.vue'
 
 export default {
   name: 'App',
+  components: {
+    GoToTop,
+    MobileBottomNav
+  },
   setup (_) {
-    const body = document.body
-    const computeStyle = window.getComputedStyle(body)
-    const defaultBgColor = computeStyle.backgroundColor
-    const defaultTextColor = computeStyle.color
+    const { proxy } = getCurrentInstance()
+    const store = useAppStore()
+    const { userAppearance } = storeToRefs(store)
 
-    onMounted(() => {
-      console.warn(`defaultBgColor-${defaultBgColor}; defaultTextColor-${defaultTextColor}`)
-      document.getElementById('app').style.background = defaultBgColor === 'rgba(0, 0, 0, 0)' ? '#212121' : defaultBgColor
-      document.getElementById('app').style.color = defaultBgColor === 'rgba(0, 0, 0, 0)' ? '#E8EBED' : '#000'
+    const showNavBar = computed(() => {
+      return proxy?.$route?.meta?.showNavBar ?? false
     })
+
+    const detectAppearance = () => {
+      if (userAppearance.value === 'light') {
+        document.body.classList.add('light-mode')
+        document.body.classList.remove('dark-mode')
+      } else {
+        document.body.classList.add('dark-mode')
+        document.body.classList.remove('light-mode')
+      }
+    }
+
+    onMounted(async () => {
+      attachAutoResize(store.SetDevice, store.SetFontsize)
+      detectAppearance()
+    })
+
+    return {
+      showNavBar
+    }
   }
 }
 
 </script>
 
-<style lang="stylus" scoped>
+<style lang="stylus">
+
+// Global background appearance classes
+.light-mode
+  #app
+    background var(--normal-background) url('@/assets/images/bg.webp') repeat-y center top
+    background-size 100% auto
+
+.dark-mode
+  #app
+    background var(--normal-background) url('@/assets/images/bg-dark.webp') repeat-y center top
+    background-size 100% auto
+
+@media (prefers-color-scheme: dark)
+  #app
+    background var(--normal-background) url('@/assets/images/bg-dark.webp') repeat-y center top
+    background-size 100% auto
+
+@media (max-width: 767px)
+  main
+    padding-bottom 88px
 
 </style>

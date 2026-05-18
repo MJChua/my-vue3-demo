@@ -1,0 +1,185 @@
+const zhTwMessages = {
+  nav: {
+    aboutUs: '關於我們',
+    service: '服務',
+    project: '專案',
+    mine: '我的'
+  },
+  header: {
+    brand: '萌寵日記',
+    switchToEnglish: 'EN',
+    switchToChinese: '繁中',
+    loginRegister: '登入/註冊',
+    theme: '主題切換',
+    language: '語言切換'
+  },
+  mobileNav: {
+    navLabel: '手機底部導覽',
+    home: '首頁',
+    diary: '日記',
+    plus: '快捷操作',
+    newDiary: '日記',
+    uploadImage: '上傳',
+    mine: '我的',
+    more: '更多'
+  },
+  home: {
+    introItem: '這是一個示範頁，展示 API 串接與圖片卡片排版能力。',
+    heroAlt: '首頁寵物主視覺',
+    heroHeadline: '今天，你被治癒了嗎？',
+    heroSubheadline: '匯集全球最萌的毛小孩，一個只屬於寵物愛好者的純淨天堂。',
+    ctaCatMode: '立即開啟吸貓模式',
+    ctaWhoCute: '看看誰最可愛',
+    dailyStarTitle: '今日萌主',
+    dailyStarBadge: '今日系統精選',
+    dailyStarOpenGallery: '開啟專屬圖集',
+    dailyGalleryTitle: '今日萌主專屬圖集',
+    explorerTitle: '分類探險',
+    explorerCat: '🐱 傲嬌喵星人',
+    explorerDog: '🐶 忠誠汪星人',
+    explorerRabbit: '🐰 軟萌兔兔',
+    explorerBird: '🐦 帥氣飛羽',
+    explorerLizard: '🦎 酷炫異寵',
+    pawWallTitle: '瀑布流展牆',
+    feedLatest: '最新上傳',
+    feedHot: '熱門排行',
+    feedFunny: '搞笑瞬間',
+    filterAll: '全部',
+    filterDog: '狗',
+    filterCat: '貓',
+    filterExotic: '異寵',
+    imageAlt: '寵物圖片',
+    imageLoadFailed: '圖片載入失敗',
+    imageLoadHint: '已顯示佔位卡片，不影響其他內容瀏覽。',
+    partialLoadHint: '部分資料來源較慢，已先顯示可用結果。',
+    upcomingTitle: '未來預告：曬寵計畫',
+    upcomingDesc: '你的孩子也很可愛？我們知道你等不及想炫耀了！',
+    upcomingUpload: '上傳：記錄毛孩成長點滴。',
+    upcomingInteract: '互動：與其他家長交換養育心得。',
+    upcomingContest: '競賽：參與每月「萌王大賽」。',
+    upcomingCta: '訂閱開啟通知',
+    upcomingSubscribed: '已加入上線通知清單，功能開放會第一時間通知你。',
+    loadFailed: '圖片載入失敗，請稍後再試。'
+  },
+  mine: {
+    title: '我的主頁',
+    subtitle: '集中管理你上傳的圖片與分享過的日記。',
+    photoSection: '我的圖片',
+    diarySection: '我的日記',
+    edit: '編輯',
+    done: '完成',
+    profileEdit: '編輯個人設定',
+    photosCount: '圖片',
+    diariesCount: '日記',
+    photoEmpty: '目前還沒有上傳圖片。',
+    diaryEmpty: '目前還沒有日記記錄。',
+    delete: '刪除',
+    draft: '草稿'
+  },
+  diary: {
+    title: '社群日記',
+    subtitle: '看看所有使用者分享的毛孩故事。',
+    latest: '最新',
+    popular: '熱門',
+    following: '追蹤',
+    author: '作者',
+    readMore: '繼續閱讀',
+    empty: '目前還沒有日記內容。'
+  },
+  more: {
+    title: '更多',
+    subtitle: '集中放置服務資訊與進階設定入口。',
+    aboutUs: '關於我們',
+    service: '服務',
+    profileSettings: '個人設定'
+  },
+  auth: {
+    title: '會員入口',
+    subtitle: '登入或註冊後，即可分享與管理內容。',
+    loginTab: '登入',
+    registerTab: '註冊',
+    email: '電子信箱',
+    password: '密碼',
+    confirmPassword: '確認密碼',
+    loginAction: '登入',
+    registerAction: '註冊'
+  },
+  diaryCreate: {
+    title: '新增日記',
+    subtitle: '把今天的萌寵瞬間記錄下來吧。',
+    titleLabel: '標題',
+    titlePlaceholder: '今天和毛孩一起...',
+    contentLabel: '內容',
+    contentPlaceholder: '寫下今天的故事...',
+    filterLabel: '分類',
+    filterLatest: '最新',
+    filterPopular: '熱門',
+    filterFollowing: '追蹤',
+    saveDraft: '儲存草稿',
+    publish: '發布',
+    draftSaved: '草稿已儲存。',
+    publishSuccess: '日記已發布。',
+    validation: '請先填寫標題與內容。'
+  },
+  uploadImage: {
+    title: '上傳圖片',
+    subtitle: '將寵物圖片上傳到你的主頁與社群牆。',
+    uploadButton: '選擇圖片',
+    preview: '圖片預覽',
+    captionLabel: '圖片說明',
+    captionPlaceholder: '幫這張照片寫一句話。',
+    submit: '送出',
+    submitSuccess: '圖片上傳完成。',
+    validation: '請先選擇圖片。'
+  },
+  profileSettings: {
+    title: '個人設定',
+    appearance: '介面偏好',
+    avatarSection: '頭像與名稱',
+    avatarUpload: '上傳頭像',
+    displayName: '暱稱',
+    save: '儲存',
+    saveSuccess: '個人資料已更新。',
+    descLine1: '可在此管理個人化顯示設定。',
+    descLine2: '包含主題與語言的瀏覽體驗。'
+  },
+  common: {
+    backToMore: '返回更多'
+  },
+  aboutUs: {
+    title: '關於我們',
+    line1: '專注於可維護的前端體驗',
+    line2: '用一致流程提升開發效率',
+    description: '我們透過模組化與自動化測試，協助團隊更穩定地交付產品。'
+  },
+  service: {
+    title: '服務',
+    line1: '我們提供技術顧問與實作支援',
+    line2: '聯絡方式',
+    line3: '589234123 03-103'
+  },
+  project: {
+    title: '專案',
+    line1: '展示近期可落地的開發成果',
+    line2: '涵蓋 UI、資料串接與效能優化',
+    line3: '內容可依商業需求快速替換與擴充'
+  },
+  footer: {
+    demo: 'Demo',
+    aboutUs: '關於我們',
+    mine: '我的',
+    copyright: '© 2026 Demo',
+    slogan: '領養代替購買，愛牠就不要拋棄牠。',
+    socialTitle: '社群追蹤',
+    socialIg: 'Instagram',
+    socialFb: 'Facebook',
+    socialThreads: 'Threads',
+    privacy: '隱私權',
+    cookies: 'Cookie 政策',
+    tags: '標籤',
+    places: '地點',
+    resources: '資源'
+  }
+}
+
+export default zhTwMessages

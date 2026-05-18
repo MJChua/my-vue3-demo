@@ -1,0 +1,71 @@
+/* breakpoints */
+@import './mixin.styl'
+@import './hamburger.styl'
+
+$body-font-size = 14px
+
+// 裝置系統字
+$body-font-sans-serif = system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+/* grid */
+$grid-breakpoint-sm = 576PX
+$grid-breakpoint-md = 768PX
+$grid-breakpoint-lg = 992PX
+$grid-breakpoint-xl = 1200PX
+
+/* container-max-widths */
+// fixed
+$container-max-width-xs = 460PX
+$container-max-width-sm = 540PX
+$container-max-width-md = 720PX
+$container-max-width-lg = 960PX
+$container-max-width-xl = 1140PX
+// rwd
+$container-max-width-xs-rwd = 300PX
+
+/* setting */
+$gutters = 0 4 6 8 10 12 16 20 24 28 32 36 40
+$gutter-x = ($gutters[0]) px // default
+$gutter-y = ($gutters[0]) px
+
+// margin | padding 間距
+$spaces = 0 2 4 6 8 10 12 16 20 24 28 32 36 40 48
+
+// font
+$sizes = 8, 10, 11, 12, 13, 14, 16, 18, 20, 24, 30, 32, 40
+$weights = 400, 500, 600, 700
+
+$colors = {
+  white : #fff
+  black : #000
+  primary : $primary_normal_color
+  primary-dark : $primary_dark_color
+  neutral : $neutral_normal_color
+  neutral-light : $neutral_light_color
+  neutral-lighter : $neutral_lighter_color
+  neutral-dark : $neutral_dark_color
+  error : $error_notice
+
+  // proxy
+  danger : $color-danger
+  win : $color-win
+  lose : $color-lose
+
+  // 3.0
+  multilingual-primary : $multilingual-primary-normal
+}
+
+// z-index
+$z-index-cc-loading-fixed = 9999
+$z-index-cc-loading = 99
+
+$z-index-float-action-button = 99
+$z-index-header-tip = 99
+
+$z-index-home-banner = 11
+$z-index-header = 10
+$z-index-header-tabs = 9
+$z-index-footer-navbar = 10
+
+$z-index-loading-animation = 5
+

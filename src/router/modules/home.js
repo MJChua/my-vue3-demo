@@ -1,6 +1,6 @@
 export default {
   path: '/',
-  name: 'HomeView',
-  meta: { showNavVar: true },
-  component: () => import(/* webpackChunkName: "home" */ '@/views/HomeView')
+  name: 'Home',
+  // meta: { showNavBar: true },
+  component: () => import('@/views/home/index.vue')
 }

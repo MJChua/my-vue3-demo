@@ -1,0 +1,52 @@
+// media-breakpoint-up
+media-breakpoint-up(media)
+  if media == sm
+    // landscape phones, 576px and up
+    @media (min-width: $grid-breakpoint-sm)
+      {block}
+  else if media == md
+    // tablets, 768px and up
+    @media (min-width: $grid-breakpoint-md)
+      {block}
+  else if media == lg
+    // desktops, 992px and up
+    @media (min-width: $grid-breakpoint-lg)
+      {block}
+  else if media == xl
+    // large desktops, 1200px and up
+    @media (min-width: $grid-breakpoint-xl)
+      {block}
+
+// media-breakpoint-down
+media-breakpoint-down(media)
+  if media == xs
+    // portrait phones, less than 576px
+    @media (max-width: $grid-breakpoint-sm - 0.02)
+      {block}
+  else if media == sm
+    // landscape phones, less than 768px
+    @media (max-width: $grid-breakpoint-md - 0.02)
+      {block}
+  else if media == md
+    // tablets, less than 992px
+    @media (max-width: $grid-breakpoint-lg - 0.02)
+      {block}
+  else if media == lg
+    // desktops, less than 1200px
+    @media (max-width: $grid-breakpoint-xl - 0.02)
+      {block}
+
+// media-breakpoint-only
+media-breakpoint-only(media)
+  if media == sm
+    // landscape phones, 576px and up
+    @media (min-width: $grid-breakpoint-sm) and (max-width: $grid-breakpoint-md - 0.02)
+      {block}
+  else if media == md
+    // tablets, 768px and up
+    @media (min-width: $grid-breakpoint-md) and (max-width: $grid-breakpoint-lg - 0.02)
+      {block}
+  else if media == lg
+    // desktops, 992px and up
+    @media (min-width: $grid-breakpoint-lg) and (max-width: $grid-breakpoint-xl - 0.02)
+      {block}
