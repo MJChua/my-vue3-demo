@@ -1,4 +1,6 @@
-# my-vue3-demo
+![alt text](image.png)
+
+# Share pic with your pets
 
 ## Project setup
 ```
@@ -39,6 +41,13 @@ pnpm test:e2e
 ```
 pnpm preview
 ```
+
+### Documentation
+```
+docs/README.md
+```
+
+Project documents are split into AI engineering context (`docs/ai/`) and Chinese user-facing docs (`docs/human/`).
 
 ### Customize configuration
 See [Vite Configuration Reference](https://vitejs.dev/config/).

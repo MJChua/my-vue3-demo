@@ -124,7 +124,7 @@ pnpm build
 If production has regression:
 1. Re-deploy previous known-good `dist` artifact.
 2. Repoint host to previous release version/tag.
-3. Open bug ticket in `docs/bug-tickets.md` and patch from latest `devlop`.
+3. Open bug ticket in `docs/ai/bug-tickets.md` and patch from latest `devlop`.
 
 ## 11) Suggested Versioning
 - Tag production merges on `master` with SemVer style:
