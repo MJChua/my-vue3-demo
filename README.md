@@ -1,4 +1,6 @@
-# my-vue3-demo
+![alt text](image.png)
+
+# Share pic with your pets
 
 ## Project setup
 ```
