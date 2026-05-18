@@ -103,29 +103,38 @@
           :style="{ '--card-height': `${pet.cardHeight}px` }"
           class="pet-card"
         >
-          <div class="pet-card__media">
-            <img
-              v-if="!failedImageMap[pet.petId]"
-              :src="pet.imageUrl"
-              :alt="`${pet.name} ${$t('home.imageAlt')}`"
-              class="pet-card__image"
-              loading="lazy"
-              @error="onImageError(pet.petId)"
-            >
-            <div v-else class="pet-card__placeholder">
-              <p class="pet-card__placeholder-title">{{ $t('home.imageLoadFailed') }}</p>
-              <p class="pet-card__placeholder-subtitle">{{ $t('home.imageLoadHint') }}</p>
-            </div>
+          <button class="pet-card__link" type="button" @click="openLinkedDiary(pet)">
+            <div class="pet-card__media">
+              <img
+                v-if="!failedImageMap[pet.petId]"
+                :src="pet.imageUrl"
+                :alt="`${pet.name} ${$t('home.imageAlt')}`"
+                class="pet-card__image"
+                loading="lazy"
+                @error="onImageError(pet.petId)"
+              >
+              <div v-else class="pet-card__placeholder">
+                <p class="pet-card__placeholder-title">{{ $t('home.imageLoadFailed') }}</p>
+                <p class="pet-card__placeholder-subtitle">{{ $t('home.imageLoadHint') }}</p>
+              </div>
 
-            <div class="pet-card__stats">
-              <span>❤ {{ pet.likes }}</span>
-              <span>👁 {{ pet.views }}</span>
+              <div class="pet-card__stats">
+                <span>♥ {{ resolvePetLikes(pet) }}</span>
+                <span>👁 {{ pet.views }}</span>
+              </div>
             </div>
-          </div>
+          </button>
 
           <div class="pet-card__meta">
             <strong>{{ pet.name }}</strong>
             <span>{{ $t(`home.filter${pet.categoryLabel}`) }}</span>
+          </div>
+
+          <div class="pet-card__actions">
+            <button class="pet-card__action" type="button" @click="likePet(pet)">♥ +1</button>
+            <button class="pet-card__action pet-card__action--link" type="button" @click="openLinkedDiary(pet)">
+              {{ pet.diaryId ? $t('home.linkDiary') : $t('home.noLinkedDiary') }}
+            </button>
           </div>
         </article>
       </div>
@@ -171,12 +180,15 @@
 
 <script>
 import { computed, getCurrentInstance, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useRouter } from 'vue-router'
 import { Popup } from 'vant'
 
 import Header from '@/components/Header/index.vue'
 import Footer from '@/components/Footer/index.vue'
 import heroPetImage from '@/assets/images/home/hero-pet.webp'
 import { fetchReadOnlyPetRows } from '@/data/laceDb/readOnlyPetRepository'
+import { useUserContentStore } from '@/store/userContent'
 
 const heroSlides = [
   heroPetImage,
@@ -212,34 +224,36 @@ const categoryLabelMap = {
 }
 
 const personalityTagMap = {
-  dog: ['拆家專門戶', '衝刺王'],
-  cat: ['高冷總監', '摸摸派'],
-  exotic: ['好奇寶寶', '深夜探險家']
+  dog: ['playful', 'snack-lover'],
+  cat: ['lazy', 'gentle'],
+  exotic: ['rare', 'curious']
 }
 
-function enrichPet (pet, index) {
+function enrichRemotePet (pet, index) {
   const now = Date.now()
   return {
     ...pet,
-    petId: `${pet.petId}_${index + 1}`,
+    petId: `remote_${pet.petId}_${index + 1}`,
     categoryLabel: categoryLabelMap[pet.category],
     likes: 300 + (index * 37) % 4000,
     views: 2000 + (index * 113) % 22000,
     humorScore: (index * 13) % 100,
     uploadedTs: now - index * 3600 * 1000,
     personalityTags: personalityTagMap[pet.category],
-    cardHeight: pet.cardHeight + ((index % 4) * 12)
+    cardHeight: pet.cardHeight + ((index % 4) * 12),
+    diaryId: null,
+    source: 'remote'
   }
 }
 
-function buildInfinitePool (basePets, maxCount = 180) {
+function buildInfinitePool (basePets, maxCount = 120) {
   if (!basePets.length) return []
 
   const pool = []
   let index = 0
   while (pool.length < maxCount) {
     const source = basePets[index % basePets.length]
-    pool.push(enrichPet(source, pool.length))
+    pool.push(enrichRemotePet(source, pool.length))
     index += 1
   }
 
@@ -255,10 +269,14 @@ export default {
   },
   setup () {
     const { proxy } = getCurrentInstance()
+    const router = useRouter()
+    const userContentStore = useUserContentStore()
+    const { wallUploads } = storeToRefs(userContentStore)
 
     const isLoading = ref(false)
     const feedErrorMessage = ref('')
     const failedImageMap = ref({})
+    const localLikesMap = ref({})
 
     const activeCategory = ref('all')
     const activeFeed = ref('latest')
@@ -267,7 +285,7 @@ export default {
     const heroIndex = ref(0)
     const showDailyGallery = ref(false)
 
-    const petPool = ref([])
+    const remotePetPool = ref([])
 
     const dailyStarRef = ref(null)
     const pawWallRef = ref(null)
@@ -276,16 +294,39 @@ export default {
     let heroTimer = null
     let observer = null
 
+    const uploadPets = computed(() => {
+      return wallUploads.value.map((item, index) => ({
+        petId: `upload_${item.id}`,
+        name: item.caption || `My Pet ${index + 1}`,
+        category: item.category || 'dog',
+        categoryLabel: categoryLabelMap[item.category || 'dog'],
+        species: 'User Upload',
+        imageUrl: item.imageUrl,
+        likes: item.likes,
+        views: item.views || 0,
+        humorScore: 40 + (index % 30),
+        uploadedTs: new Date(item.createdAt).getTime(),
+        personalityTags: ['user', 'pet'],
+        cardHeight: 220 + (index % 3) * 20,
+        diaryId: item.diaryId,
+        source: 'upload'
+      }))
+    })
+
+    const allWallPets = computed(() => {
+      return [...uploadPets.value, ...remotePetPool.value]
+    })
+
     const filteredPets = computed(() => {
-      if (activeCategory.value === 'all') return petPool.value
-      return petPool.value.filter((pet) => pet.category === activeCategory.value)
+      if (activeCategory.value === 'all') return allWallPets.value
+      return allWallPets.value.filter((pet) => pet.category === activeCategory.value)
     })
 
     const rankedPets = computed(() => {
       const list = [...filteredPets.value]
 
       if (activeFeed.value === 'hot') {
-        return list.sort((a, b) => (b.likes + b.views) - (a.likes + a.views))
+        return list.sort((a, b) => (resolvePetLikes(b) + b.views) - (resolvePetLikes(a) + a.views))
       }
 
       if (activeFeed.value === 'funny') {
@@ -296,15 +337,24 @@ export default {
     })
 
     const displayedPets = computed(() => rankedPets.value.slice(0, visibleCount.value))
-    const dailyStar = computed(() => rankedPets.value[0] || null)
+
+    const dailyStar = computed(() => {
+      if (!allWallPets.value.length) return null
+      return [...allWallPets.value].sort((a, b) => resolvePetLikes(b) - resolvePetLikes(a))[0]
+    })
 
     const dailyGalleryPets = computed(() => {
       if (!dailyStar.value) return []
 
-      return petPool.value
+      return allWallPets.value
         .filter((pet) => pet.category === dailyStar.value.category)
         .slice(0, 9)
     })
+
+    const resolvePetLikes = (pet) => {
+      const localLikes = localLikesMap.value[pet.petId] || 0
+      return (pet.likes || 0) + localLikes
+    }
 
     const onImageError = (petId) => {
       failedImageMap.value = {
@@ -362,7 +412,7 @@ export default {
           return
         }
 
-        petPool.value = buildInfinitePool(result.pets)
+        remotePetPool.value = buildInfinitePool(result.pets)
         visibleCount.value = 18
         await setupInfiniteObserver()
       } catch (error) {
@@ -393,6 +443,34 @@ export default {
 
     const subscribeUpcoming = () => {
       proxy?.$toast?.({ message: proxy.$t('home.upcomingSubscribed'), position: 'top' })
+    }
+
+    const likePet = (pet) => {
+      if (pet.source === 'upload') {
+        const uploadId = pet.petId.replace('upload_', '')
+        userContentStore.increaseUploadLike(uploadId)
+        return
+      }
+
+      localLikesMap.value = {
+        ...localLikesMap.value,
+        [pet.petId]: (localLikesMap.value[pet.petId] || 0) + 1
+      }
+    }
+
+    const openLinkedDiary = (pet) => {
+      if (!pet.diaryId) {
+        proxy?.$toast?.({ message: proxy.$t('home.noLinkedDiary'), position: 'top' })
+        return
+      }
+
+      router.push({
+        name: 'Diary',
+        query: {
+          diaryId: pet.diaryId,
+          fromWall: '1'
+        }
+      })
     }
 
     watch([activeCategory, activeFeed], () => {
@@ -434,7 +512,10 @@ export default {
       focusDailyStar,
       onExplorerSelect,
       openDailyGallery,
-      subscribeUpcoming
+      subscribeUpcoming,
+      resolvePetLikes,
+      likePet,
+      openLinkedDiary
     }
   }
 }
@@ -677,6 +758,13 @@ export default {
   overflow hidden
   content-visibility auto
 
+  &__link
+    border 0
+    background transparent
+    padding 0
+    width 100%
+    cursor pointer
+
   &__media
     position relative
     height var(--card-height)
@@ -726,9 +814,26 @@ export default {
     display flex
     justify-content space-between
     gap 8px
-    padding 10px
+    padding 10px 10px 6px
     color var(--black-70-percent)
     font-size 12px
+
+  &__actions
+    display flex
+    gap 8px
+    padding 0 10px 10px
+
+  &__action
+    border 1px solid var(--black-30-percent)
+    border-radius 999px
+    padding 4px 9px
+    background var(--surface-soft)
+    color var(--text-primary)
+    font-size 11px
+    cursor pointer
+
+    &--link
+      margin-left auto
 
 .upcoming
   margin 26px auto 30px

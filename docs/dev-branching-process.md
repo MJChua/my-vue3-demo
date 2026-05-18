@@ -38,13 +38,43 @@
 
 ## Release workflow
 1. From `master`, create release branch with SemVer name: `release_X.Y.Z`.
-2. Merge all sprint-complete `feature_*` and `bug_*` scope (already integrated in `devlop`) into release branch.
+2. Use `master` as the exact baseline and collect sprint scope branch-by-branch:
+   - verify each sprint `feature_*` and `bug_*` branch to be included
+   - merge each selected branch into `release_X.Y.Z` individually (or cherry-pick equivalent commits)
+   - do not merge `devlop` directly into `master`
 3. Run full quality gate and regression checks on release branch.
 4. Merge release branch back to `master`.
 5. Deploy from `master`.
 6. If urgent fix is needed after release cut, create `hotfix_X.Y.Z` from release branch, fix, verify, then merge back through release -> `master`.
 
+## Master Promotion Checklist
+1. Confirm `release_X.Y.Z` is branched from current `master`.
+2. Build sprint candidate list from merged PR records:
+   - `feature_*` branches in sprint scope
+   - `bug_*` branches in sprint scope
+3. Merge candidates into release branch one by one and resolve conflicts in release context.
+4. Run quality gate (`pre:pr` equivalent) on release branch.
+5. Merge `release_X.Y.Z` back to `master` only after checklist completion.
+
 ## PM update title rule
 - Use incremental numeric title: `01`, `02`, `03`, ...
 - Keep one short summary line and affected scope.
 - Feature branch number should map to PM title number when applicable.
+
+## Cleanup Rule
+- When replacing images/files during feature or bug changes, remove old files that are no longer used.
+- Before PR, verify no stale assets or dead files remain in the branch.
+
+## Theme Contrast Rule
+- Any feature touching UI must validate light/dark readability before PR:
+  - text cannot blend into card/background after theme switch
+  - control labels/icons must keep sufficient contrast in both modes
+  - mobile drawer, footer actions, and primary forms are mandatory checkpoints
+
+## CSS Standardization Rule
+- Recommended direction: adopt a shared utility standard (for example Tailwind CSS v4) in phased rollout.
+- Migration approach:
+  - phase 1: install and use for new modules only
+  - phase 2: migrate frequently changed legacy pages
+  - phase 3: retire duplicated ad-hoc utility classes once coverage is stable
+- During migration, keep one source of design tokens for light/dark colors and spacing.

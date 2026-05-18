@@ -2,13 +2,24 @@ const enMessages = {
   nav: {
     aboutUs: 'About Us',
     service: 'Service',
-    project: 'Project',
-    mine: 'Profile'
+    mine: 'Mine'
   },
   header: {
     brand: 'PetPals',
     switchToEnglish: 'EN',
-    switchToChinese: '\u7e41\u4e2d'
+    switchToChinese: 'ZH',
+    loginRegister: 'Login',
+    language: 'Language'
+  },
+  mobileNav: {
+    navLabel: 'Mobile navigation',
+    home: 'Home',
+    diary: 'Diary',
+    plus: 'Quick actions',
+    newDiary: 'Diary',
+    uploadImage: 'Upload',
+    mine: 'Mine',
+    more: 'More'
   },
   home: {
     introItem: 'This is a demo page showing API integration and image card rendering.',
@@ -46,13 +57,108 @@ const enMessages = {
     upcomingContest: 'Contest: Join monthly cutest-pet competitions.',
     upcomingCta: 'Subscribe For Launch Notification',
     upcomingSubscribed: 'You are on the notification list. We will ping you when upload goes live.',
-    loadFailed: 'Failed to load images. Please try again later.'
+    loadFailed: 'Failed to load images. Please try again later.',
+    linkDiary: 'Open linked diary',
+    noLinkedDiary: 'No diary linked'
   },
   mine: {
-    title: 'Profile',
+    title: 'My Space',
+    subtitle: 'Manage your uploads and diaries in one place.',
+    quickCreateDiary: 'Write Diary',
+    quickUploadImage: 'Upload Pet Photo',
+    photoSection: 'My Uploaded Photos',
+    diarySection: 'My Shared Diaries',
+    edit: 'Edit',
+    done: 'Done',
+    profileEdit: 'Edit Profile',
+    photosCount: 'Photos',
+    diariesCount: 'Diaries',
+    photoEmpty: 'No uploaded photos yet.',
+    diaryEmpty: 'No diary records yet.',
+    delete: 'Delete',
+    draft: 'Draft'
+  },
+  diary: {
+    title: 'Community Diary',
+    subtitle: 'Read stories from pet lovers around the world.',
+    latest: 'Latest',
+    popular: 'Popular',
+    following: 'Following',
+    author: 'Author',
+    readMore: 'Read More',
+    empty: 'No diary entries yet.',
+    linkedFromWall: 'From pet wall'
+  },
+  more: {
+    title: 'More',
+    subtitle: 'Additional product information and settings.',
+    aboutUs: 'About Us',
+    service: 'Service',
+    profileSettings: 'Profile Settings'
+  },
+  auth: {
+    title: 'Member Access',
+    subtitle: 'Login or create your account to post and manage content.',
+    loginTab: 'Login',
+    registerTab: 'Register',
+    email: 'Email',
+    password: 'Password',
+    confirmPassword: 'Confirm Password',
+    loginAction: 'Login',
+    registerAction: 'Register'
+  },
+  diaryCreate: {
+    title: 'Create Diary',
+    subtitle: "Record today's cute moments with text and image.",
+    titleLabel: 'Title',
+    titlePlaceholder: 'Today with my pet...',
+    contentLabel: 'Content',
+    contentPlaceholder: 'Write your diary...',
+    imageLabel: 'Diary Image',
+    imageEmpty: 'No image selected',
+    imageSelect: 'Select Image',
+    filterLabel: 'Category',
+    filterLatest: 'Latest',
+    filterPopular: 'Popular',
+    filterFollowing: 'Following',
+    saveDraft: 'Save Draft',
+    publish: 'Publish',
+    draftSaved: 'Draft saved.',
+    publishSuccess: 'Diary published.',
+    validation: 'Please enter title and content first.'
+  },
+  uploadImage: {
+    title: 'Upload Pet Image',
+    subtitle: 'Upload pet photos for your profile and community feed.',
+    uploadButton: 'Select Image',
+    preview: 'Image preview',
+    captionLabel: 'Caption',
+    captionPlaceholder: 'Write a short note for this photo.',
+    categoryLabel: 'Pet Type',
+    categoryDog: 'Dog',
+    categoryCat: 'Cat',
+    categoryExotic: 'Exotic',
+    relatedDiaryLabel: 'Related Diary',
+    noRelatedDiary: 'No linked diary',
+    petOnlyConfirm: 'I confirm this is a pet photo.',
+    submit: 'Submit',
+    submitSuccess: 'Photo uploaded.',
+    validation: 'Please select an image first.',
+    petOnlyError: 'Please confirm this is a pet photo.'
+  },
+  profileSettings: {
+    title: 'Profile Settings',
     appearance: 'Appearance',
+    avatarSection: 'Avatar & Name',
+    avatarUpload: 'Upload Avatar',
+    displayName: 'Display Name',
+    save: 'Save',
+    saveSuccess: 'Profile updated.',
     descLine1: 'Manage your personal display preferences here.',
     descLine2: 'Includes theme and language browsing settings.'
+  },
+  common: {
+    backToMore: 'Back to More'
   },
   aboutUs: {
     title: 'About Us',
@@ -66,17 +172,11 @@ const enMessages = {
     line2: 'Contact',
     line3: '589234123 03-103'
   },
-  project: {
-    title: 'Project',
-    line1: 'Showcasing practical recent development outcomes',
-    line2: 'Covering UI, API integration, and performance optimization',
-    line3: 'Content can be quickly replaced and extended for business needs'
-  },
   footer: {
     demo: 'Demo',
     aboutUs: 'About Us',
-    mine: 'Profile',
-    copyright: '\u00a9 2026 Demo',
+    mine: 'Mine',
+    copyright: '© 2026 Demo',
     slogan: 'Adopt, do not shop. Love them, never abandon them.',
     socialTitle: 'Follow Us',
     socialIg: 'Instagram',

@@ -67,4 +67,8 @@ export default {
     margin 0
     color var(--black-70-percent)
     font-size 12px
+
+@media (max-width: 767px)
+  .site-footer
+    display none
 </style>

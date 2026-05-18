@@ -1,70 +1,106 @@
 <template>
-  <div :class="$isMobile() ? 'px-24' : 'px-40'" class="header fw-700 py-16">
-    <div :class="$isMobile() ? 'fz-20' : 'fz-24'" class="logo" @click="$goHome()">{{ $t('header.brand') }}</div>
-
-    <van-cell-group v-if="!$isMobile()" :border="false" class="desktop-nav">
-      <van-cell
-        v-for="(item, index) in homeTabs"
-        :key="index"
-        :title="$t(item.titleKey)"
-        :icon="item.icon"
-        clickable
-        @click.stop="onTab(index)"
-      />
-    </van-cell-group>
-
-    <div class="actions-right">
-      <button
-        :aria-label="localeToggleLabel"
-        :disabled="isLocaleSwitching"
-        class="locale-toggle"
-        type="button"
-        @click="onLocaleToggle"
-      >
-        {{ localeToggleLabel }}
+  <header :class="['header', { 'header--mobile': $isMobile() }]" class="fw-700 py-16">
+    <template v-if="$isMobile()">
+      <button class="mobile-menu-trigger" type="button" @click="show = true">
+        <HamburgerMenu :opened="show" :absolute="false" class="mobile-hamburger" />
       </button>
 
-      <van-switch
-        v-model="checkedSwitch"
-        :size="$isMobile() ? '14px' : '18px'"
-        class="appearance-switch"
-        @change="onAppearanceChange"
-      />
+      <div class="logo logo--center" @click="goToRoute('Home')">{{ $t('header.brand') }}</div>
 
-      <HamburgerMenu
-        v-if="$isMobile()"
-        :opened="show"
-        :absolute="false"
-        class="menu-trigger"
-        @click="show = true"
-      />
-    </div>
+      <button class="auth-entry" type="button" @click="goToRoute('Auth')">
+        {{ $t('header.loginRegister') }}
+      </button>
+    </template>
 
-    <van-popup v-model:show="show" position="right" round>
-      <van-cell
-        v-for="(item, index) in homeTabs"
-        :key="index"
-        :title="$t(item.titleKey)"
-        :icon="item.icon"
-        clickable
-        @click.stop="onTab(index)"
-      />
+    <template v-else>
+      <div class="logo" @click="goToRoute('Home')">{{ $t('header.brand') }}</div>
+
+      <van-cell-group :border="false" class="desktop-nav">
+        <van-cell
+          v-for="(item, index) in homeTabs"
+          :key="index"
+          :title="$t(item.titleKey)"
+          :icon="item.icon"
+          clickable
+          @click.stop="onDesktopTab(index)"
+        />
+      </van-cell-group>
+
+      <div class="actions-right">
+        <button
+          :aria-label="localeToggleLabel"
+          :disabled="isLocaleSwitching"
+          class="locale-toggle"
+          type="button"
+          @click="onLocaleToggle"
+        >
+          {{ localeToggleLabel }}
+        </button>
+
+        <ThemeSwitch :checked="checkedSwitch" @change="onAppearanceChange" />
+      </div>
+    </template>
+
+    <van-popup v-model:show="show" class="mobile-drawer-popup" position="left">
+      <aside class="mobile-drawer">
+        <div class="mobile-drawer__theme-block">
+          <ThemeSwitch :checked="checkedSwitch" @change="onAppearanceChange" />
+        </div>
+
+        <button
+          :aria-label="localeToggleLabel"
+          :disabled="isLocaleSwitching"
+          class="mobile-drawer__setting"
+          type="button"
+          @click="onLocaleToggle"
+        >
+          <span class="mobile-drawer__setting-left">
+            <van-icon name="globe-o" />
+            <span>{{ $t('header.language') }}</span>
+          </span>
+          <span class="mobile-drawer__setting-right">EN/中</span>
+        </button>
+
+        <button
+          v-for="item in mobilePrimaryNav"
+          :key="item.name"
+          :class="['mobile-drawer__item', { 'is-active': isRouteActive(item.name) }]"
+          type="button"
+          @click="onDrawerNavigate(item.name)"
+        >
+          <span v-if="item.name === 'Mine'" class="mobile-drawer__avatar-wrap">
+            <img :src="mineAvatarUrl" :alt="$t('mobileNav.mine')" class="mobile-drawer__avatar">
+          </span>
+          <van-icon v-else :name="item.icon" />
+          <span>{{ $t(item.labelKey) }}</span>
+        </button>
+      </aside>
     </van-popup>
-  </div>
+  </header>
 </template>
 
 <script>
-import { computed, getCurrentInstance, ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
-import { CellGroup, Cell, Popup, Switch } from 'vant'
+import { CellGroup, Cell, Popup, Icon } from 'vant'
 
 import { applyAppearanceClass } from '@my-vue3/core'
 import { useHomeStore } from '@/store/home'
 import { useAppStore } from '@/store/main'
+import { useUserContentStore } from '@/store/userContent'
 import { getLocale, toggleLocale } from '@/i18n'
 import { homeTabs } from '@/store/constant'
-
 import HamburgerMenu from '@/components/HamburgerMenu/index.vue'
+import ThemeSwitch from '@/components/ThemeSwitch/index.vue'
+import avatarPlaceholder from '@/assets/images/common/avatar-default.svg'
+
+const mobilePrimaryNav = [
+  { name: 'Home', icon: 'wap-home-o', labelKey: 'mobileNav.home' },
+  { name: 'Diary', icon: 'notes-o', labelKey: 'mobileNav.diary' },
+  { name: 'Mine', icon: 'contact-o', labelKey: 'mobileNav.mine' },
+  { name: 'More', icon: 'apps-o', labelKey: 'mobileNav.more' }
+]
 
 export default {
   name: 'HeaderMenu',
@@ -72,15 +108,18 @@ export default {
     'van-cell': Cell,
     'van-cell-group': CellGroup,
     'van-popup': Popup,
-    'van-switch': Switch,
-    HamburgerMenu
+    'van-icon': Icon,
+    HamburgerMenu,
+    ThemeSwitch
   },
-
   setup () {
-    const { proxy } = getCurrentInstance()
+    const router = useRouter()
+    const route = useRoute()
     const homeStore = useHomeStore()
     const appStore = useAppStore()
+    const userContentStore = useUserContentStore()
     const { userAppearance } = storeToRefs(appStore)
+    const { profile } = storeToRefs(userContentStore)
 
     const show = ref(false)
     const checkedSwitch = ref(userAppearance.value === 'dark')
@@ -88,26 +127,39 @@ export default {
     const isLocaleSwitching = ref(false)
 
     const localeToggleLabel = computed(() => {
-      return currentLocale.value === 'zh-TW'
-        ? proxy.$t('header.switchToEnglish')
-        : proxy.$t('header.switchToChinese')
+      return currentLocale.value === 'zh-TW' ? 'EN' : '中'
     })
 
-    const onTab = (index) => {
-      homeStore.onTab(index)
-      proxy.$goToPage(homeStore.computePage)
-      show.value = false
+    const mineAvatarUrl = computed(() => {
+      return profile.value.avatarUrl || avatarPlaceholder
+    })
+
+    const goToRoute = (name) => {
+      if (route.name === name) return
+      router.push({ name })
     }
 
-    const onAppearanceChange = (checked) => {
-      const nextMode = checked ? 'dark' : 'light'
+    const onDrawerNavigate = (name) => {
+      show.value = false
+      goToRoute(name)
+    }
+
+    const isRouteActive = (name) => route.name === name
+
+    const onDesktopTab = (index) => {
+      homeStore.onTab(index)
+      goToRoute(homeStore.computePage)
+    }
+
+    const onAppearanceChange = (nextChecked) => {
+      checkedSwitch.value = nextChecked
+      const nextMode = nextChecked ? 'dark' : 'light'
       applyAppearanceClass(nextMode)
       appStore.SetAppearance(nextMode)
     }
 
     const onLocaleToggle = async () => {
       if (isLocaleSwitching.value) return
-
       isLocaleSwitching.value = true
 
       try {
@@ -121,13 +173,22 @@ export default {
       checkedSwitch.value = value === 'dark'
     })
 
+    watch(() => route.fullPath, () => {
+      show.value = false
+    })
+
     return {
       show,
       homeTabs,
       checkedSwitch,
       isLocaleSwitching,
       localeToggleLabel,
-      onTab,
+      mineAvatarUrl,
+      mobilePrimaryNav,
+      goToRoute,
+      onDrawerNavigate,
+      isRouteActive,
+      onDesktopTab,
       onAppearanceChange,
       onLocaleToggle
     }
@@ -146,13 +207,15 @@ export default {
   box-shadow 2px 1px 6px 0 $neutral_normal_color
   border-radius 0 0 10px 10px
   background var(--white-80-percent-header)
-  overflow hidden
+  padding-left 18px
+  padding-right 18px
 
   .logo
     margin-right 16px
+    font-size 24px
     font-style italic
     transform rotate(-5deg)
-    background linear-gradient(to right, red, blue)
+    background linear-gradient(to right, #ff4e76, #4c7fff)
     background-clip text
     color transparent
     cursor pointer
@@ -174,7 +237,7 @@ export default {
     display flex
     align-items center
     margin-left auto
-    gap 6px
+    gap 8px
 
   .locale-toggle
     border 1px solid var(--header-control-border)
@@ -192,8 +255,47 @@ export default {
       opacity .6
       cursor not-allowed
 
-  .menu-trigger
-    margin-left 12px
+.header--mobile
+  position sticky
+  padding 10px 12px
+  min-height 58px
+  justify-content space-between
+
+  .mobile-menu-trigger
+    border 0
+    padding 0
+    margin 0
+    width 38px
+    height 38px
+    border-radius 10px
+    background rgba(255, 255, 255, 0.16)
+    display flex
+    align-items center
+    justify-content center
+    cursor pointer
+
+  .mobile-hamburger
+    transform scale(.78)
+
+  .logo--center
+    position absolute
+    left 50%
+    top 50%
+    margin 0
+    transform translate(-50%, -50%) rotate(-5deg)
+    font-size 20px
+
+  .auth-entry
+    border 1px solid var(--header-control-border)
+    border-radius 999px
+    background var(--header-control-bg)
+    color var(--header-control-text)
+    font-size 11px
+    font-weight 700
+    line-height 1
+    padding 6px 10px
+    min-width 78px
+    cursor pointer
 
 :deep(.desktop-nav)
   .van-cell
@@ -212,25 +314,80 @@ export default {
         transition all .1s ease
         transform rotate(45deg)
 
-:deep(.van-popup)
-  background var(--main-color)
-  top 24%
+.mobile-drawer-popup
+  width min(80vw, 320px)
+  height 100vh
+  border-radius 0
+  background var(--list-block-background)
 
-  .van-cell
-    padding-left 10px
+.mobile-drawer
+  padding 20px 14px
+  display flex
+  flex-direction column
+  gap 10px
 
-    .van-icon
-      color var(--black-70-percent)
+  &__theme-block
+    border 1px solid var(--black-30-percent)
+    border-radius 12px
+    background var(--surface-card)
+    padding 9px
+    display flex
+    justify-content center
 
-@media (max-width: 767px)
-  .header
-    .logo
-      margin-right auto
+  &__item
+    border 1px solid var(--black-30-percent)
+    border-radius 12px
+    background var(--surface-card)
+    color var(--text-primary)
+    padding 10px 12px
+    display flex
+    align-items center
+    gap 10px
+    font-size 14px
+    cursor pointer
 
-    .actions-right
-      gap 4px
+    &.is-active
+      border-color var(--main-color)
+      box-shadow 0 6px 12px var(--black-30-percent)
 
-    .locale-toggle
-      font-size 10px
-      padding 3px 6px
+  &__setting
+    border 1px solid var(--black-30-percent)
+    border-radius 12px
+    padding 10px 12px
+    background var(--surface-card)
+    color var(--text-primary)
+    display flex
+    align-items center
+    justify-content space-between
+    gap 10px
+    cursor pointer
+
+    &:disabled
+      opacity .6
+      cursor not-allowed
+
+  &__setting-left
+    display inline-flex
+    align-items center
+    gap 8px
+
+  &__setting-right
+    font-size 12px
+    color var(--text-secondary)
+
+  &__avatar-wrap
+    width 20px
+    height 20px
+    border-radius 50%
+    overflow hidden
+    border 1px solid var(--black-30-percent)
+
+  &__avatar
+    width 100%
+    height 100%
+    object-fit cover
+
+@media (min-width: 768px)
+  .header--mobile
+    display none
 </style>
